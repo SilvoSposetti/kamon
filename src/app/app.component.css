@@ -2,8 +2,8 @@
   width: 100vw;
   height: 100vh;
   font-size: var(--default-font-size);
-  /*font-family: 'Montserrat', sans-serif;*/
+  font-family: 'Montserrat', sans-serif;
   /*font-family: 'Raleway', sans-serif;*/
   /*font-family: 'Titillium Web', sans-serif;*/
-  font-weight: 100; /* Lightest possible */
+  font-weight: 100; /* Lightest possi ble */
   color: var(--default-font-color);}
