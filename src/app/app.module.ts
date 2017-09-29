@@ -1,10 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
 
-import { AppComponent } from './app.component';
-import { BackgroundComponent } from './background/background.component';
-import { ContentComponent } from './content/content.component';
-import { ClockComponent } from './content/clock/clock.component';
+import {AppComponent} from './app.component';
+import {BackgroundComponent} from './background/background.component';
+import {ContentComponent} from './content/content.component';
+import {ClockComponent} from './content/clock/clock.component';
+
+import {ClockService} from './shared/services/clock.service';
+
+
 
 @NgModule({
   declarations: [
@@ -16,7 +20,8 @@ import { ClockComponent } from './content/clock/clock.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [ClockService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

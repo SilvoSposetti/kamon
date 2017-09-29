@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {ClockService} from './shared/services/clock.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  providers: [ClockService];
 }

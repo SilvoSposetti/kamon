@@ -10,6 +10,8 @@
 
   /*CUSTOM COLORS*/
   --default-font-color: black;
+  --loading-font-color: white;
+  --default-background-color: #373737;
 
   /*OTHER*/
   /*.ng-valid[required], .ng-valid.required {*/
@@ -25,13 +27,14 @@ index.html:
 ***********************************************************************************************************************/
 .index-container {
   font-size: var(--default-font-size);
-  color: var(--default-font-color);
+  color: var(--loading-font-color);
   width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: var(--default-background-color);
 }
 
 .index-loading {

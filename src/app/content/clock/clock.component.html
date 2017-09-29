@@ -1,27 +1,28 @@
 <div class="clock-container">
   <div class="dial">
-    <div class="hour-digits">
-      XX
+    <div class="hour-digits digits">
+      <!--ToDO: separate the first and second digit-->
+      {{hoursFirstDigit}}{{hoursSecondDigit}}
     </div>
     <div class="dial-separator"></div>
-    <div class="minute-digits">
-      YY
+    <div class="minute-digits digits">
+      {{minutesFirstDigit}}{{minutesSecondDigit}}
     </div>
     <div class="dial-separator"></div>
-    <div class="second-digits">
-      ZZ
+    <div class="second-digits digits">
+      {{secondsFirstDigit}}{{secondsSecondDigit}}
     </div>
   </div>
   <div class="horizontal-line"></div>
   <div class="clock-footer">
     <div class="place-container">
       <div class="place">
-        palce
+        place
       </div>
     </div>
     <div class="date-container">
       <div class="date">
-        date
+        {{dayOfWeek}}, {{day}}.{{month}}.{{year}}
       </div>
     </div>
   </div>

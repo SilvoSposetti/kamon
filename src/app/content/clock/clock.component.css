@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  font-size:0.8rem;
 }
 
 /***********************************************************************************************************************
@@ -15,7 +16,13 @@ Dial
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  font-size: 4em;
+  font-size: 4rem;
+}
+
+.digits{
+  width: 4.5rem;
+  text-align:center;
+
 }
 
 .dial-separator {
