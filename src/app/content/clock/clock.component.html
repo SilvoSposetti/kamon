@@ -1,16 +1,30 @@
 <div class="clock-container">
   <div class="dial">
-    <div class="hour-digits digits">
-      <!--ToDO: separate the first and second digit-->
-      {{hoursFirstDigit}}{{hoursSecondDigit}}
+    <div class="hour-digits digits-container">
+      <div class="digit">
+        {{hoursFirstDigit}}
+      </div>
+      <div class="digit">
+        {{hoursSecondDigit}}
+      </div>
     </div>
     <div class="dial-separator"></div>
-    <div class="minute-digits digits">
-      {{minutesFirstDigit}}{{minutesSecondDigit}}
+    <div class="minute-digits digits-container">
+      <div class="digit">
+        {{minutesFirstDigit}}
+      </div>
+      <div class="digit">
+        {{minutesSecondDigit}}
+      </div>
     </div>
     <div class="dial-separator"></div>
-    <div class="second-digits digits">
-      {{secondsFirstDigit}}{{secondsSecondDigit}}
+    <div class="second-digits digits-container">
+      <div class="digit">
+        {{secondsFirstDigit}}
+      </div>
+      <div class="digit">
+        {{secondsSecondDigit}}
+      </div>
     </div>
   </div>
   <div class="horizontal-line"></div>

@@ -1,0 +1,1 @@
+Add fade-in to clock (and probably to links part)

@@ -1,3 +1,4 @@
+
 import {Component, OnInit} from '@angular/core';
 import {ClockService} from '../../shared/services/clock.service';
 import {Subscription} from 'rxjs/Subscription';
@@ -32,20 +33,15 @@ export class ClockComponent implements OnInit {
   updateTime(): void {
     this.timeSubscription = this.clockService.getSecondsFirstDigit().subscribe(value => {
       this.secondsFirstDigit = value;
-      console.log('updated seconds first');
-
     });
     this.timeSubscription = this.clockService.getSecondsSecondDigit().subscribe(value => {
       this.secondsSecondDigit = value;
-      console.log('updated seconds second');
     });
     this.timeSubscription = this.clockService.getMinutesFirstDigit().subscribe(value => {
       this.minutesFirstDigit = value;
-      console.log('updated minutes first');
     });
     this.timeSubscription = this.clockService.getMinutesSecondDigit().subscribe(value => {
       this.minutesSecondDigit = value;
-      console.log('updated minutes second');
     });
     this.timeSubscription = this.clockService.getHoursFirstDigit().subscribe(value => {
       this.hoursFirstDigit = value;
