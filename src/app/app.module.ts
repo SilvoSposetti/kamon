@@ -13,6 +13,8 @@ import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';
 
 import {environment} from '../environments/environment';
+import { SettingComponent } from './background/setting/setting.component';
+import { SceneComponent } from './background/scene/scene.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import {environment} from '../environments/environment';
     AppComponent,
     BackgroundComponent,
     ContentComponent,
-    ClockComponent
+    ClockComponent,
+    SettingComponent,
+    SceneComponent
   ],
   imports: [
     HttpModule,

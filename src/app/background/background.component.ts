@@ -8,13 +8,13 @@ import {ConfigService} from '../shared/services/config.service';
 })
 export class BackgroundComponent implements OnInit {
 
-  public variable = '';
+  public useScene = this.configService.getConfig().useScene;
 
   constructor(private configService: ConfigService) {
   }
 
   ngOnInit() {
-    this.variable = this.configService.getConfig().configuration2;
   }
+
 
 }

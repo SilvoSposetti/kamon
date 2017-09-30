@@ -1,4 +1,5 @@
 {
-  "configuration1": 12,
-  "configuration2": "yolo swaggins"
+  "useCustomBackgroundImage": true,
+  "useScene": true,
+  "scene" : "none"
 }

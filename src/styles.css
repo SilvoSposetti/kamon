@@ -4,14 +4,14 @@
 
   /*!********************************************************/
   /*CUSTOM FONT SIZES*!*/
-  --default-font-size: 2vh;
+  --default-font-size: 20px;
 
   /*}*/
 
   /*CUSTOM COLORS*/
   --default-font-color: black;
-  --loading-font-color: white;
   --default-background-color: #373737;
+  --setting-color: linear-gradient(45deg, rgba(0, 133, 0, 1) 0%, rgba(0, 173, 173, 1) 100%);
 
   /*OTHER*/
   /*.ng-valid[required], .ng-valid.required {*/
@@ -20,13 +20,19 @@
 
   /*.ng-invalid:not(form) {*/
   /*border-left: 10px solid var(--failure); !* red *!*/
+
+  /*LOADING SCREEN*/
+  --loading-font-size: 2vh;
+  --loading-font-color: white;
+  --loading-background-color: #373737;
+
 }
 
 /***********************************************************************************************************************
 index.html:
 ***********************************************************************************************************************/
 .index-container {
-  font-size: var(--default-font-size);
+  font-size: var(--loading-font-size);
   color: var(--loading-font-color);
   width: 100vw;
   height: 100vh;
@@ -34,7 +40,7 @@ index.html:
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--default-background-color);
+  background-color: var(--loading-background-color);
 }
 
 .index-loading {
