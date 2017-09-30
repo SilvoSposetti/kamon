@@ -13,8 +13,9 @@ import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';
 
 import {environment} from '../environments/environment';
-import { SettingComponent } from './background/setting/setting.component';
-import { SceneComponent } from './background/scene/scene.component';
+import {SettingComponent} from './background/setting/setting.component';
+import {SceneComponent} from './background/scene/scene.component';
+import {ListComponent} from './content/list/list.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { SceneComponent } from './background/scene/scene.component';
     ContentComponent,
     ClockComponent,
     SettingComponent,
-    SceneComponent
+    SceneComponent,
+    ListComponent
   ],
   imports: [
     HttpModule,

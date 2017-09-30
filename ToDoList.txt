@@ -1,4 +1,5 @@
-Choice between only setting and setting + scene
+List component
+List data, each element has: [Category, Name, Key_Shortcut, Link, Search_Query, Color] each parameter is a string
+google suggestions
 ability to choose if list is visible at start or not
-each element has: [Category, Name, Key_Shortcut, Link, Search_Query, Color] each parameter is a string
 Add fade-in to clock (and probably to links part)
