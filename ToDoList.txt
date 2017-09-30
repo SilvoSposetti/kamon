@@ -1,1 +1,3 @@
+ability to choose if list is visible at start or not
+each element has: [Category, Name, Key_Shortcut, Link, Search_Query, Color] each parameter is a string
 Add fade-in to clock (and probably to links part)
