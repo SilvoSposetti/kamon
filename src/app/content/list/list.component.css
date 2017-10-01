@@ -2,16 +2,42 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
+  font-size: var(--list-default-font-size);
+}
+
+.list-separator {
+  width: 20px;
+  height: 20px;
 }
 
 /***********************************************************************************************************************
 List category:
 ***********************************************************************************************************************/
+.list-category-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+}
 
 .list-category {
-  background: white;
   width: 15vw;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+.list-category-name-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  font-size: var(--list-category-font-size);
 }
 
 /***********************************************************************************************************************
@@ -19,16 +45,29 @@ List element:
 ***********************************************************************************************************************/
 
 .list-element {
+  width: 100%;
   height: 2em;
   display: flex;
   align-items: center;
-  justify-content: center;
-  flex-direction:row;
-}
-.shortcut-indicator-container{
-  width:20%;
+  justify-content: flex-start;
+  flex-direction: row;
+  border: 1px solid white;
+  border-radius: 1.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
-.list-name-container{
-  width:80%;
+.shortcut-indicator-container {
+  min-width: 1.5em;
+  min-height: 1.5em;
+  border: 1px solid black;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.element-separator {
+  width: 1em;
+  height: 1em;
 }

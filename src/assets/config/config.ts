@@ -3,7 +3,8 @@ export class Configuration {
   constructor(public useCustomBackgroundImage: boolean,
               public useScene: boolean,
               public scene: string,
-              public list: any[][]) {
+              public searchEngine: string[],
+              public list: string[][]) {
   }
 
 }

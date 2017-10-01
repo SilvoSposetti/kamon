@@ -2,15 +2,13 @@
   "useCustomBackgroundImage": true,
   "useScene": true,
   "scene": "none",
+  "searchEngine": [
+    "Google",
+    "https://encrypted.google.com",
+    "/search?q={}",
+    "#373737"
+  ],
   "list": [
-    [
-      null,
-      "Google",
-      "*",
-      "https://encrypted.google.com",
-      "/search?q={}",
-      "#373737"
-    ],
     [
       "Silvo",
       "GitHub",

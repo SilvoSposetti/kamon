@@ -13,3 +13,7 @@
   flex-direction:column;
 }
 
+.content-separator{
+  width:30px;
+  height:50px;
+}

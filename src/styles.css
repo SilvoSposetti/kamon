@@ -2,15 +2,21 @@
 /*FOR THE WHOLE PROJECT*!*/
 :root {
 
-  /*!********************************************************/
   /*CUSTOM FONT SIZES*!*/
   --default-font-size: 20px;
 
-  /*}*/
+  /*CLOCK PARAMETERS*/
+
+  /*LIST PARAMETERS*/
+  --list-category-font-size: 1.2em;
+  --list-default-font-size: 1em;
+
 
   /*CUSTOM COLORS*/
   --default-font-color: black;
   --default-background-color: #373737;
+
+  
   --setting-color: linear-gradient(45deg, rgba(0, 133, 0, 1) 0%, rgba(0, 173, 173, 1) 100%);
 
   /*OTHER*/

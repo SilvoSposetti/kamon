@@ -65,7 +65,7 @@ export class ClockService {
     const date = this.correctLength((newDate.getDate().toString()));
     const month = this.correctLength((newDate.getMonth() + 1).toString()); // Months start from 1 when new Date() is created
     const year = this.correctLength(newDate.getFullYear().toString());
-    const day = this.correctLength(this.translateDayToLanguage(newDate.getDay().toString()));
+    const day = this.translateDayToLanguage(newDate.getDay().toString());
 
 
     // Check if the new value has been modified before inserting it into the Observable stream
