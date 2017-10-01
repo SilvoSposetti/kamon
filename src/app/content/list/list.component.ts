@@ -8,6 +8,8 @@ import {ConfigService} from '../../shared/services/config.service';
 })
 export class ListComponent implements OnInit {
   private configList = this.configService.getConfig().list;
+  public categories: string[] = [];
+  public searchEngine: string[] = [];
 
   constructor(private configService: ConfigService) {
   }
@@ -17,21 +19,14 @@ export class ListComponent implements OnInit {
   }
 
   readList(): void {
-    let searchEngine: string[] = [];
-    let categories: string[] = [];
-    // Extracts categories (without duplicates) from the list.
+    // Extracts categories (without duplicates) and info about search engine from the list.
     for (let i = 0; i < this.configList.length; i++) {
-      if (this.configList[i][0] !== null) {
-        if (categories.indexOf(this.configList[i][0]) === -1) {
-          categories.push(this.configList[i][0]);
+        if (this.categories.indexOf(this.configList[i][0]) === -1 && this.configList[i][0] !== null) {
+          this.categories.push(this.configList[i][0]);
         }
-      } else {
-        searchEngine = this.configList[i];
-      }
 
     }
-    console.log('categories: ' + categories);
-    console.log('search engine: ' + searchEngine);
+    console.log('categories: ' + this.categories);
   }
 
 }

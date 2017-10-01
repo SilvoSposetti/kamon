@@ -1,3 +1,23 @@
-<p>
-  list works!
-</p>
+<div class="list-parent">
+<div class="list-category" *ngFor="let category of categories; let i=index">
+ <!--aggiungere elemento con ngFor-->
+  <!--fare bottone con scorciatioia-->
+  <div class="list-category-name-container">
+    <div class="list-category-name">
+      {{categories[i]}}
+    </div>
+  </div>
+  <div class="list-element"><!--add ngFor here-->
+    <div class="shortcut-indicator-container">
+      <div class="shortcut-indicator">
+        X
+      </div>
+    </div>
+    <div class="list-name-container">
+      <div class="list-name">
+        name
+      </div>
+    </div>
+  </div>
+</div>
+</div>

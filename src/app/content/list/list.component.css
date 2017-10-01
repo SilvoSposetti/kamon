@@ -1,0 +1,34 @@
+.list-parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+
+/***********************************************************************************************************************
+List category:
+***********************************************************************************************************************/
+
+.list-category {
+  background: white;
+  width: 15vw;
+}
+
+/***********************************************************************************************************************
+List element:
+***********************************************************************************************************************/
+
+.list-element {
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction:row;
+}
+.shortcut-indicator-container{
+  width:20%;
+}
+
+.list-name-container{
+  width:80%;
+}
