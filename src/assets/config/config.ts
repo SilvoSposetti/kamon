@@ -3,6 +3,7 @@ export class Configuration {
   constructor(public useCustomBackgroundImage: boolean,
               public useScene: boolean,
               public scene: string,
+              public openLinkInNewTab: boolean,
               public searchEngine: string[],
               public list: string[][]) {
   }

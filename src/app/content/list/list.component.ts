@@ -44,4 +44,14 @@ export class ListComponent implements OnInit {
     }
   }
 
+  link(i: number, j: number) {
+    if (this.configService.getConfig().openLinkInNewTab) {
+      window.open(this.elements[i][j][2], '_blank');
+
+    }
+    else {
+      window.location.href = this.elements[i][j][2];
+    }
+  }
+
 }

@@ -2,6 +2,7 @@
   "useCustomBackgroundImage": true,
   "useScene": true,
   "scene": "none",
+  "openLinkInNewTab": false,
   "searchEngine": [
     "Google",
     "https://encrypted.google.com",
