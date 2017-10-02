@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ConfigService} from '../../shared/services/config.service';
+import {ScreenSizeService} from '../../shared/services/screen-size.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-list',
@@ -9,15 +11,30 @@ import {ConfigService} from '../../shared/services/config.service';
 export class ListComponent implements OnInit {
   private configList = this.configService.getConfig().list;
   public categories: string[] = [];
-  public elements: any[][][] = []; // Triple array!
+  public elements: string[][][] = []; // Triple array!
   // First level are categories, second the element of each category, and third the values of each element
 
-  constructor(private configService: ConfigService) {
+  private widthSubscription: Subscription;
+  private isWide: boolean;
+  private widthThreshold = 1250;
+
+  constructor(private configService: ConfigService,
+              private screenSizeService: ScreenSizeService) {
   }
 
   ngOnInit() {
+    //this.updateWindowSize();
     this.readList();
   }
+
+  //updateWindowSize(): void {
+  //  this.widthSubscription = this.screenSizeService.getWidth().subscribe(
+  //    value => {
+  //      this.isWide = value >= this.widthThreshold;
+  //      console.log(value);
+  //    }
+  //  );
+  //}
 
   readList(): void {
     // Extracts categories (without duplicates) and info about search engine from the list.
@@ -44,14 +61,12 @@ export class ListComponent implements OnInit {
     }
   }
 
-  link(i: number, j: number) {
+  openLink(i: number, j: number) {
     if (this.configService.getConfig().openLinkInNewTab) {
       window.open(this.elements[i][j][2], '_blank');
-
     }
     else {
       window.location.href = this.elements[i][j][2];
     }
   }
-
 }

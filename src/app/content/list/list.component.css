@@ -19,10 +19,12 @@ List category:
   align-items: flex-start;
   justify-content: center;
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .list-category {
   width: 15vw;
+  min-width:200px;
   display: flex;
   align-items: flex-start;
   justify-content: center;

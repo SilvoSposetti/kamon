@@ -1,5 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {environment} from '../environments/environment';
 
 import {APP_INITIALIZER} from '@angular/core';
 import {HttpModule} from '@angular/http';
@@ -8,14 +9,14 @@ import {AppComponent} from './app.component';
 import {BackgroundComponent} from './background/background.component';
 import {ContentComponent} from './content/content.component';
 import {ClockComponent} from './content/clock/clock.component';
-
-import {ConfigService} from './shared/services/config.service';
-import {ClockService} from './shared/services/clock.service';
-
-import {environment} from '../environments/environment';
 import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
 import {ListComponent} from './content/list/list.component';
+
+import {ConfigService} from './shared/services/config.service';
+import {ClockService} from './shared/services/clock.service';
+import {ScreenSizeService} from './shared/services/screen-size.service';
+
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import {ListComponent} from './content/list/list.component';
     multi: true
   },
     // Add more services here:
-    ClockService],
+    ClockService, ScreenSizeService],
   bootstrap: [AppComponent],
 })
 
