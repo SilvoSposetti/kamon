@@ -1,6 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {environment} from '../environments/environment';
+import {FormsModule} from '@angular/forms';
 
 import {APP_INITIALIZER} from '@angular/core';
 import {HttpModule} from '@angular/http';
@@ -16,6 +17,8 @@ import {ListComponent} from './content/list/list.component';
 import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';
 import {ScreenSizeService} from './shared/services/screen-size.service';
+import {SearchComponent} from './content/search/search.component';
+import {MyFocusDirective} from './shared/directives/my-focus.directive';
 
 
 
@@ -27,11 +30,14 @@ import {ScreenSizeService} from './shared/services/screen-size.service';
     ClockComponent,
     SettingComponent,
     SceneComponent,
-    ListComponent
+    ListComponent,
+    SearchComponent,
+    MyFocusDirective
   ],
   imports: [
     HttpModule,
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [ConfigService, {
     provide: APP_INITIALIZER,
