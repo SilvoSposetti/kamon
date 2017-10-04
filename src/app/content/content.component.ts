@@ -1,4 +1,5 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ConfigService} from '../shared/services/config.service';
 
 @Component({
   selector: 'app-content',
@@ -6,6 +7,8 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
   styleUrls: ['./content.component.css']
 })
 export class ContentComponent implements OnInit {
+
+  @Input() listIsVisible: boolean;
 
   public showSearch: boolean;
   public searchText: string = '';

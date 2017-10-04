@@ -4,6 +4,7 @@ export class Configuration {
               public useScene: boolean,
               public scene: string,
               public openLinkInNewTab: boolean,
+              public listIsVisible: boolean,
               public searchEngine: string[],
               public list: string[][]) {
   }

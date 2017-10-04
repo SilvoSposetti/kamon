@@ -11,10 +11,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction:column;
+  flex-direction: column;
 }
 
-.content-separator{
-  width:30px;
-  height:50px;
+.content-separator {
+  width: 30px;
+  height: 50px;
+}
+
+/* MOVED SEARCH INPUT OUTSIDE WINDOW */
+.search-input-container {
+  position: absolute;
+  bottom: 100%;
+  right: 100%;
 }

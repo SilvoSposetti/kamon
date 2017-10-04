@@ -3,6 +3,7 @@
   "useScene": true,
   "scene": "none",
   "openLinkInNewTab": false,
+  "listIsVisible": true,
   "searchEngine": [
     "Google",
     "https://encrypted.google.com",

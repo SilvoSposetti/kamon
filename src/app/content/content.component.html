@@ -2,19 +2,20 @@
   <div class="content-container">
     <app-clock></app-clock>
     <div class="content-separator"></div>
-    <app-list></app-list>
+    <app-list *ngIf="listIsVisible"></app-list>
     <app-search *ngIf="showSearch" [searchInput]="searchText"></app-search>
     <div class="search-input-container">
       <form class="form-container" #searchForm="ngForm" id="searchForm">
         <label for="search-input">Search</label>
         <input class="search-input" id="search-input"
                maxlength="100"
-               myFocus [myFocus]="true"
+               [myFocus]="true"
                [(ngModel)]="searchText"
                name="search-input"
                (ngModelChange)="searchInputChanged()"
                #eventName="ngModel">
         <!--(ngModelChange) must be after the [(ngModel)] so that the function can be called after the value changes-->
+
         <!--required-->
         <!--[pattern]="textRegEx"-->
       </form>
