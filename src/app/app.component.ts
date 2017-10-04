@@ -1,5 +1,6 @@
 import {Component, HostListener} from '@angular/core';
 import {ConfigService} from './shared/services/config.service';
+import {SearchService} from './shared/services/search.service';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,9 @@ export class AppComponent {
   private keyboardEvent: any;
   //private altKeyAction: boolean;
   public listIsVisible: boolean = this.configService.getConfig().listIsVisible;
-  constructor(private configService: ConfigService){
+
+  constructor(private configService: ConfigService,
+              private searchService: SearchService) {
   }
 
   // listens and deals with function calling and propagation of keypresses.
@@ -22,15 +25,14 @@ export class AppComponent {
     if (event.ctrlKey) {
       // do not stopPropagation and preventDefault because it is needed for Ctrl+Shift+i (open browser console)
       this.listIsVisible = !this.listIsVisible;
-      console.log(this.listIsVisible);
     }
-    else if (event.escape){
+    else if (event.which === 27) {
       event.preventDefault();
       event.stopPropagation();
       console.log('escape');
-      // ToDo: delete search query here
+      this.searchService.resetSearchString();
     }
-    else if (event.which === 13){ //
+    else if (event.which === 13) { //
       event.preventDefault();
       event.stopPropagation();
       console.log('enter');

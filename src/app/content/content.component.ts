@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ConfigService} from '../shared/services/config.service';
+import {SearchService} from '../shared/services/search.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-content',
@@ -11,18 +12,35 @@ export class ContentComponent implements OnInit {
   @Input() listIsVisible: boolean;
 
   public showSearch: boolean;
-  public searchText: string = '';
+  public searchText: string;
 
-  constructor() {
+  private searchSubscription: Subscription;
+
+  constructor(private searchService: SearchService) {
   }
 
   ngOnInit() {
     this.showSearch = false;
+    this.listenForSearch();
+  }
+
+  listenForSearch(): void {
+    this.searchSubscription = this.searchService.getSearch().subscribe((value) => {
+      this.searchText = value;
+      if (value === '') {
+        this.checkShowSearch();
+      }
+    });
   }
 
   searchInputChanged(): void {
-    this.showSearch = !(this.searchText === '');
+    this.searchService.setSearchString(this.searchText); // Update content of searchString
+    this.checkShowSearch();
   }
 
-  //this.renderer.selectRootElement('#myFocus').focus();
+  private checkShowSearch(): void {
+    this.showSearch = !(this.searchText === '');
+
+  }
+
 }

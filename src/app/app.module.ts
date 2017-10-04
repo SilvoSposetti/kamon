@@ -14,11 +14,13 @@ import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
 import {ListComponent} from './content/list/list.component';
 
+import {MyFocusDirective} from './shared/directives/my-focus.directive';
+
 import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';
 import {ScreenSizeService} from './shared/services/screen-size.service';
 import {SearchComponent} from './content/search/search.component';
-import {MyFocusDirective} from './shared/directives/my-focus.directive';
+import {SearchService} from './shared/services/search.service';
 
 
 
@@ -46,7 +48,7 @@ import {MyFocusDirective} from './shared/directives/my-focus.directive';
     multi: true
   },
     // Add more services here:
-    ClockService, ScreenSizeService],
+    ClockService, ScreenSizeService, SearchService],
   bootstrap: [AppComponent],
 })
 
