@@ -16,6 +16,10 @@ Search Text:
 ***********************************************************************************************************************/
 
 .search-text-container{
+  width:100%;
+  display: flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .search-text{
@@ -42,13 +46,20 @@ Suggestions:
 
 .suggestion-text{
   font-size: var(--suggestions-font-size);
-  padding: 1em;
+  padding: 0.5em;
+  margin: 1em;
+
 }
 
 .suggestions-separator{
-  height:2em;
+  height:1.618em;
   width:1px;
   margin: 0;
   padding: 0;
   border-left:1px solid white;
+}
+
+.suggestionHighlighted{
+  background: rgba(255,255,255,0.2);
+  border-radius: 0.4em;
 }

@@ -10,6 +10,7 @@ import {Subscription} from 'rxjs/Subscription';
 export class ContentComponent implements OnInit {
 
   @Input() listIsVisible: boolean;
+  @Input() selectionSuggestion: number;
 
   public showSearch: boolean;
   public searchText: string;

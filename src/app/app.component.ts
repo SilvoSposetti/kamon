@@ -1,22 +1,30 @@
-import {Component, HostListener} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ConfigService} from './shared/services/config.service';
 import {SearchService} from './shared/services/search.service';
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public title = 'kamon';
 
   private keyboardEvent: any;
   //private altKeyAction: boolean;
   public listIsVisible: boolean = this.configService.getConfig().listIsVisible;
+  private selectionSubscription: Subscription;
+  public selectionSuggestion: number = -1;
 
   constructor(private configService: ConfigService,
               private searchService: SearchService) {
   }
+
+  ngOnInit() {
+    this.listenForSelection();
+  }
+
 
   // listens and deals with function calling and propagation of keypresses.
   @HostListener('window:keydown', ['$event'])
@@ -36,7 +44,19 @@ export class AppComponent {
       event.preventDefault();
       event.stopPropagation();
       console.log('enter');
-      this.searchService.launchSearch();
+      this.searchService.launchSearch(this.selectionSuggestion);
+    }
+    else if (event.which === 37 || event.which === 38) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log('arrowLeft');
+      this.searchService.selectLeft();
+    }
+    else if (event.which === 39 || event.which === 40) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log('arrowRight');
+      this.searchService.selectRight();
     }
 
     //this.keyboardEvent = event;
@@ -57,4 +77,10 @@ export class AppComponent {
     //this.which = event.which;
 
   }
+
+  private listenForSelection() {
+      this.selectionSubscription = this.searchService.getSelection().subscribe((value)=>
+      this.selectionSuggestion = value);
+  }
+
 }
