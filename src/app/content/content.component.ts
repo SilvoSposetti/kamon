@@ -27,7 +27,6 @@ export class ContentComponent implements OnInit {
   listenForSearch(): void {
     this.searchSubscription = this.searchService.getSearch().subscribe((value) => {
       this.searchText = value;
-      console.log(value);
       if (value.length === 0) {
         this.checkShowSearch();
       }
@@ -37,6 +36,7 @@ export class ContentComponent implements OnInit {
   searchInputChanged(): void {
     this.searchService.setSearchString(this.searchText); // Update content of searchString
     this.checkShowSearch();
+
   }
 
   private checkShowSearch(): void {

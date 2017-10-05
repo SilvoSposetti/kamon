@@ -5,6 +5,7 @@ export class Configuration {
               public scene: string,
               public openLinkInNewTab: boolean,
               public listIsVisible: boolean,
+              public amountOfSuggestions: number,
               public searchEngine: string[],
               public list: string[][]) {
   }

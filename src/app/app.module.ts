@@ -5,6 +5,7 @@ import {FormsModule} from '@angular/forms';
 
 import {APP_INITIALIZER} from '@angular/core';
 import {HttpModule} from '@angular/http';
+import {JsonpModule} from '@angular/http';
 
 import {AppComponent} from './app.component';
 import {BackgroundComponent} from './background/background.component';
@@ -39,7 +40,7 @@ import {SearchService} from './shared/services/search.service';
   imports: [
     HttpModule,
     BrowserModule,
-    FormsModule
+    FormsModule,    JsonpModule
   ],
   providers: [ConfigService, {
     provide: APP_INITIALIZER,

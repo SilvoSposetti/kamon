@@ -32,11 +32,11 @@ export class AppComponent {
       console.log('escape');
       this.searchService.resetSearchString();
     }
-    else if (event.which === 13) { //
+    else if (event.which === 13) {
       event.preventDefault();
       event.stopPropagation();
       console.log('enter');
-      // ToDo: launch search here
+      // Todo: launch search in new tab.
     }
 
     //this.keyboardEvent = event;

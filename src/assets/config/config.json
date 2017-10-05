@@ -4,6 +4,7 @@
   "scene": "none",
   "openLinkInNewTab": false,
   "listIsVisible": true,
+  "amountOfSuggestions": 10,
   "searchEngine": [
     "Google",
     "https://encrypted.google.com",

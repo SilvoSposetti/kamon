@@ -1,3 +1,5 @@
-google suggestions
+google suggestions (or DuckDuckGo)
+do a scene and add a 'sceneManager'
 ability to choose if list is visible at start or not
 Add fade-in to clock (and probably to links part) -> animations in general
+add FOAAS random sentences
