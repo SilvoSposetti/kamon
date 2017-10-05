@@ -19,6 +19,11 @@
   --search-font-color: white;
 
 
+  /*SEARCH COMPONENT*/
+  --search-text-font-size: 2em;
+  --suggestions-font-size: 0.9em;
+
+
   --setting-color: linear-gradient(45deg, rgba(0, 133, 0, 1) 0%, rgba(0, 173, 173, 1) 100%);
 
   /*OTHER*/

@@ -13,8 +13,9 @@ export class ContentComponent implements OnInit {
 
   public showSearch: boolean;
   public searchText: string;
-
+  public searchSuggestions: string[];
   private searchSubscription: Subscription;
+  private suggestionsSubscription: Subscription;
 
   constructor(private searchService: SearchService) {
   }
@@ -31,12 +32,14 @@ export class ContentComponent implements OnInit {
         this.checkShowSearch();
       }
     });
+    this.suggestionsSubscription = this.searchService.getSuggestions().subscribe((value) => {
+      this.searchSuggestions = value;
+    });
   }
 
   searchInputChanged(): void {
     this.searchService.setSearchString(this.searchText); // Update content of searchString
     this.checkShowSearch();
-
   }
 
   private checkShowSearch(): void {

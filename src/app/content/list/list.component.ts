@@ -27,15 +27,6 @@ export class ListComponent implements OnInit {
     this.readList();
   }
 
-  //updateWindowSize(): void {
-  //  this.widthSubscription = this.screenSizeService.getWidth().subscribe(
-  //    value => {
-  //      this.isWide = value >= this.widthThreshold;
-  //      console.log(value);
-  //    }
-  //  );
-  //}
-
   readList(): void {
     // Extracts categories (without duplicates) and info about search engine from the list.
     for (let i = 0; i < this.configList.length; i++) {

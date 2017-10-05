@@ -1,3 +1,16 @@
 <div class="search-parent">
-  {{searchText}}
+  <div class="search-text-container">
+    <div class="search-text">
+      {{searchText}}
+    </div>
+  </div>
+  <div class="suggestions-container">
+    <div class="suggestion" *ngFor="let element of searchSuggestions; let i = index">
+      <div class="suggestions-separator" *ngIf="i !== 0"></div>
+      <div class="suggestion-text">
+        {{searchSuggestions[i]}}
+      </div>
+    </div>
+  </div>
 </div>
+

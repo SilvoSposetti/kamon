@@ -40,7 +40,8 @@ import {SearchService} from './shared/services/search.service';
   imports: [
     HttpModule,
     BrowserModule,
-    FormsModule,    JsonpModule
+    FormsModule,
+    JsonpModule
   ],
   providers: [ConfigService, {
     provide: APP_INITIALIZER,

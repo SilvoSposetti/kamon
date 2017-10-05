@@ -36,7 +36,7 @@ export class AppComponent {
       event.preventDefault();
       event.stopPropagation();
       console.log('enter');
-      // Todo: launch search in new tab.
+      this.searchService.launchSearch();
     }
 
     //this.keyboardEvent = event;

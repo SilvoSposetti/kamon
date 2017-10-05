@@ -12,4 +12,13 @@ export class SceneComponent implements OnInit {
   ngOnInit() {
   }
 
+  //updateWindowSize(): void {
+  //  this.widthSubscription = this.screenSizeService.getWidth().subscribe(
+  //    value => {
+  //      this.isWide = value >= this.widthThreshold;
+  //      console.log(value);
+  //    }
+  //  );
+  //}
+
 }

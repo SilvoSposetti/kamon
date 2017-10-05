@@ -11,3 +11,44 @@
   flex-direction: column;
   color: var(--search-font-color);
 }
+/***********************************************************************************************************************
+Search Text:
+***********************************************************************************************************************/
+
+.search-text-container{
+}
+
+.search-text{
+  font-size: var(--search-text-font-size);
+}
+/***********************************************************************************************************************
+Suggestions:
+***********************************************************************************************************************/
+.suggestions-container{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  }
+
+.suggestion{
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.suggestion-text{
+  font-size: var(--suggestions-font-size);
+  padding: 1em;
+}
+
+.suggestions-separator{
+  height:2em;
+  width:1px;
+  margin: 0;
+  padding: 0;
+  border-left:1px solid white;
+}

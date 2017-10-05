@@ -1,5 +1,5 @@
-google suggestions (or DuckDuckGo)
+Select suggestions with arrow keys
+In search component the background changes when a shortcut is detected
 do a scene and add a 'sceneManager'
-ability to choose if list is visible at start or not
 Add fade-in to clock (and probably to links part) -> animations in general
 add FOAAS random sentences

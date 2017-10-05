@@ -2,13 +2,13 @@
   "useCustomBackgroundImage": true,
   "useScene": true,
   "scene": "none",
-  "openLinkInNewTab": false,
+  "openLinkInNewTab": true,
   "listIsVisible": true,
-  "amountOfSuggestions": 10,
+  "amountOfSuggestions": 5,
   "searchEngine": [
     "Google",
-    "https://encrypted.google.com",
-    "/search?q={}",
+    "http://www.google.com/",
+    "/search?q=",
     "#373737"
   ],
   "list": [

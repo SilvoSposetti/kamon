@@ -3,7 +3,7 @@
     <app-clock></app-clock>
     <div class="content-separator"></div>
     <app-list *ngIf="listIsVisible"></app-list>
-    <app-search *ngIf="showSearch" [searchText]="searchText"></app-search>
+    <app-search *ngIf="showSearch" [searchText]="searchText" [searchSuggestions]="searchSuggestions"></app-search>
     <div class="search-input-container">
       <form class="form-container" #searchForm="ngForm" id="searchForm">
         <label for="search-input">Search</label>
