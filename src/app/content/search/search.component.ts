@@ -10,6 +10,7 @@ export class SearchComponent implements OnInit {
   @Input() searchSuggestions: string[];
   @Input() searchText: string;
   @Input() selectionSuggestion: number;
+  @Input() shortcut: number;
 
 
   constructor() {

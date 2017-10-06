@@ -15,8 +15,10 @@ export class ContentComponent implements OnInit {
   public showSearch: boolean;
   public searchText: string;
   public searchSuggestions: string[];
+  public shortcut: string[];
   private searchSubscription: Subscription;
   private suggestionsSubscription: Subscription;
+  private shortcutSubscription: Subscription;
 
   constructor(private searchService: SearchService) {
   }
@@ -35,6 +37,9 @@ export class ContentComponent implements OnInit {
     });
     this.suggestionsSubscription = this.searchService.getSuggestions().subscribe((value) => {
       this.searchSuggestions = value;
+    });
+    this.shortcutSubscription = this.searchService.getShortcut().subscribe((value)=>{
+      this.shortcut = value;
     });
   }
 

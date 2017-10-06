@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ConfigService} from '../../shared/services/config.service';
 import {ScreenSizeService} from '../../shared/services/screen-size.service';
 import {Subscription} from 'rxjs/Subscription';
+import {SearchService} from '../../shared/services/search.service';
 
 @Component({
   selector: 'app-list',
@@ -11,20 +12,16 @@ import {Subscription} from 'rxjs/Subscription';
 export class ListComponent implements OnInit {
   private configList = this.configService.getConfig().list;
   public categories: string[] = [];
-  public elements: string[][][] = []; // Triple array!
+  public elements: string[][][] = []; // Tri-dimensional array!
   // First level are categories, second the element of each category, and third the values of each element
 
-  private widthSubscription: Subscription;
-  private isWide: boolean;
-  private widthThreshold = 1250;
-
-  constructor(private configService: ConfigService,
-              private screenSizeService: ScreenSizeService) {
+  constructor(private configService: ConfigService, private searchService: SearchService) {
   }
 
   ngOnInit() {
     //this.updateWindowSize();
     this.readList();
+    this.searchService.setList(this.elements);
   }
 
   readList(): void {

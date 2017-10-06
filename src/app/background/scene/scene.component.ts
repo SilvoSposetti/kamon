@@ -7,6 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SceneComponent implements OnInit {
 
+  //private widthSubscription: Subscription;
+  //private isWide: boolean;
+  //private widthThreshold = 1250;
+
   constructor() { }
 
   ngOnInit() {

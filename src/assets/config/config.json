@@ -4,6 +4,8 @@
   "scene": "none",
   "openLinkInNewTab": true,
   "listIsVisible": true,
+  "suggestions": true,
+  "searchDelimiter": ":",
   "amountOfSuggestions": 5,
   "searchEngine": [
     "Google",
@@ -25,7 +27,7 @@
       "Gmail",
       "g",
       "https://mail.google.com/mail/u/0/?tab=wm#inbox",
-      "/search/{}",
+      null,
       "#4285f4"
     ],
     [
@@ -46,8 +48,8 @@
     ],
     [
       "Uni",
-      "Mail",
-      "W",
+      "UniMail",
+      "u",
       "https://idlmail05.lotus.uzh.ch/",
       null,
       "#0099ff"
@@ -112,7 +114,7 @@
       "Fun",
       "Twitch",
       "t",
-      "https://www.twitch.tv/directory/following",
+      "https://www.twitch.tv/",
       null,
       "#6441a5"
     ],
@@ -137,7 +139,7 @@
       "YTS",
       "Y",
       "https://yts.ag/browse-movies/0/1080p/all/7/latest",
-      "/browse-movies/{}/1080p/all/0/rating",
+      null,
       "#2f2f2f"
     ],
     [

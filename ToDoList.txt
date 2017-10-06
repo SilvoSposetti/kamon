@@ -1,4 +1,5 @@
-In search component the background changes when a shortcut is detected
+Shortcut detection and background changes
+click on suggestions
 do a scene and add a 'sceneManager'
 Add fade-in to clock (and probably to links part) -> animations in general
 add FOAAS random sentences

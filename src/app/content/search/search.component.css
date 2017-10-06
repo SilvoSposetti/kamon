@@ -4,7 +4,6 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: var(--search-background-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,4 +61,8 @@ Suggestions:
 .suggestionHighlighted{
   background: rgba(255,255,255,0.2);
   border-radius: 0.4em;
+}
+
+.shortcut-name{
+  font-size: var(--shortcut-found-font-size);
 }

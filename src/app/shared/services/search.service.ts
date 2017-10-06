@@ -18,12 +18,19 @@ export class SearchService {
   private selectionSuggestionSubject: Subject<number> = new Subject<number>();
   private selectionSuggestion: number = -1; // Updated and used only here in the service
 
+  public elements: string[][][] = []; // Tri-dimensional array!
+  // First level are categories, second the element of each category, and third the values of each element
+
+  private shortcutSubject: Subject<string[]> = new Subject<string[]>();
+  private shortcut: string[] = [];
+
   constructor(private jsonP: Jsonp, private configService: ConfigService) {
   }
 
   public setSearchString(newSearchString: string): void {
     this.searchStringSubject.next(newSearchString);
     this.searchString = newSearchString;
+    this.updateShortcut();
     this.requestSuggestions();
     this.resetSelection();
   }
@@ -52,6 +59,14 @@ export class SearchService {
     return this.suggestionsArrayStyledSubject.asObservable();
   }
 
+  public getShortcut(): Observable<string[]> {
+    return this.shortcutSubject.asObservable();
+  }
+
+  public setList(elements: string[][][]): void {
+    this.elements = elements;
+  }
+
   private requestSuggestions(): void {
     if (this.searchString.length < 1) {
       // Do not send an empty suggestion request.
@@ -61,24 +76,27 @@ export class SearchService {
 
     }
     else {
-      let headers = new Headers();
-      headers.append('Content-Type', 'application/json');
-      headers.append('Access-Control-Allow-Origin', '*');
-      this.jsonP.request('http://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchString, headers).map(res => res.json()).subscribe(response => {
-        this.suggestionsArray = response[1].slice(0, this.configService.getConfig().amountOfSuggestions);
-        this.suggestionsArraySubject.next(this.suggestionsArray);
-        // Reset suggestions styled and elaborate the new ones;
-        this.suggestionsArrayStyledSubject.next([]);
-        let newSuggestionsStyled = [];
-        for (let i = 0; i < this.suggestionsArray.length; i++) {
-          let suggestion = this.suggestionsArray[i];
-          suggestion = suggestion.replace(this.searchString, '<i><b>'+this.searchString + '</i></b>');
-          newSuggestionsStyled.push(suggestion);
-        }
-        this.suggestionsArrayStyledSubject.next(newSuggestionsStyled);
-
-
-      });
+      if (!this.configService.getConfig().suggestions) {
+        // Config file says suggestions are unnecessary.
+      }
+      else {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        headers.append('Access-Control-Allow-Origin', '*');
+        this.jsonP.request('http://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchString, headers).map(res => res.json()).subscribe(response => {
+          this.suggestionsArray = response[1].slice(0, this.configService.getConfig().amountOfSuggestions);
+          this.suggestionsArraySubject.next(this.suggestionsArray);
+          // Reset suggestions styled and elaborate the new ones;
+          this.suggestionsArrayStyledSubject.next([]);
+          let newSuggestionsStyled = [];
+          for (let i = 0; i < this.suggestionsArray.length; i++) {
+            let suggestion = this.suggestionsArray[i];
+            suggestion = suggestion.replace(this.searchString, '<i><b>' + this.searchString + '</i></b>');
+            newSuggestionsStyled.push(suggestion);
+          }
+          this.suggestionsArrayStyledSubject.next(newSuggestionsStyled);
+        });
+      }
     }
   }
 
@@ -87,19 +105,16 @@ export class SearchService {
       // do nothing because empty search string
     }
     else {
-      let keyword: string = '';
-      if (index === -1) {
-        keyword = this.searchString;
+      if (this.shortcut[0] !== '') { // Checks if a shortcut has been detected
+        if (this.searchString.length === 1) { //Need to open start page of shortcut
+          this.openShortcut();
+        }
+        else { // Need to open custom search in shortcut
+          this.openSearchInShortcut();
+        }
       }
-      else {
-        keyword = this.suggestionsArray[index];
-      }
-      let link = this.configService.getConfig().searchEngine[1] + this.configService.getConfig().searchEngine[2] + keyword;
-      if (this.configService.getConfig().openLinkInNewTab) {
-        window.open(link, '_blank');
-      }
-      else {
-        window.location.href = link;
+      else { // No shortcut detected fires normal search engine search.
+        this.standardSearch(index);
       }
     }
   }
@@ -137,4 +152,77 @@ export class SearchService {
       }
     }
   }
+
+  public updateShortcut(): void {
+    if (this.searchString.length < 1) {
+      // Do nothing because empty search string;
+    }
+    else {
+      if (this.searchString.length === 1 || this.searchString.substring(1, 2) === this.configService.getConfig().searchDelimiter) {
+        // Update shortcut only if the string is 1 char long or the delimiter is found in the second position of the string.
+        let elementFound: string[] = [];
+        let found = false;
+        let firstChar = this.searchString.substring(0, 1);
+        for (let i = 0; i < this.elements.length; i++) {
+          for (let j = 0; j < this.elements[i].length; j++) {
+            if (this.elements[i][j][1] === firstChar) {
+              elementFound = this.elements[i][j];
+              found = true;
+            }
+          }
+        }
+        if (found) {
+          this.shortcut = elementFound;
+          this.shortcutSubject.next(this.shortcut);
+        }
+        else {
+          this.setStandardShortcut();
+        }
+      }
+      else {
+        this.setStandardShortcut();
+      }
+    }
+  }
+
+  private setStandardShortcut(): void {
+    this.shortcut = ['', '', '', '', 'rgba(0,0,0,0.8)'];
+    this.shortcutSubject.next(this.shortcut);
+  }
+
+  private standardSearch(index: number): void {
+    let keyword: string = '';
+    if (index === -1) { // No suggestion was selected
+      keyword = this.searchString;
+    }
+    else { // A suggestion was selected
+      keyword = this.suggestionsArray[index];
+    }
+    let link = this.configService.getConfig().searchEngine[1] + this.configService.getConfig().searchEngine[2] + keyword;
+    this.openLink(link);
+  }
+
+  private openShortcut(): void {
+    let link = this.shortcut[2];
+    this.openLink(link);
+  }
+
+  private openSearchInShortcut(): void {
+    let link = this.shortcut[2];
+    if (this.shortcut[3] !== null) {
+      link += this.shortcut[3];
+      link = link.replace('{}',this.searchString.substring(2));
+    }
+    this.openLink(link);
+  }
+
+  private openLink(link: string): void {
+    if (this.configService.getConfig().openLinkInNewTab) {
+      window.open(link, '_blank');
+    }
+    else {
+      window.location.href = link;
+    }
+  }
 }
+
