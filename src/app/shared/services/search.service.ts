@@ -13,6 +13,8 @@ export class SearchService {
   private suggestionsArraySubject: Subject<string[]> = new Subject<string[]>();
   private suggestionsArray: string[] = [];
 
+  private suggestionsArrayStyledSubject: Subject<string[]> = new Subject<string[]>();
+
   private selectionSuggestionSubject: Subject<number> = new Subject<number>();
   private selectionSuggestion: number = -1; // Updated and used only here in the service
 
@@ -41,12 +43,13 @@ export class SearchService {
   public getSearch(): Observable<string> {
     return this.searchStringSubject.asObservable();
   }
-  public getSelection(): Observable<number>{
+
+  public getSelection(): Observable<number> {
     return this.selectionSuggestionSubject.asObservable();
   }
 
   public getSuggestions(): Observable<string[]> {
-    return this.suggestionsArraySubject.asObservable();
+    return this.suggestionsArrayStyledSubject.asObservable();
   }
 
   private requestSuggestions(): void {
@@ -64,6 +67,17 @@ export class SearchService {
       this.jsonP.request('http://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchString, headers).map(res => res.json()).subscribe(response => {
         this.suggestionsArray = response[1].slice(0, this.configService.getConfig().amountOfSuggestions);
         this.suggestionsArraySubject.next(this.suggestionsArray);
+        // Reset suggestions styled and elaborate the new ones;
+        this.suggestionsArrayStyledSubject.next([]);
+        let newSuggestionsStyled = [];
+        for (let i = 0; i < this.suggestionsArray.length; i++) {
+          let suggestion = this.suggestionsArray[i];
+          suggestion = suggestion.replace(this.searchString, '<i><b>'+this.searchString + '</i></b>');
+          newSuggestionsStyled.push(suggestion);
+        }
+        this.suggestionsArrayStyledSubject.next(newSuggestionsStyled);
+
+
       });
     }
   }
@@ -77,7 +91,7 @@ export class SearchService {
       if (index === -1) {
         keyword = this.searchString;
       }
-      else{
+      else {
         keyword = this.suggestionsArray[index];
       }
       let link = this.configService.getConfig().searchEngine[1] + this.configService.getConfig().searchEngine[2] + keyword;
@@ -94,7 +108,6 @@ export class SearchService {
     if (this.suggestionsArray.length < 1) {
       this.selectionSuggestion = -1;
       this.selectionSuggestionSubject.next(this.selectionSuggestion);
-
     }
     else {
       if (this.selectionSuggestion <= 0) { // At leftmost part of array.
@@ -112,7 +125,6 @@ export class SearchService {
     if (this.suggestionsArray.length < 1) {
       this.selectionSuggestion = -1;
       this.selectionSuggestionSubject.next(this.selectionSuggestion);
-
     }
     else {
       if (this.selectionSuggestion >= this.suggestionsArray.length - 1) { // At leftmost part of array.

@@ -1,5 +1,4 @@
 In search component the background changes when a shortcut is detected
-underline, bold or italic part of suggestion which corresponds to part that has been typed
 do a scene and add a 'sceneManager'
 Add fade-in to clock (and probably to links part) -> animations in general
 add FOAAS random sentences

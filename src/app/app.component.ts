@@ -9,7 +9,6 @@ import {Subscription} from 'rxjs/Subscription';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  public title = 'kamon';
 
   private keyboardEvent: any;
   //private altKeyAction: boolean;
