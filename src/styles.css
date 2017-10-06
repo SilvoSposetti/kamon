@@ -24,6 +24,10 @@
   --suggestions-font-size: 1em;
   --shortcut-found-font-size:1.2em;
 
+  /*FUCK OFF COMPONENT*/
+  --fuck-off-message-font-size: 1em;
+  --fuck-off-author-font-size: 0.7em;
+
 
   --setting-color: linear-gradient(45deg, rgba(0, 133, 0, 1) 0%, rgba(0, 173, 173, 1) 100%);
 

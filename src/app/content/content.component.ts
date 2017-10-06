@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchService} from '../shared/services/search.service';
 import {Subscription} from 'rxjs/Subscription';
+import {ConfigService} from '../shared/services/config.service';
 
 @Component({
   selector: 'app-content',
@@ -20,7 +21,9 @@ export class ContentComponent implements OnInit {
   private suggestionsSubscription: Subscription;
   private shortcutSubscription: Subscription;
 
-  constructor(private searchService: SearchService) {
+  public showFuckOff = this.configService.getConfig().showFuckOff;
+
+  constructor(private searchService: SearchService, private configService: ConfigService) {
   }
 
   ngOnInit() {

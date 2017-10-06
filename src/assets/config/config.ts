@@ -3,6 +3,7 @@ export class Configuration {
   constructor(public useCustomBackgroundImage: boolean,
               public useScene: boolean,
               public scene: string,
+              public showFuckOff: boolean,
               public openLinkInNewTab: boolean,
               public listIsVisible: boolean,
               public suggestions: boolean,

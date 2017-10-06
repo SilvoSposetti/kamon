@@ -1,0 +1,15 @@
+.fuck-off-parent{
+  position: fixed;
+  top: 1em;
+  right:1em;
+  display: flex;
+  align-items:flex-end;
+  justify-content: center;
+  flex-direction: column;
+}
+.fuck-off-message{
+  font-size: var(--fuck-off-message-font-size)
+}
+.fuck-off-author{
+  font-size: var(--fuck-off-author-font-size)
+}

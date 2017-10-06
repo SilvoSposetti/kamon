@@ -2,6 +2,7 @@
   "useCustomBackgroundImage": true,
   "useScene": true,
   "scene": "none",
+  "showFuckOff": true,
   "openLinkInNewTab": true,
   "listIsVisible": true,
   "suggestions": true,
