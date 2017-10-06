@@ -1,6 +1,6 @@
 <div class="content-parent">
   <div class="content-container">
-    <app-clock></app-clock>
+    <app-clock *ngIf="showClock"></app-clock>
     <div class="content-separator"></div>
     <app-list *ngIf="listIsVisible"></app-list>
     <app-search *ngIf="showSearch" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion" [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
