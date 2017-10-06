@@ -24,6 +24,7 @@ import {ScreenSizeService} from './shared/services/screen-size.service';
 import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
+import { StartSceneComponent } from './background/scene/start-scene/start-scene.component';
 
 
 
@@ -38,7 +39,8 @@ import {FuckOffService} from './shared/services/fuck-off.service';
     ListComponent,
     SearchComponent,
     MyFocusDirective,
-    FuckOffComponent
+    FuckOffComponent,
+    StartSceneComponent
   ],
   imports: [
     HttpModule,

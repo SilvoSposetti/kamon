@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
+import {ScreenSizeService} from '../../shared/services/screen-size.service';
 
 @Component({
   selector: 'app-scene',
@@ -7,22 +9,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SceneComponent implements OnInit {
 
-  //private widthSubscription: Subscription;
-  //private isWide: boolean;
-  //private widthThreshold = 1250;
+  private widthSubscription: Subscription;
+  private heightSubscription: Subscription;
+  public sceneWidth: number;
+  public sceneHeight: number;
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor(private screenSizeService: ScreenSizeService) {
   }
 
-  //updateWindowSize(): void {
-  //  this.widthSubscription = this.screenSizeService.getWidth().subscribe(
-  //    value => {
-  //      this.isWide = value >= this.widthThreshold;
-  //      console.log(value);
-  //    }
-  //  );
-  //}
+  ngOnInit() {
+    this.updateWindowSize();
+  }
+
+  updateWindowSize(): void {
+    this.widthSubscription = this.screenSizeService.getWidth().subscribe(
+      value => {
+        this.sceneWidth = value;
+      }
+    );
+    this.heightSubscription = this.screenSizeService.getHeight().subscribe(value => {
+      this.sceneHeight = value;
+    });
+
+  }
 
 }
