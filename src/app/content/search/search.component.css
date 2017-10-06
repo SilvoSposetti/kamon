@@ -43,6 +43,12 @@ Suggestions:
   flex-wrap: wrap;
 }
 
+.suggestion-text:hover{
+  background: rgba(255,255,255,0.2);
+  border-radius: 0.4em;
+  cursor: pointer;
+}
+
 .suggestion-text{
   font-size: var(--suggestions-font-size);
   padding: 0.5em;

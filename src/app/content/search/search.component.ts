@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {SearchService} from '../../shared/services/search.service';
 
 @Component({
   selector: 'app-search',
@@ -13,10 +14,13 @@ export class SearchComponent implements OnInit {
   @Input() shortcut: number;
 
 
-  constructor() {
+  constructor(private searchService: SearchService) {
   }
 
   ngOnInit() {
   }
 
+  public clickedSuggestion(index: number):void{
+    this.searchService.clickedSuggestion(index);
+  }
 }

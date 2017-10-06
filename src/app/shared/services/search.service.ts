@@ -211,7 +211,7 @@ export class SearchService {
     let link = this.shortcut[2];
     if (this.shortcut[3] !== null) {
       link += this.shortcut[3];
-      link = link.replace('{}',this.searchString.substring(2));
+      link = link.replace('{}', this.searchString.substring(2));
     }
     this.openLink(link);
   }
@@ -223,6 +223,10 @@ export class SearchService {
     else {
       window.location.href = link;
     }
+  }
+
+  public clickedSuggestion(index: number): void {
+    this.standardSearch(index);
   }
 }
 

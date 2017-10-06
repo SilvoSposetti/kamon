@@ -7,7 +7,10 @@
   <div class="suggestions-container">
     <div class="suggestion" *ngFor="let element of searchSuggestions; let i = index">
       <div class="suggestions-separator" *ngIf="i !== 0"></div>
-      <div class="suggestion-text" [ngClass]="{suggestionHighlighted: selectionSuggestion === i}" [innerHTML]="searchSuggestions[i]">
+      <div class="suggestion-text"
+           [ngClass]="{suggestionHighlighted: selectionSuggestion === i}"
+           [innerHTML]="searchSuggestions[i]"
+      (click)="clickedSuggestion(i)">
       </div>
     </div>
   </div>
