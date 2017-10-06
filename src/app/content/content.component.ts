@@ -22,6 +22,7 @@ export class ContentComponent implements OnInit {
   private shortcutSubscription: Subscription;
 
   public showFuckOff = this.configService.getConfig().showFuckOff;
+  public showClock = this.configService.getConfig().showClock;
 
   constructor(private searchService: SearchService, private configService: ConfigService) {
   }
