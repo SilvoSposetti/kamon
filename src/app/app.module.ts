@@ -16,7 +16,9 @@ import {SceneComponent} from './background/scene/scene.component';
 import {ListComponent} from './content/list/list.component';
 import {FuckOffComponent} from './content/fuck-off/fuck-off.component';
 import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
-import {PhyllotaxyComponent } from './background/scene/phyllotaxy/phyllotaxy.component';
+import {PhyllotaxyComponent} from './background/scene/phyllotaxy/phyllotaxy.component';
+import {SceneSelectorComponent} from './content/scene-selector/scene-selector.component';
+import {MazeComponent} from './background/scene/maze/maze.component';
 
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 
@@ -27,8 +29,6 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
-import { SceneSelectorComponent } from './content/scene-selector/scene-selector.component';
-
 
 
 
@@ -46,8 +46,8 @@ import { SceneSelectorComponent } from './content/scene-selector/scene-selector.
     FuckOffComponent,
     AsteroidsComponent,
     PhyllotaxyComponent,
-    SceneSelectorComponent
-  ],
+    SceneSelectorComponent,
+    MazeComponent],
   imports: [
     HttpModule,
     BrowserModule,

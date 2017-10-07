@@ -55,10 +55,7 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
       ctx.fill();
       ctx.stroke();
       this.counter++;
-
     }
-
-
 
     // Schedule next
     requestAnimationFrame(() => this.paint());

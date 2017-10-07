@@ -29,13 +29,14 @@ export class ScenesService {
   public getSceneNr(): Observable<number> {
     return this.selectedSceneNrSubject.asObservable();
   }
+
   public getSceneArray(): string[] {
     return this.scenesArray;
   }
 
-  public startScenes():void{
+  public startScenes(): void {
     // Add new scenes in array below!
-    this.scenesArray = ['asteroids', 'phyllotaxy'];
+    this.scenesArray = ['asteroids', 'phyllotaxy', 'maze'];
     this.setSceneFromName(this.configService.getConfig().defaultScene);
   }
 
