@@ -15,6 +15,8 @@ import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
 import {ListComponent} from './content/list/list.component';
 import {FuckOffComponent} from './content/fuck-off/fuck-off.component';
+import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
+import {PhyllotaxyComponent } from './background/scene/phyllotaxy/phyllotaxy.component';
 
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 
@@ -24,7 +26,9 @@ import {ScreenSizeService} from './shared/services/screen-size.service';
 import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
-import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
+import {ScenesService} from './shared/services/scenes.service';
+import { SceneSelectorComponent } from './content/scene-selector/scene-selector.component';
+
 
 
 
@@ -40,7 +44,9 @@ import {AsteroidsComponent} from './background/scene/asteroids/asteroids.compone
     SearchComponent,
     MyFocusDirective,
     FuckOffComponent,
-    AsteroidsComponent
+    AsteroidsComponent,
+    PhyllotaxyComponent,
+    SceneSelectorComponent
   ],
   imports: [
     HttpModule,
@@ -55,7 +61,7 @@ import {AsteroidsComponent} from './background/scene/asteroids/asteroids.compone
     multi: true
   },
     // Add more services here:
-    ClockService, ScreenSizeService, SearchService, FuckOffService],
+    ClockService, ScreenSizeService, SearchService, FuckOffService, ScenesService],
   bootstrap: [AppComponent],
 })
 

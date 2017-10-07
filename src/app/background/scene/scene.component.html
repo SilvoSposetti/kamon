@@ -1,3 +1,5 @@
 <div class="scene-parent">
-  <app-asteroids [screenWidth]="sceneWidth" [screenHeight]="sceneHeight" ></app-asteroids>
+  <app-asteroids *ngIf="sceneNr === 0" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight" ></app-asteroids>
+  <app-phyllotaxy *ngIf="sceneNr === 1"></app-phyllotaxy>
+
 </div>

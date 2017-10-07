@@ -1,3 +1,9 @@
-do a scene and add a 'sceneManager'
+add a 'sceneManager'
+SCENE Lissajous: divide screen in more parts and each part represents a ratio (cos(3x),sin(4y) in part(3,4), plus mark the ratios
+SCENE RainDrops: falling drops with invisible umbrellas moving in the background.
+SCENE Maze: construct a maze like the one of the video of Daniel Shiffman.
+SCENE Bouncing Spheres: Spheres colliding with each other.
+SCENE Root: A "fractal" tree growing from some point on the screen.
+SCENE Shoal: A number of fishes shoaling together.
 Add fade-in to clock (and probably to links part) -> animations in general
 position service with city, coordinates, ... weather?

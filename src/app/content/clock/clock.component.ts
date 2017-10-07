@@ -1,4 +1,3 @@
-
 import {Component, OnInit} from '@angular/core';
 import {ClockService} from '../../shared/services/clock.service';
 import {Subscription} from 'rxjs/Subscription';
@@ -61,6 +60,7 @@ export class ClockComponent implements OnInit {
     this.timeSubscription = this.clockService.getDay().subscribe(value => {
       this.dayOfWeek = value;
     });
-  }
 
+    this.clockService.resetClock();
+  }
 }

@@ -10,8 +10,11 @@ import {ConfigService} from '../shared/services/config.service';
 })
 export class ContentComponent implements OnInit {
 
-  @Input() listIsVisible: boolean;
+  @Input() showList: boolean;
   @Input() selectionSuggestion: number;
+  @Input() showSceneSelector: number;
+  @Input() showClock: boolean;
+  @Input() showFuckOff: boolean;
 
   public showSearch: boolean;
   public searchText: string;
@@ -21,10 +24,8 @@ export class ContentComponent implements OnInit {
   private suggestionsSubscription: Subscription;
   private shortcutSubscription: Subscription;
 
-  public showFuckOff = this.configService.getConfig().showFuckOff;
-  public showClock = this.configService.getConfig().showClock;
 
-  constructor(private searchService: SearchService, private configService: ConfigService) {
+  constructor(private searchService: SearchService) {
   }
 
   ngOnInit() {
@@ -42,7 +43,7 @@ export class ContentComponent implements OnInit {
     this.suggestionsSubscription = this.searchService.getSuggestions().subscribe((value) => {
       this.searchSuggestions = value;
     });
-    this.shortcutSubscription = this.searchService.getShortcut().subscribe((value)=>{
+    this.shortcutSubscription = this.searchService.getShortcut().subscribe((value) => {
       this.shortcut = value;
     });
   }

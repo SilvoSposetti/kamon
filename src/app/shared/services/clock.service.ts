@@ -165,4 +165,17 @@ export class ClockService {
     }
 
   }
+
+  public resetClock(): void{
+    this.secondsFirstDigitSubject.next(this.oldSecondsFirst);
+    this.secondsSecondDigitSubject.next(this.oldSecondsSecond);
+    this.minutesFirstDigitSubject.next(this.oldMinutesFirst);
+    this.minutesSecondDigitSubject.next(this.oldMinutesSecond);
+    this.hoursFirstDigitSubject.next(this.oldHoursFirst);
+    this.hoursSecondDigitSubject.next(this.oldHoursSecond);
+    this.dateSubject.next(this.oldDate);
+    this.monthSubject.next(this.oldMonth);
+    this.yearSubject.next(this.oldYear);
+    this.daySubject.next(this.oldDay);
+  }
 }

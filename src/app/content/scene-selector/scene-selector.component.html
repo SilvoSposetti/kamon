@@ -1,0 +1,7 @@
+<div class="scene-selector-parent">
+  <div class="scene-container" *ngFor="let scene of scenesArray, let i = index">
+    <div class="scene-name" [ngClass]="{highlighted: selectedSceneNr === i}" (click)="clickScene(i)" >
+      {{scene}}
+    </div>
+  </div>
+</div>

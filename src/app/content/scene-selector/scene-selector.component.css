@@ -1,0 +1,31 @@
+.scene-selector-parent {
+  position: fixed;
+  top: 1em;
+  left: 1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.scene-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.highlighted {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.scene-name {
+  padding: 0.5em;
+  margin: 0.1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  width: 200px;
+}
+
+.scene-name:hover {
+  background: rgba(255, 255, 255, 0.1)
+}

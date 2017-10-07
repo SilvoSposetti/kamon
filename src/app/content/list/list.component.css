@@ -60,7 +60,7 @@ List element:
   overflow:hidden;
 }
 .list-element:hover{
-  background:rgba(200,200,200,0.4);
+  background:rgba(200,200,200,0.2);
   cursor: pointer;
 }
 

@@ -74,11 +74,11 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
       let randomAngle = this.randomFloat(0, 2 * Math.PI);
       let x = this.screenWidth/2 - this.randomFloat(300,450)*Math.cos(randomAngle);
       let y = this.screenHeight/2 - this.randomFloat(300,450)*Math.sin(randomAngle);
-      let randomAngleTurned = randomAngle+Math.PI/4;
+      let randomAngleTurned = randomAngle-Math.PI/4;
       element.push(x);
       element.push(y);
-      element.push(Math.cos(randomAngleTurned));
-      element.push(Math.sin(randomAngleTurned));
+      element.push(0.5*Math.cos(randomAngleTurned));
+      element.push(0.5*Math.sin(randomAngleTurned));
       element.push(Math.random() * 5);
       this.asteroids.push(element);
 

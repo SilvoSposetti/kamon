@@ -12,9 +12,12 @@ export class AppComponent implements OnInit {
 
   private keyboardEvent: any;
   //private altKeyAction: boolean;
-  public listIsVisible: boolean = this.configService.getConfig().listIsVisible;
+  public showList: boolean = this.configService.getConfig().showList;
   private selectionSubscription: Subscription;
   public selectionSuggestion: number = -1;
+  public showSceneSelector = false;
+  public showClock = this.configService.getConfig().showClock;
+  public showFuckOff = this.configService.getConfig().showFuckOff;
 
   constructor(private configService: ConfigService,
               private searchService: SearchService) {
@@ -31,7 +34,7 @@ export class AppComponent implements OnInit {
 
     if (event.ctrlKey) {
       // do not stopPropagation and preventDefault because it is needed for Ctrl+Shift+i (open browser console)
-      this.listIsVisible = !this.listIsVisible;
+      this.showList = !this.showList;
     }
     else if (event.which === 27) {
       event.preventDefault();
@@ -57,6 +60,18 @@ export class AppComponent implements OnInit {
       console.log('arrowRight');
       this.searchService.selectRight();
     }
+    else if (event.which === 36) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log('home');
+      this.showSceneSelector = !this.showSceneSelector;
+    }
+    else if (event.which === 35) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log('end');
+      this.showClock = !this.showClock;
+    }
 
     //this.keyboardEvent = event;
     //console.log(this.keyboardEvent);
@@ -78,7 +93,7 @@ export class AppComponent implements OnInit {
   }
 
   private listenForSelection() {
-      this.selectionSubscription = this.searchService.getSelection().subscribe((value)=>
+    this.selectionSubscription = this.searchService.getSelection().subscribe((value) =>
       this.selectionSuggestion = value);
   }
 
