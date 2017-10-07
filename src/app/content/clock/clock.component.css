@@ -4,7 +4,13 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  font-size:1.1rem;
+  font-size: 1.1rem;
+  border-radius: 3em;
+  padding: 1.5em;
+  width: 25em;
+  -webkit-box-shadow: 0 0 40px 0 rgba(0,0,0,0.2);
+  -moz-box-shadow: 0 0 40px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 0 40px 0 rgba(0,0,0,0.2);
 }
 
 /***********************************************************************************************************************
@@ -18,16 +24,18 @@ Dial
   font-size: 4rem;
 }
 
-.digits-container{
-  text-align:center;
+.digits-container {
+  text-align: center;
   display: flex;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
   flex-direction: row;
 
 }
-.digit{
-  width:0.7em;
+
+.digit {
+  width: 0.7em;
+
 }
 
 .dial-separator {
@@ -51,7 +59,7 @@ Clock Footer
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  width: 100%;
+  width: 80%;
 }
 
 .place-container {

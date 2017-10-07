@@ -2,7 +2,7 @@
   "useCustomBackgroundImage": false,
   "useScene": true,
   "showClock": true,
-  "defaultScene": "asteroids",
+  "defaultScene": "phyllotaxy",
   "showFuckOff": false,
   "openLinkInNewTab": true,
   "showList": true,

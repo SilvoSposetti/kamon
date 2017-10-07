@@ -24,7 +24,7 @@ List category:
 
 .list-category {
   width: 15vw;
-  min-width:200px;
+  min-width: 200px;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -57,10 +57,14 @@ List element:
   border-radius: 1.5em;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
-  overflow:hidden;
+  overflow: hidden;
+  -webkit-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);
 }
-.list-element:hover{
-  background:rgba(200,200,200,0.2);
+
+.list-element:hover {
+  background: rgba(200, 200, 200, 0.2);
   cursor: pointer;
 }
 
@@ -68,7 +72,7 @@ List element:
   min-width: 1.7em;
   min-height: 1.7em;
   /*border-left: 15px solid;*/
-  color:white;
+  color: white;
   background: black;
   border-radius: 50%;
   display: flex;

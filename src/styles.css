@@ -29,7 +29,8 @@
   --fuck-off-author-font-size: 0.7em;
 
 
-  --setting-color: linear-gradient(141deg, #10afa3 0%, #10998e 25%, #177181 51%, #1b5978 75%, #1b4564 100%);
+  /*--setting-color: linear-gradient(141deg, #10afa3 0%, #10998e 25%, #177181 51%, #1b5978 75%, #1b4564 100%);*/
+  --setting-color: #121212;
 
   /*OTHER*/
   /*.ng-valid[required], .ng-valid.required {*/

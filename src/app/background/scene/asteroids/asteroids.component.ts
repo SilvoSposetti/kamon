@@ -48,7 +48,7 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     //grd.addColorStop(0.75, '1b5978');
     //grd.addColorStop(1, '1b4564');
     //ctx.fillStyle = grd;
-    ctx.fillStyle = '#191919';
+    ctx.fillStyle = 'rgba(25,25,25,0.05)';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
     ctx.strokeStyle = '#ffffff';
     ctx.beginPath();
@@ -72,13 +72,13 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.nrOfElements; ++i) {
       let element: number[] = [];
       let randomAngle = this.randomFloat(0, 2 * Math.PI);
-      let x = this.screenWidth/2 - this.randomFloat(300,450)*Math.cos(randomAngle);
-      let y = this.screenHeight/2 - this.randomFloat(300,450)*Math.sin(randomAngle);
-      let randomAngleTurned = randomAngle-Math.PI/4;
+      let x = this.screenWidth/2 - this.randomFloat(100,450)*Math.cos(randomAngle);
+      let y = this.screenHeight/2 - this.randomFloat(100,450)*Math.sin(randomAngle);
+      let randomAngleTurned = randomAngle+Math.PI/2;
       element.push(x);
       element.push(y);
-      element.push(0.5*Math.cos(randomAngleTurned));
-      element.push(0.5*Math.sin(randomAngleTurned));
+      element.push(1.7*Math.cos(randomAngleTurned));
+      element.push(1.7*Math.sin(randomAngleTurned));
       element.push(Math.random() * 5);
       this.asteroids.push(element);
 
