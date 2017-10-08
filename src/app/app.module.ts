@@ -29,6 +29,7 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
+import { PerlinFieldComponent } from './background/scene/perlin-field/perlin-field.component';
 
 
 
@@ -47,7 +48,8 @@ import {ScenesService} from './shared/services/scenes.service';
     AsteroidsComponent,
     PhyllotaxyComponent,
     SceneSelectorComponent,
-    MazeComponent],
+    MazeComponent,
+    PerlinFieldComponent],
   imports: [
     HttpModule,
     BrowserModule,
