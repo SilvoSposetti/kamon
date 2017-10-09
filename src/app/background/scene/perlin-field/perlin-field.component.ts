@@ -27,18 +27,18 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   //Declaration of noise type which provides noise functions
   private noise = new OpenSimplexNoise(Date.now());
 
-  private spacing = 40;
+  private spacing = 10;
   private columns: number;
   private rows: number;
   private field: number[][] = [];
-  private inc = 0.1;
+  private inc = 0.05;
   private time = 0;
-  private timeInc = 0.02;
+  private timeInc = 0.001;
 
   private numOfParticles: number = 1500;
   private particles: number[][] = [];
   //[x,y,vx,vy]
-  private maxSpeed: number = 2;
+  private maxSpeed: number = 1.5;
   private particlesSize = 1.5;
   private particleMass: number = 0.01; // NOT ZERO!
 
@@ -120,7 +120,7 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
       //  color = 17;
       //}
       //ctx.fillStyle = '#' + color.toString(16) + color.toString(16) + color.toString(16);
-      ctx.fillStyle = '#ffffff';
+      ctx.fillStyle = '#999999';
       ctx.strokeStyle= 'rgba(0,0,0,0)';
       ctx.arc(this.particles[i][0], this.particles[i][1], this.particlesSize, 0, 2 * Math.PI);
       ctx.fill();
@@ -194,19 +194,19 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
       // Boundary check
       if (this.particles[i][0] < 0) {
         //this.particles[i][0] = this.screenWidth -1;
-        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenWidth, 0, 0];
+        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenHeight, 0, 0];
       }
       if (this.particles[i][0] >= this.screenWidth) {
         //this.particles[i][0] = 0;
-        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenWidth, 0, 0];
+        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenHeight, 0, 0];
       }
       if (this.particles[i][1] < 0) {
         //this.particles[i][1] = this.screenHeight -1;
-        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenWidth, 0, 0];
+        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenHeight, 0, 0];
       }
       if (this.particles[i][1] >= this.screenHeight) {
         //this.particles[i][1] = 0;
-        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenWidth, 0, 0];
+        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenHeight, 0, 0];
       }
     }
   }

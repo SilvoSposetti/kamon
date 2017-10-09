@@ -12,7 +12,7 @@ export class MazeComponent implements OnInit, OnDestroy {
   @Input() screenHeight: number;
 
   private running: boolean;
-  private spacing: number = 10;
+  private spacing: number = 15;
   private sectors: number[][][] = [];
   private columns: number;
   private rows: number;
@@ -52,14 +52,14 @@ export class MazeComponent implements OnInit, OnDestroy {
 
       if (random < 0.25) {
         ctx.beginPath();
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#999999';
         ctx.moveTo(x, y);
         ctx.lineTo(x + this.spacing, y + this.spacing);
         ctx.stroke();
       }
       else if(random<0.9){
         ctx.beginPath();
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#999999';
         ctx.moveTo(x + this.spacing, y);
         ctx.lineTo(x, y + this.spacing);
         ctx.stroke();

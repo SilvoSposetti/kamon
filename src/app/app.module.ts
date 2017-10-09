@@ -19,6 +19,8 @@ import {AsteroidsComponent} from './background/scene/asteroids/asteroids.compone
 import {PhyllotaxyComponent} from './background/scene/phyllotaxy/phyllotaxy.component';
 import {SceneSelectorComponent} from './content/scene-selector/scene-selector.component';
 import {MazeComponent} from './background/scene/maze/maze.component';
+import {PerlinFieldComponent} from './background/scene/perlin-field/perlin-field.component';
+import {RainComponent} from './background/scene/rain/rain.component';
 
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 
@@ -29,7 +31,6 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
-import { PerlinFieldComponent } from './background/scene/perlin-field/perlin-field.component';
 
 
 
@@ -49,7 +50,8 @@ import { PerlinFieldComponent } from './background/scene/perlin-field/perlin-fie
     PhyllotaxyComponent,
     SceneSelectorComponent,
     MazeComponent,
-    PerlinFieldComponent],
+    PerlinFieldComponent,
+    RainComponent],
   imports: [
     HttpModule,
     BrowserModule,

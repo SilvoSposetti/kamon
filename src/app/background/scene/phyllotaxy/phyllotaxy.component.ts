@@ -40,8 +40,9 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
 
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    //ctx.fillStyle = 'rgba(25,25,25,0.05)';
-    //ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    //ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
 
     for (let i = 0; i < 10; i++) {
