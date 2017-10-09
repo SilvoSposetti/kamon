@@ -27,20 +27,20 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   //Declaration of noise type which provides noise functions
   private noise = new OpenSimplexNoise(Date.now());
 
-  private spacing = 30;
+  private spacing = 40;
   private columns: number;
   private rows: number;
   private field: number[][] = [];
   private inc = 0.1;
   private time = 0;
-  private timeInc = 0.01;
+  private timeInc = 0.02;
 
-  private numOfParticles: number = 1000;
+  private numOfParticles: number = 1500;
   private particles: number[][] = [];
   //[x,y,vx,vy]
-  private maxSpeed: number = 10;
-  private particlesSize = 5;
-  private particleMass: number = 1;
+  private maxSpeed: number = 2;
+  private particlesSize = 1.5;
+  private particleMass: number = 0.01; // NOT ZERO!
 
   private xPos = 0;
   private yPos = 0;
@@ -80,37 +80,53 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
     this.updateField();
     this.updateParticles();
 
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    //ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
-    for (let k = 0; k < this.rows * this.columns - 1; k++) {
-      let angle = this.field[this.xPos][this.yPos] * 2 * Math.PI;
 
-      //output = output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start)
-
-
-      ctx.strokeStyle = '#777777';
-      ctx.beginPath();
-      ctx.moveTo(this.xPos * this.spacing, this.yPos * this.spacing);
-      ctx.lineTo((this.xPos + Math.cos(angle)) * this.spacing, (this.yPos + Math.sin(angle)) * this.spacing);
-      ctx.closePath();
-      ctx.stroke();
-
-
-      this.xPos += 1;
-      if (this.xPos >= this.columns) {
-        this.yPos += 1;
-        this.xPos = 0;
-      }
-      if (this.yPos >= this.rows) {
-        this.yPos = 0;
-        //this.running = false;
-        //console.log('ended');
-      }
-    } // this is the other parenthesis of the for loop over
+    //for (let k = 0; k < this.rows * this.columns; k++) {
+    //  let angle = this.field[this.xPos][this.yPos] * 2 * Math.PI;
+    //
+    //  //output = output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start)
+    //
+    //
+    //  ctx.strokeStyle = '#777777';
+    //  ctx.beginPath();
+    //  ctx.moveTo(this.xPos * this.spacing, this.yPos * this.spacing);
+    //  ctx.lineTo((this.xPos + Math.cos(angle)) * this.spacing, (this.yPos + Math.sin(angle)) * this.spacing);
+    //  ctx.closePath();
+    //  ctx.stroke();
+    //
+    //
+    //  this.xPos += 1;
+    //  if (this.xPos >= this.columns) {
+    //    this.yPos += 1;
+    //    this.xPos = 0;
+    //  }
+    //  if (this.yPos >= this.rows) {
+    //    this.yPos = 0;
+    //    //this.running = false;
+    //    //console.log('ended');
+    //  }
+    //} // this is the other parenthesis of the for loop over
 
     for (let i = 0; i < this.numOfParticles; ++i) {
       ctx.fillStyle = '#ffffff';
-      ctx.fillRect(this.particles[i][0], this.particles[i][1], this.particlesSize, this.particlesSize);    }
+      ctx.fillRect(this.particles[i][0], this.particles[i][1], this.particlesSize, this.particlesSize);
+
+      ctx.beginPath();
+      //let color = Math.floor(this.counter * 0.2) % 100;
+      //if (color<17){
+      //  color = 17;
+      //}
+      //ctx.fillStyle = '#' + color.toString(16) + color.toString(16) + color.toString(16);
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle= 'rgba(0,0,0,0)';
+      ctx.arc(this.particles[i][0], this.particles[i][1], this.particlesSize, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.stroke();
+
+    }
 
 
     // Schedule next
@@ -133,13 +149,18 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
       let y = Math.random() * this.screenHeight;
       this.particles.push([x, y, 0, 0]);
     }
+    console.log(this.rows, this.columns);
   }
 
 
   private updateField(): void {
     for (let x = 0; x < this.columns; x++) {
       for (let y = 0; y < this.rows; y++) {
+        //this.field[x][y] = Math.random();
         this.field[x][y] = (0.5 * this.noise.noise3D(x * this.inc, y * this.inc, this.time * this.timeInc) + 0.5);
+        if (this.field[x][y] < 0.01) {
+          this.field[x][y] = 0.01;
+        }
       }
     }
     this.time++;
@@ -149,34 +170,43 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.numOfParticles; i++) {
       let posOnGridX = Math.floor(this.particles[i][0] / this.spacing);
       let posOnGridY = Math.floor(this.particles[i][1] / this.spacing);
-      let forceX = Math.cos(this.field[posOnGridX][posOnGridY]);
-      let forceY = Math.sin(this.field[posOnGridX][posOnGridY]);
+      let forceX = Math.cos(this.field[posOnGridX][posOnGridY] * 2 * Math.PI);
+      let forceY = Math.sin(this.field[posOnGridX][posOnGridY] * 2 * Math.PI);
 
       // Apply Force
-      this.particles[i][2] += 1000*forceX/this.particleMass;
-      this.particles[i][3] += 1000*forceY/this.particleMass;
+      this.particles[i][2] += forceX / this.particleMass;
+      this.particles[i][3] += forceY / this.particleMass;
 
       // Check that speed is lower than maxSpeed
       let speedValue = Math.sqrt(Math.pow(this.particles[i][2], 2) + Math.pow(this.particles[i][3], 2));
+      if (speedValue === 0) {
+        speedValue = 0.01;
+      }
       if (speedValue >= this.maxSpeed) {
         this.particles[i][2] *= this.maxSpeed / speedValue;
         this.particles[i][3] *= this.maxSpeed / speedValue;
       }
       this.particles[i][0] += this.particles[i][2];
       this.particles[i][1] += this.particles[i][3];
+      //console.log(this.particles[i], i);
+
 
       // Boundary check
       if (this.particles[i][0] < 0) {
-        this.particles[i][0] = this.screenWidth;
+        //this.particles[i][0] = this.screenWidth -1;
+        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenWidth, 0, 0];
       }
-      if (this.particles[i][0] > this.screenWidth) {
-        this.particles[i][0] = 0;
+      if (this.particles[i][0] >= this.screenWidth) {
+        //this.particles[i][0] = 0;
+        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenWidth, 0, 0];
       }
       if (this.particles[i][1] < 0) {
-        this.particles[i][1] = this.screenHeight;
+        //this.particles[i][1] = this.screenHeight -1;
+        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenWidth, 0, 0];
       }
-      if (this.particles[i][1] > this.screenHeight) {
-        this.particles[i][1] = 0;
+      if (this.particles[i][1] >= this.screenHeight) {
+        //this.particles[i][1] = 0;
+        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenWidth, 0, 0];
       }
     }
   }
