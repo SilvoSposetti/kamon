@@ -12,21 +12,25 @@ export class RainComponent implements OnInit, OnDestroy {
 
   private running: boolean;
 
-  private numOfRainDrops: number = 1000;
+  private numOfRainDrops: number = 200;
   private rainDrops: number[][] = [];
-  //[x,y,vx,vy]
-  private gravity: number = 10;
-  private maxSpeed: number = 5;
+  //[x,y,vx,vy,ax,ay]
+  private gravity: number = 1;
+  private maxSpeed: number = 10;
 
-  private numOfUmbrellas: number = 1;
+  private numOfUmbrellas: number = 4;
   private umbrellas: number[][] = [];
+  //[x,y,vx,vy,r,stepOffset,heightOffset]
   private umbrellasSize = 300;
-  private umbrellaRatio = 2/3;
-  private cutOff: number = this.umbrellasSize *this.umbrellaRatio;
-  private slide: number = 2;
-
-
-  //[x,y,vx,vy,r]
+  private umbrellaRatio = 2 / 3;
+  private cutOff: number = this.umbrellasSize * this.umbrellaRatio;
+  private slideForce: number = 5;
+  private bounceForce: number = 5;
+  private spacingBetweenUmbrellas: number;
+  private umbrellasMaxSpeed = 3;
+  private umbrellasMinSpeed = 1;
+  private umbrellasStepSize = 5;
+  private umbrellasCounter = 0;
 
 
 
@@ -35,6 +39,7 @@ export class RainComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.running = true;
+    this.spacingBetweenUmbrellas = this.screenHeight/(this.numOfUmbrellas+1);
     this.setup();
     this.paint();
   }
@@ -52,7 +57,8 @@ export class RainComponent implements OnInit, OnDestroy {
     this.updateRainDrops();
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = '#000000';
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    //ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
 
@@ -64,12 +70,12 @@ export class RainComponent implements OnInit, OnDestroy {
       ctx.fill();
     }
 
-    ////draw umbrellas:
+    //draw umbrellas:
     //for (let j = 0; j < this.numOfUmbrellas; ++j) {
     //  ctx.beginPath();
     //  ctx.fillStyle = '#000000';
     //  ctx.strokeStyle = '#ffffff';
-    //  ctx.arc(this.umbrellas[j][0], this.umbrellas[j][1], this.umbrellas[j][4], 0, 2 * Math.PI);
+    //  ctx.arc(this.umbrellas[j][0], this.umbrellas[j][1], this.umbrellas[j][4], 4.0, 5.4);
     //  ctx.fill();
     //  ctx.stroke();
     //}
@@ -80,13 +86,16 @@ export class RainComponent implements OnInit, OnDestroy {
 
   private setup(): void {
     for (let i = 0; i < this.numOfRainDrops; ++i) {
-      this.rainDrops.push([Math.random() * this.screenWidth, Math.random() * this.screenHeight/2, 0, 0]);
+      this.rainDrops.push([Math.random() * this.screenWidth, Math.random() * this.screenHeight, 0, 0, 0, 0]);
     }
     for (let j = 0; j < this.numOfUmbrellas; ++j) {
-      //ensures top of umbrella is always under the half of the screen
-      //let radius = Math.random()*200;
-      let radius = this.umbrellasSize;
-      this.umbrellas.push([this.screenWidth / 2, this.screenHeight / 2 + radius, 0, 0, radius]);
+      let ySpeed = this.umbrellasMinSpeed + (this.umbrellasMaxSpeed - this.umbrellasMinSpeed) * Math.random();
+      if (Math.random() < 0.5) {
+        this.umbrellas.push([Math.random()*this.screenWidth, (j + 2) * this.spacingBetweenUmbrellas, ySpeed, 0, this.umbrellasSize, Math.random() * Math.PI * 2, (j + 2) * this.spacingBetweenUmbrellas]);
+      }
+      else {
+        this.umbrellas.push([Math.random()*this.screenWidth, (j + 2) * this.spacingBetweenUmbrellas, -ySpeed, 0, this.umbrellasSize, Math.random() * Math.PI * 2, (j + 2) * this.spacingBetweenUmbrellas]);
+      }
     }
   }
 
@@ -101,7 +110,7 @@ export class RainComponent implements OnInit, OnDestroy {
       for (let j = 0; j < this.numOfUmbrellas; j++) {
         let distanceToUmbrella = Math.sqrt(Math.pow(this.rainDrops[i][0] - this.umbrellas[j][0], 2) + Math.pow(this.rainDrops[i][1] - this.umbrellas[j][1], 2));
         let isInCutOff = ((this.rainDrops[i][0] > this.umbrellas[j][0] - this.cutOff) && this.rainDrops[i][0] < (this.umbrellas[j][0] + this.cutOff));
-        let isUnderUmbrella = this.rainDrops[i][1] > this.umbrellas[j][1]-this.cutOff;
+        let isUnderUmbrella = this.rainDrops[i][1] > this.umbrellas[j][1] - this.cutOff;
         if (distanceToUmbrella <= this.umbrellas[j][4] && isInCutOff && !isUnderUmbrella) {
           if (this.rainDrops[i][0] < this.umbrellas[j][0]) {
             collisionLeft = true;
@@ -118,16 +127,23 @@ export class RainComponent implements OnInit, OnDestroy {
       if (collision) {
         this.rainDrops[i][3] = 0;
         if (collisionLeft) {
-          this.rainDrops[i][2] = -this.slide;
+          this.rainDrops[i][4] = -this.slideForce;
+          this.rainDrops[i][5] = -this.bounceForce;
         }
         else {
-          this.rainDrops[i][2] = this.slide;
+          this.rainDrops[i][4] = this.slideForce;
+          this.rainDrops[i][5] = -this.bounceForce;
         }
+        this.rainDrops[i][2] += this.rainDrops[i][4];
+        this.rainDrops[i][3] += this.rainDrops[i][5];
       }
       else {
-        this.rainDrops[i][3] += this.gravity;
+        this.rainDrops[i][4] = 0;
+        this.rainDrops[i][5] = this.gravity;
+        this.rainDrops[i][2] += this.rainDrops[i][4];
+        this.rainDrops[i][3] += this.rainDrops[i][5];
       }
-      //this.rainDrops[i][2] += this.gravity;
+
 
       // Check that speed is lower than maxSpeed
       let speedValue = Math.sqrt(Math.pow(this.rainDrops[i][2], 2) + Math.pow(this.rainDrops[i][3], 2));
@@ -161,10 +177,17 @@ export class RainComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updateUmbrellas(): void{
-    for (let i = 0; i<this.numOfUmbrellas; i++){
-      this.umbrellas[i][0]+=1;
+  private updateUmbrellas(): void {
+    for (let i = 0; i < this.numOfUmbrellas; i++) {
+      this.umbrellas[i][0] += this.umbrellas[i][2];
+      this.umbrellas[i][1] = this.umbrellas[i][6] + this.umbrellasStepSize * Math.cos(this.umbrellas[i][5] + this.umbrellasCounter / 5);
+      if (this.umbrellas[i][0] > this.screenWidth + this.cutOff + 1) {
+        this.umbrellas[i][0] = -this.cutOff;
+      }
+      if (this.umbrellas[i][0] < -this.cutOff - 1) {
+        this.umbrellas[i][0] = this.screenWidth + this.cutOff;
+      }
     }
-
+    this.umbrellasCounter++;
   }
 }

@@ -40,15 +40,15 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
 
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    //ctx.fillStyle = 'rgba(0,0,0,0.05)';
     //ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+    //ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
 
     for (let i = 0; i < 10; i++) {
       ctx.beginPath();
       let color = Math.floor(this.counter * 0.2) % 100;
-      if (color<17){
+      if (color < 17) {
         color = 17;
       }
       ctx.fillStyle = '#' + color.toString(16) + color.toString(16) + color.toString(16);
@@ -65,7 +65,7 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
   private loadPoints(): void {
     let goldenAngle = Math.PI * (3 - Math.sqrt(5));
     for (let i = 0; i < this.nrOfPoints; i++) {
-      let r = this.c * Math.sqrt(i)- 2*this.c;
+      let r = this.c * Math.sqrt(i) - 2 * this.c;
       let x = this.screenWidth / 2 + r * Math.cos(i * goldenAngle);
       let y = this.screenHeight / 2 + r * Math.sin(i * goldenAngle);
       let size = 20;
