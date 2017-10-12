@@ -1,11 +1,11 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false,
-  "defaultScene": "rain",
-  "showFuckOff": false,
+  "showClock": true,
+  "defaultScene": "phyllotaxy",
+  "showFuckOff": true,
   "openLinkInNewTab": true,
-  "showList": false,
+  "showList": true,
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
@@ -17,7 +17,7 @@
   ],
   "list": [
     [
-      "Silvo",
+      "Personal",
       "GitHub",
       "G",
       "https://github.com",
@@ -25,15 +25,7 @@
       "#373737"
     ],
     [
-      "Silvo",
-      "Gmail",
-      "g",
-      "https://mail.google.com/mail/u/0/?tab=wm#inbox",
-      null,
-      "#4285f4"
-    ],
-    [
-      "Silvo",
+      "Personal",
       "Drive",
       "d",
       "https://drive.google.com/drive/my-drive",
@@ -41,44 +33,12 @@
       "#fcc93e"
     ],
     [
-      "Silvo",
+      "Personal",
       "WhatsApp Web",
       "w",
       "https://web.whatsapp.com/",
       null,
       "#2a948a"
-    ],
-    [
-      "Uni",
-      "UniMail",
-      "u",
-      "https://idlmail05.lotus.uzh.ch/",
-      null,
-      "#0099ff"
-    ],
-    [
-      "Uni",
-      "Courses",
-      "l",
-      "https://studentservices.uzh.ch/uzh/anonym/vvz/index.html",
-      null,
-      "#0099ff"
-    ],
-    [
-      "Uni",
-      "Olat",
-      "o",
-      "https://lms.uzh.ch/dmz/",
-      null,
-      "#0099ff"
-    ],
-    [
-      "Uni",
-      "Grades",
-      "n",
-      "http://www.students.uzh.ch/de/record/uebersicht.html",
-      null,
-      "#0099ff"
     ],
     [
       "Lurk",
@@ -129,7 +89,7 @@
       "#fc0101"
     ],
     [
-      "Fun",
+      "Download",
       "The Pirate Bay",
       "b",
       "https://thepiratebay.org",
@@ -137,7 +97,7 @@
       "#4c4132"
     ],
     [
-      "Fun",
+      "Download",
       "YTS",
       "Y",
       "https://yts.ag/browse-movies/0/1080p/all/7/latest",
@@ -145,7 +105,7 @@
       "#2f2f2f"
     ],
     [
-      "Other",
+      "Code",
       "StackOverflow",
       "s",
       "https://stackoverflow.com/",
@@ -153,7 +113,15 @@
       "#f48024"
     ],
     [
-      "Other",
+      "Code",
+      "Kamon",
+      "k",
+      "https://kamon-startpage.firebaseapp.com/",
+      null,
+      "#373737"
+    ],
+    [
+      "Shops",
       "Digitec",
       "c",
       "https://www.digitec.ch/",
@@ -161,7 +129,7 @@
       "#0068ab"
     ],
     [
-      "Other",
+      "Shops",
       "Steam",
       "S",
       "http://store.steampowered.com/",
@@ -169,7 +137,7 @@
       "#173d57"
     ],
     [
-      "Other",
+      "Shops",
       "Humble Bundle",
       "h",
       "https://www.humblebundle.com/",
