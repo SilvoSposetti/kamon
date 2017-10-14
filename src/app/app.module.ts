@@ -31,6 +31,7 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 
@@ -56,7 +57,8 @@ import {ScenesService} from './shared/services/scenes.service';
     HttpModule,
     BrowserModule,
     FormsModule,
-    JsonpModule
+    JsonpModule,
+    BrowserAnimationsModule
   ],
   providers: [ConfigService, {
     provide: APP_INITIALIZER,

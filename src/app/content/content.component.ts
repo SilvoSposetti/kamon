@@ -1,12 +1,26 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchService} from '../shared/services/search.service';
 import {Subscription} from 'rxjs/Subscription';
-import {ConfigService} from '../shared/services/config.service';
+import {trigger, animate, style, transition, state} from '@angular/animations';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
-  styleUrls: ['./content.component.css']
+  styleUrls: ['./content.component.css'],
+  animations: [
+    trigger(
+      'myEnter',
+      [
+        transition(":enter", [
+          style({ opacity: 0 }),
+          animate(400, style({ opacity: 1 }))
+        ]),
+        transition(":leave", [
+          animate(400, style({ opacity: 0 }))
+        ])
+      ]
+    )
+  ],
 })
 export class ContentComponent implements OnInit {
 
@@ -55,7 +69,5 @@ export class ContentComponent implements OnInit {
 
   private checkShowSearch(): void {
     this.showSearch = !(this.searchText.length === 0);
-
   }
-
 }

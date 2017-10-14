@@ -2,6 +2,7 @@
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 1;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -10,65 +11,78 @@
   flex-direction: column;
   color: var(--search-font-color);
 }
+
+.search-background-diffuse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  -webkit-box-shadow: inset 0 0 500px 0 rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: inset 0 0 500px 0 rgba(0, 0, 0, 0.45);
+  box-shadow: inset 0 0 500px 0 rgba(0, 0, 0, 0.45);
+}
+
 /***********************************************************************************************************************
 Search Text:
 ***********************************************************************************************************************/
 
-.search-text-container{
-  width:100%;
+.search-text-container {
+  width: 100%;
   display: flex;
-  align-items:center;
-  justify-content:center;
+  align-items: center;
+  justify-content: center;
 }
 
-.search-text{
+.search-text {
   font-size: var(--search-text-font-size);
 }
+
 /***********************************************************************************************************************
 Suggestions:
 ***********************************************************************************************************************/
-.suggestions-container{
+.suggestions-container {
   display: flex;
-  align-items:center;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  }
-
-.suggestion{
-  display: flex;
-  align-items:center;
+  align-items: center;
   justify-content: center;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.suggestion-text:hover{
-  background: rgba(255,255,255,0.2);
+.suggestion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.suggestion-text:hover {
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 0.4em;
   cursor: pointer;
 }
 
-.suggestion-text{
+.suggestion-text {
   font-size: var(--suggestions-font-size);
   padding: 0.5em;
   margin: 1em;
 
 }
 
-.suggestions-separator{
-  height:1.618em;
-  width:1px;
+.suggestions-separator {
+  height: 1.618em;
+  width: 1px;
   margin: 0;
   padding: 0;
-  border-left:1px solid white;
+  border-left: 1px solid white;
 }
 
-.suggestionHighlighted{
-  background: rgba(255,255,255,0.2);
+.suggestionHighlighted {
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 0.4em;
 }
 
-.shortcut-name{
+.shortcut-name {
   font-size: var(--shortcut-found-font-size);
 }

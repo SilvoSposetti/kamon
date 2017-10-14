@@ -1,11 +1,11 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false,
+  "showClock": true,
   "defaultScene": "phyllotaxy",
   "showFuckOff": false,
   "openLinkInNewTab": true,
-  "showList": false,
+  "showList": true,
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
