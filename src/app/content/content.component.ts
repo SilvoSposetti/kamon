@@ -22,7 +22,7 @@ import {trigger, animate, style, transition, state} from '@angular/animations';
     )
   ],
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements   OnInit {
 
   @Input() showList: boolean;
   @Input() selectionSuggestion: number;

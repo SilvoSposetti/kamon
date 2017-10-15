@@ -5,7 +5,7 @@
   "defaultScene": "phyllotaxy",
   "showFuckOff": false,
   "openLinkInNewTab": true,
-  "showList": true,
+  "showList": false,
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,

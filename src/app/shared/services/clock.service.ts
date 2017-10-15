@@ -154,7 +154,7 @@ export class ClockService {
 
   // used to transform the day of the week number into human readable weekdays.
   private translateDayToLanguage(dayNr: string): string {
-    return this.daysOfWeek.days[Number(dayNr) - 1]; // new Date() returns a day number starting from 1.
+    return this.daysOfWeek.days[Number(dayNr)]; // new Date() returns a day number starting from 1.
   }
 
   private correctLength(digits: string): string {
