@@ -57,7 +57,7 @@ export class RainComponent implements OnInit, OnDestroy {
     this.updateRainDrops();
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
     //ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 

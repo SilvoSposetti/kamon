@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {APP_INITIALIZER} from '@angular/core';
 import {HttpModule} from '@angular/http';
 import {JsonpModule} from '@angular/http';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AppComponent} from './app.component';
 import {BackgroundComponent} from './background/background.component';
@@ -21,6 +22,7 @@ import {SceneSelectorComponent} from './content/scene-selector/scene-selector.co
 import {MazeComponent} from './background/scene/maze/maze.component';
 import {PerlinFieldComponent} from './background/scene/perlin-field/perlin-field.component';
 import {RainComponent} from './background/scene/rain/rain.component';
+import {LissajousComponent} from './background/scene/lissajous/lissajous.component';
 
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 
@@ -31,7 +33,6 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 
@@ -52,7 +53,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     SceneSelectorComponent,
     MazeComponent,
     PerlinFieldComponent,
-    RainComponent],
+    RainComponent,
+    LissajousComponent],
   imports: [
     HttpModule,
     BrowserModule,

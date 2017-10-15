@@ -13,7 +13,6 @@ export class MyFocusDirective {
   // Used to focus on #search-input input at application startup
   autoFocus() {
     this.renderer.selectRootElement('#search-input').focus();
-    console.log('fired');
   }
 
   // Used to focus again on #search-input input when focus is lost on it.
