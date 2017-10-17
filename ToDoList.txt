@@ -1,5 +1,4 @@
-SCENE Lissajous: divide screen in more parts and each part represents a ratio (cos(3x),sin(4y) in part(3,4), plus mark the ratios
-SCENE Bouncing Spheres: Spheres colliding with each other.
+SCENE Spheres pendulum: Spheres colliding with each other.
 SCENE Root: A "fractal" tree growing from some point on the screen.
 SCENE Squares: rotating black and white squares with center of rotation in the center of the screen.
 SCENE Shoal: A number of fishes shoaling together.

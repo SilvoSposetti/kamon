@@ -3,7 +3,7 @@
   "useScene": true,
   "showClock": true,
   "defaultScene": "phyllotaxy",
-  "showFuckOff": false,
+  "showFuckOff": true,
   "openLinkInNewTab": false,
   "showList": true,
   "suggestions": true,

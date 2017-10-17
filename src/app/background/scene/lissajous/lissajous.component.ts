@@ -21,7 +21,7 @@ export class LissajousComponent implements OnInit, OnDestroy {
   // Setting this to 1 will show you the FPS of the last sampled frame only
   public fpsFilter = 100;
 
-  private spacing: number = 200;
+  private spacing: number = 100;
   private columns: number;
   private rows: number;
 
@@ -62,7 +62,7 @@ export class LissajousComponent implements OnInit, OnDestroy {
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    ctx.fillStyle = 'rgba(0,0,0,0.001)';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     for (let i = 0; i < this.columns; i++) {
@@ -70,7 +70,10 @@ export class LissajousComponent implements OnInit, OnDestroy {
 
         ctx.fillStyle = '#ffffff';
         //ctx.strokeStyle = 'rgba(0,0,0,0)';
-        ctx.fillRect(this.gridValues[i][j][0], this.gridValues[i][j][1], 5, 5);
+        ctx.beginPath();
+        ctx.ellipse(this.gridValues[i][j][0], this.gridValues[i][j][1], 1, 1,0, 0 ,Math.PI*2);
+        ctx.fill();
+        ctx.closePath();
       }
     }
 
@@ -89,7 +92,6 @@ export class LissajousComponent implements OnInit, OnDestroy {
         this.gridValues[i].push([i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2, i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2, i + 1, j + 1]);
       }
     }
-    console.log(this.gridValues);
   }
 
   private updateGrid(): void {
@@ -100,7 +102,7 @@ export class LissajousComponent implements OnInit, OnDestroy {
         let angularFrequencyX = this.gridValues[i][j][4];
         let angularFrequencyY = this.gridValues[i][j][5];
         this.gridValues[i][j][0] = centerX + this.amplitude * Math.cos(this.counter * this.frequency * angularFrequencyX);
-        this.gridValues[i][j][1] = centerY + this.amplitude * Math.sin(this.counter * this.frequency * angularFrequencyY);
+        this.gridValues[i][j][1] = centerY + this.amplitude * Math.cos(this.counter * this.frequency * angularFrequencyY);
       }
     }
     this.counter++;
