@@ -33,6 +33,7 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
+import { FunctionsComponent } from './background/scene/functions/functions.component';
 
 
 
@@ -54,7 +55,8 @@ import {ScenesService} from './shared/services/scenes.service';
     MazeComponent,
     PerlinFieldComponent,
     RainComponent,
-    LissajousComponent],
+    LissajousComponent,
+    FunctionsComponent],
   imports: [
     HttpModule,
     BrowserModule,
