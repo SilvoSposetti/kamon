@@ -23,7 +23,7 @@ export class FunctionsComponent implements OnInit {
   public fpsFilter = 100;
 
   private functionValues: number[][];
-  // [xPos, yPos]
+  // [xPos, yPos, previousXPos, previousYPos]
   private numOfFunctions: number = 3;
   // sin, cos
   private rowHeight: number;
@@ -70,12 +70,23 @@ export class FunctionsComponent implements OnInit {
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     for (let i = 0; i < this.numOfFunctions; i++) {
-      ctx.fillStyle = '#ffffff';
-      //ctx.strokeStyle = 'rgba(0,0,0,0)';
+      //ctx.fillStyle = '#ffffff';
+      ////ctx.strokeStyle = 'rgba(0,0,0,0)';
+      //ctx.beginPath();
+      //ctx.ellipse(this.functionValues[i][0], this.functionValues[i][1], 4, 4, 0, 0, Math.PI * 2);
+      //ctx.fill();
+      //ctx.closePath();
+
+      ctx.strokeStyle = '#dddddd';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.ellipse(this.functionValues[i][0], this.functionValues[i][1], 4, 4, 0, 0, Math.PI * 2);
-      ctx.fill();
+      // draw line from previousPos to newPos
+      ctx.moveTo(this.functionValues[i][2], this.functionValues[i][3]);
+      ctx.lineTo(this.functionValues[i][0], this.functionValues[i][1]);
       ctx.closePath();
+      ctx.stroke();
+
+
     }
 
 
@@ -88,12 +99,9 @@ export class FunctionsComponent implements OnInit {
     this.functionValues = [];
     for (let i = 0; i < this.numOfFunctions; i++) {
       this.rowsCenter.push((i) * this.rowHeight + this.rowHeight / 2);
-      this.functionValues.push([0, this.rowsCenter[i]]);
+      this.functionValues.push([0, this.rowsCenter[i], 0, this.rowsCenter[i]]);
 
     }
-    console.log(this.rowsCenter);
-    console.log(this.functionValues);
-
   }
 
   private update(): void {
@@ -103,14 +111,20 @@ export class FunctionsComponent implements OnInit {
       }
     }
     // Function 0: sin(x)
+    this.functionValues[0][2] = this.functionValues[0][0];
+    this.functionValues[0][3] = this.functionValues[0][1];
     this.functionValues[0][0] = this.functionValues[0][0] + this.xForward;
     this.functionValues[0][1] = this.rowsCenter[0] + this.rowHeight * 4 / 10 * Math.sin(this.functionValues[0][0] * this.sinAngularVelocity);
     // Function 1: cos(x)
+    this.functionValues[1][2] = this.functionValues[1][0];
+    this.functionValues[1][3] = this.functionValues[1][1];
     this.functionValues[1][0] += this.xForward;
     this.functionValues[1][1] = this.rowsCenter[1] + this.rowHeight * 4 / 10 * Math.cos(this.functionValues[1][0] * this.cosAngularVelocity);
     // Function 2:
+    this.functionValues[2][2] = this.functionValues[2][0];
+    this.functionValues[2][3] = this.functionValues[2][1];
     this.functionValues[2][0] += this.xForward;
-    this.functionValues[2][1] = this.rowsCenter[2] + this.rowHeight * 2 / 10 * (Math.cos(this.functionValues[2][0]*this.cosAngularVelocity*11) + Math.cos(this.functionValues[2][0]*this.cosAngularVelocity*10));
+    this.functionValues[2][1] = this.rowsCenter[2] + this.rowHeight * 2 / 10 * (Math.cos(this.functionValues[2][0] * this.cosAngularVelocity * 11) + Math.cos(this.functionValues[2][0] * this.cosAngularVelocity * 10));
 
     // Function 3:
 

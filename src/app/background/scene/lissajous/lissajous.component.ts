@@ -31,7 +31,7 @@ export class LissajousComponent implements OnInit, OnDestroy {
 
   private gridValues: number[][][] = [];
 
-  // [xPos, yPos, xCenterPos, yCenterPos, sinMultiplier, cosMultiplier]
+  // [xPos, yPos, xCenterPos, yCenterPos, sinMultiplier, cosMultiplier, previousXPos, previousYPos]
 
   ngOnInit() {
     this.running = true;
@@ -62,18 +62,30 @@ export class LissajousComponent implements OnInit, OnDestroy {
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(0,0,0,0.001)';
+    ctx.fillStyle = 'rgba(0,0,0,0.01)';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     for (let i = 0; i < this.columns; i++) {
       for (let j = 0; j < this.rows; j++) {
 
-        ctx.fillStyle = '#ffffff';
-        //ctx.strokeStyle = 'rgba(0,0,0,0)';
+        ctx.strokeStyle = '#dddddd';
+        ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.ellipse(this.gridValues[i][j][0], this.gridValues[i][j][1], 1, 1,0, 0 ,Math.PI*2);
-        ctx.fill();
+        // draw line from previousPos to newPos
+        ctx.moveTo(this.gridValues[i][j][6], this.gridValues[i][j][7]);
+        ctx.lineTo(this.gridValues[i][j][0], this.gridValues[i][j][1]);
         ctx.closePath();
+        ctx.stroke();
+
+        //Draw them as dots:
+        //ctx.fillStyle = '#ffffff';
+        //ctx.strokeStyle = 'rgba(0,0,0,0)';
+        //ctx.beginPath();
+        //ctx.ellipse(this.gridValues[i][j][0], this.gridValues[i][j][1], 1, 1,0, 0 ,Math.PI*2);
+        //ctx.closePath();
+        //ctx.fill();
+
+
       }
     }
 
@@ -89,7 +101,7 @@ export class LissajousComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.columns; i++) {
       this.gridValues.push([]);
       for (let j = 0; j < this.rows; j++) {
-        this.gridValues[i].push([i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2, i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2, i + 1, j + 1]);
+        this.gridValues[i].push([i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2, i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2, i + 1, j + 1, i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2]);
       }
     }
   }
@@ -101,6 +113,8 @@ export class LissajousComponent implements OnInit, OnDestroy {
         let centerY = this.gridValues[i][j][3];
         let angularFrequencyX = this.gridValues[i][j][4];
         let angularFrequencyY = this.gridValues[i][j][5];
+        this.gridValues[i][j][6] = this.gridValues[i][j][0];
+        this.gridValues[i][j][7] = this.gridValues[i][j][1];
         this.gridValues[i][j][0] = centerX + this.amplitude * Math.cos(this.counter * this.frequency * angularFrequencyX);
         this.gridValues[i][j][1] = centerY + this.amplitude * Math.cos(this.counter * this.frequency * angularFrequencyY);
       }

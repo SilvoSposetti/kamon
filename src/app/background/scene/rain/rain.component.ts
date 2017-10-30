@@ -12,9 +12,9 @@ export class RainComponent implements OnInit, OnDestroy {
 
   private running: boolean;
 
-  private numOfRainDrops: number = 200;
+  private numOfRainDrops: number = 500;
   private rainDrops: number[][] = [];
-  //[x,y,vx,vy,ax,ay]
+  //[x,y,vx,vy,ax,ay,previousXPOs,previousYPos]
   private gravity: number = 1;
   private maxSpeed: number = 10;
 
@@ -39,7 +39,7 @@ export class RainComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.running = true;
-    this.spacingBetweenUmbrellas = this.screenHeight/(this.numOfUmbrellas+1);
+    this.spacingBetweenUmbrellas = this.screenHeight / (this.numOfUmbrellas + 1);
     this.setup();
     this.paint();
   }
@@ -57,24 +57,33 @@ export class RainComponent implements OnInit, OnDestroy {
     this.updateRainDrops();
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
     //ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
 
     // draw rain drops
     for (let i = 0; i < this.numOfRainDrops; ++i) {
+      //ctx.beginPath();
+      //ctx.fillStyle = '#ffffff';
+      //ctx.arc(this.rainDrops[i][0], this.rainDrops[i][1], 1, 0, 2 * Math.PI);
+      //ctx.fill();
+
+      ctx.strokeStyle = '#dddddd';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.fillStyle = '#ffffff';
-      ctx.arc(this.rainDrops[i][0], this.rainDrops[i][1], 1, 0, 2 * Math.PI);
-      ctx.fill();
+      // draw line from previousPos to newPos
+      ctx.moveTo(this.rainDrops[i][6], this.rainDrops[i][7]);
+      ctx.lineTo(this.rainDrops[i][0], this.rainDrops[i][1]);
+      ctx.closePath();
+      ctx.stroke();
     }
 
     //draw umbrellas:
     //for (let j = 0; j < this.numOfUmbrellas; ++j) {
     //  ctx.beginPath();
     //  ctx.fillStyle = '#000000';
-    //  ctx.strokeStyle = '#ffffff';
+    //  ctx.strokeStyle = '#dddddd';
     //  ctx.arc(this.umbrellas[j][0], this.umbrellas[j][1], this.umbrellas[j][4], 4.0, 5.4);
     //  ctx.fill();
     //  ctx.stroke();
@@ -86,15 +95,17 @@ export class RainComponent implements OnInit, OnDestroy {
 
   private setup(): void {
     for (let i = 0; i < this.numOfRainDrops; ++i) {
-      this.rainDrops.push([Math.random() * this.screenWidth, Math.random() * this.screenHeight, 0, 0, 0, 0]);
+      let posX = Math.random() * this.screenWidth;
+      let posY = Math.random() * this.screenHeight;
+      this.rainDrops.push([posX, posY, 0, 0, 0, 0, posX, posY]);
     }
     for (let j = 0; j < this.numOfUmbrellas; ++j) {
       let ySpeed = this.umbrellasMinSpeed + (this.umbrellasMaxSpeed - this.umbrellasMinSpeed) * Math.random();
       if (Math.random() < 0.5) {
-        this.umbrellas.push([Math.random()*this.screenWidth, (j + 2) * this.spacingBetweenUmbrellas, ySpeed, 0, this.umbrellasSize, Math.random() * Math.PI * 2, (j + 2) * this.spacingBetweenUmbrellas]);
+        this.umbrellas.push([Math.random() * this.screenWidth, (j + 2) * this.spacingBetweenUmbrellas, ySpeed, 0, this.umbrellasSize, Math.random() * Math.PI * 2, (j + 2) * this.spacingBetweenUmbrellas]);
       }
       else {
-        this.umbrellas.push([Math.random()*this.screenWidth, (j + 2) * this.spacingBetweenUmbrellas, -ySpeed, 0, this.umbrellasSize, Math.random() * Math.PI * 2, (j + 2) * this.spacingBetweenUmbrellas]);
+        this.umbrellas.push([Math.random() * this.screenWidth, (j + 2) * this.spacingBetweenUmbrellas, -ySpeed, 0, this.umbrellasSize, Math.random() * Math.PI * 2, (j + 2) * this.spacingBetweenUmbrellas]);
       }
     }
   }
@@ -154,25 +165,27 @@ export class RainComponent implements OnInit, OnDestroy {
         this.rainDrops[i][2] *= this.maxSpeed / speedValue;
         this.rainDrops[i][3] *= this.maxSpeed / speedValue;
       }
+      this.rainDrops[i][6] = this.rainDrops[i][0];
+      this.rainDrops[i][7] = this.rainDrops[i][1];
       this.rainDrops[i][0] += this.rainDrops[i][2];
       this.rainDrops[i][1] += this.rainDrops[i][3];
 
       // Boundary check
       if (this.rainDrops[i][0] < 0) {
         //this.particles[i][0] = this.screenWidth -1;
-        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0];
+        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0,0,0];
       }
       if (this.rainDrops[i][0] >= this.screenWidth) {
         //this.particles[i][0] = 0;
-        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0];
+        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0,0,0];
       }
       if (this.rainDrops[i][1] < 0) {
         //this.particles[i][1] = this.screenHeight -1;
-        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0];
+        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0,0,0];
       }
       if (this.rainDrops[i][1] >= this.screenHeight) {
         //this.particles[i][1] = 0;
-        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0];
+        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0,0,0];
       }
     }
   }

@@ -52,14 +52,14 @@ export class MazeComponent implements OnInit, OnDestroy {
 
       if (random < 0.25) {
         ctx.beginPath();
-        ctx.strokeStyle = '#999999';
+        ctx.strokeStyle = '#dddddd';
         ctx.moveTo(x, y);
         ctx.lineTo(x + this.spacing, y + this.spacing);
         ctx.stroke();
       }
       else if(random<0.9){
         ctx.beginPath();
-        ctx.strokeStyle = '#999999';
+        ctx.strokeStyle = '#dddddd';
         ctx.moveTo(x + this.spacing, y);
         ctx.lineTo(x, y + this.spacing);
         ctx.stroke();

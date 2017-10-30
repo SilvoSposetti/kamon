@@ -12,11 +12,10 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
 
   private running: boolean;
   private asteroids: number[][] = [];
-  // [posX,posY,velX,velY,mass]
+  // [posX,posY,velX,velY,mass,previousXPos,previousYPos]
   private massInCenter = 10;
   private gravConst = 100;
   private nrOfElements = 1000;
-  private counter = 0;
 
   constructor() {
   }
@@ -38,16 +37,8 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     }
 
     // Paint current frame
-    let ctx: CanvasRenderingContext2D =
-      this.canvasRef.nativeElement.getContext('2d');
-    ////Draw background (which also effectively clears any previous drawing)
-    //let grd = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    //grd.addColorStop(0, '10afa3');
-    //grd.addColorStop(0.25, '10998e');
-    //grd.addColorStop(0.5, '177181');
-    //grd.addColorStop(0.75, '1b5978');
-    //grd.addColorStop(1, '1b4564');
-    //ctx.fillStyle = grd;
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
     ctx.fillStyle = 'rgba(25,25,25,0.05)';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
     ctx.strokeStyle = '#ffffff';
@@ -58,10 +49,20 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     this.updateAsteroids();
     ctx.fillStyle = 'rgb(255,255,255)';
     for (let i = 0; i < this.nrOfElements; ++i) {
+      //ctx.beginPath();
+      //ctx.save();
+      //ctx.fillRect(this.asteroids[i][0], this.asteroids[i][1], 2, 2);
+      //ctx.restore();
+
+      ctx.strokeStyle = '#aaaaaa';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      ctx.save();
-      ctx.fillRect(this.asteroids[i][0], this.asteroids[i][1], 2, 2);
-      ctx.restore();
+      // draw line from previousPos to newPos
+      ctx.moveTo(this.asteroids[i][5], this.asteroids[i][6]);
+      ctx.lineTo(this.asteroids[i][0], this.asteroids[i][1]);
+      ctx.closePath();
+      ctx.stroke();
+
     }
 
     // Schedule next
@@ -72,14 +73,16 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.nrOfElements; ++i) {
       let element: number[] = [];
       let randomAngle = this.randomFloat(0, 2 * Math.PI);
-      let x = this.screenWidth/2 - this.randomFloat(100,450)*Math.cos(randomAngle);
-      let y = this.screenHeight/2 - this.randomFloat(100,450)*Math.sin(randomAngle);
-      let randomAngleTurned = randomAngle+Math.PI/2;
+      let x = this.screenWidth / 2 - this.randomFloat(100, 450) * Math.cos(randomAngle);
+      let y = this.screenHeight / 2 - this.randomFloat(100, 450) * Math.sin(randomAngle);
+      let randomAngleTurned = randomAngle + Math.PI / 2;
       element.push(x);
       element.push(y);
-      element.push(1.7*Math.cos(randomAngleTurned));
-      element.push(1.7*Math.sin(randomAngleTurned));
+      element.push(1.7 * Math.cos(randomAngleTurned));
+      element.push(1.7 * Math.sin(randomAngleTurned));
       element.push(Math.random() * 5);
+      element.push(x);
+      element.push(y);
       this.asteroids.push(element);
 
     }
@@ -98,6 +101,8 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
       let vectorToCenterLength = Math.sqrt(Math.pow(vectorToCenterX, 2) + Math.pow(vectorToCenterY, 2));
       vectorToCenterX /= vectorToCenterLength;
       vectorToCenterY /= vectorToCenterLength;
+      this.asteroids[i][5]= this.asteroids[i][0];
+      this.asteroids[i][6]= this.asteroids[i][1];
       this.asteroids[i][2] += force * vectorToCenterX / this.asteroids[i][4];
       this.asteroids[i][3] += force * vectorToCenterY / this.asteroids[i][4];
       this.asteroids[i][0] += this.asteroids[i][2];
@@ -114,9 +119,3 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     return Math.random() * (max - min + 1) + min;
   }
 }
-
-//ctx.beginPath();
-//ctx.save();
-
-//ctx.restore();
-

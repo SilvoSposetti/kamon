@@ -27,7 +27,7 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   //Declaration of noise type which provides noise functions
   private noise = new OpenSimplexNoise(Date.now());
 
-  private spacing = 10;
+  private spacing = 20;
   private columns: number;
   private rows: number;
   private field: number[][] = [];
@@ -35,9 +35,9 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   private time = 0;
   private timeInc = 0.001;
 
-  private numOfParticles: number = 1500;
+  private numOfParticles: number = 1000;
   private particles: number[][] = [];
-  //[x,y,vx,vy]
+  //[x,y,vx,vy,previousXPos,previousYPos]
   private maxSpeed: number = 1.5;
   private particlesSize = 1.5;
   private particleMass: number = 0.01; // NOT ZERO!
@@ -84,6 +84,7 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
     //ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
+    // Draw vector field.
     //for (let k = 0; k < this.rows * this.columns; k++) {
     //  let angle = this.field[this.xPos][this.yPos] * 2 * Math.PI;
     //
@@ -114,16 +115,20 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(this.particles[i][0], this.particles[i][1], this.particlesSize, this.particlesSize);
 
+      //ctx.beginPath();
+      //ctx.fillStyle = '#999999';
+      //ctx.strokeStyle= 'rgba(0,0,0,0)';
+      //ctx.arc(this.particles[i][0], this.particles[i][1], this.particlesSize, 0, 2 * Math.PI);
+      //ctx.fill();
+      //ctx.stroke();
+
+      ctx.strokeStyle = '#dddddd';
+      ctx.lineWidth = 2;
       ctx.beginPath();
-      //let color = Math.floor(this.counter * 0.2) % 100;
-      //if (color<17){
-      //  color = 17;
-      //}
-      //ctx.fillStyle = '#' + color.toString(16) + color.toString(16) + color.toString(16);
-      ctx.fillStyle = '#999999';
-      ctx.strokeStyle= 'rgba(0,0,0,0)';
-      ctx.arc(this.particles[i][0], this.particles[i][1], this.particlesSize, 0, 2 * Math.PI);
-      ctx.fill();
+      // draw line from previousPos to newPos
+      ctx.moveTo(this.particles[i][4], this.particles[i][5]);
+      ctx.lineTo(this.particles[i][0], this.particles[i][1]);
+      ctx.closePath();
       ctx.stroke();
 
     }
@@ -147,9 +152,8 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.numOfParticles; i++) {
       let x = Math.random() * this.screenWidth;
       let y = Math.random() * this.screenHeight;
-      this.particles.push([x, y, 0, 0]);
+      this.particles.push([x, y, 0, 0, x, y]);
     }
-    console.log(this.rows, this.columns);
   }
 
 
@@ -186,28 +190,35 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
         this.particles[i][2] *= this.maxSpeed / speedValue;
         this.particles[i][3] *= this.maxSpeed / speedValue;
       }
+      this.particles[i][4] = this.particles[i][0];
+      this.particles[i][5] = this.particles[i][1];
       this.particles[i][0] += this.particles[i][2];
       this.particles[i][1] += this.particles[i][3];
-      //console.log(this.particles[i], i);
 
 
       // Boundary check
       if (this.particles[i][0] < 0) {
         //this.particles[i][0] = this.screenWidth -1;
-        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenHeight, 0, 0];
+        this.reSpawnParticle(i);
       }
       if (this.particles[i][0] >= this.screenWidth) {
         //this.particles[i][0] = 0;
-        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenHeight, 0, 0];
+        this.reSpawnParticle(i);
       }
       if (this.particles[i][1] < 0) {
         //this.particles[i][1] = this.screenHeight -1;
-        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenHeight, 0, 0];
+        this.reSpawnParticle(i);
       }
       if (this.particles[i][1] >= this.screenHeight) {
         //this.particles[i][1] = 0;
-        this.particles[i] = [Math.random()*this.screenWidth, Math.random()*this.screenHeight, 0, 0];
+        this.reSpawnParticle(i);
       }
     }
+  }
+
+  private reSpawnParticle(index: number): void {
+    let x = Math.random() * this.screenWidth;
+    let y = Math.random() * this.screenHeight;
+    this.particles[index] = [x, y, 0, 0, x, y];
   }
 }
