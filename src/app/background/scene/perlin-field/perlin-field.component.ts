@@ -42,9 +42,6 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   private particlesSize = 1.5;
   private particleMass: number = 0.01; // NOT ZERO!
 
-  private xPos = 0;
-  private yPos = 0;
-
   constructor() {
   }
 
