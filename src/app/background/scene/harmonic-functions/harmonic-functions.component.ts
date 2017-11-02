@@ -1,13 +1,11 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 @Component({
-  selector: 'app-functions',
-  templateUrl: './functions.component.html',
-  styleUrls: ['./functions.component.css']
+  selector: 'app-harmonic-functions',
+  templateUrl: './harmonic-functions.component.html',
+  styleUrls: ['./harmonic-functions.component.css']
 })
-export class FunctionsComponent implements OnInit {
-
+export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
 
   @ViewChild('myCanvas') canvasRef: ElementRef;
   @Input() screenWidth: number;
@@ -31,6 +29,8 @@ export class FunctionsComponent implements OnInit {
   private rowsCenter: number[] = [];
   private xForward: number[] = [3, 3, 6, 3];
   private loops: number[] = [];
+
+
 
 
   constructor() {
@@ -91,7 +91,9 @@ export class FunctionsComponent implements OnInit {
 
 
     // Schedule next
-    requestAnimationFrame(() => this.paint());
+    if(this.running) {
+      requestAnimationFrame(() => this.paint());
+    }
   }
 
   private setup(): void {
@@ -109,7 +111,6 @@ export class FunctionsComponent implements OnInit {
       if (this.functionValues[i][0] >= this.screenWidth) {
         this.functionValues[i][0] = 0;
         this.loops[i]++;
-        console.log(this.loops);
       }
     }
     for (let i = 0; i < this.numOfFunctions; ++i) {

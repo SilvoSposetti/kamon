@@ -1,7 +1,11 @@
 SCENE Spheres pendulum: Spheres colliding with each other.
 SCENE Root: A "fractal" tree growing from some point on the screen.
 SCENE Squares: rotating black and white squares with center of rotation in the center of the screen.
-SCENE Shoal: A number of fishes shoaling together.
+SCENE Shoal: A number of fishes shoaling together (or birds with boids algroithm).
+SCENE Polar: A number of nice polar functions and curves.
 position service with city, coordinates, ... weather?
 Loop between scenes when they finish
 Fix image bug when building with base-href: ./
+add Math category with desmos, wolfram
+add google scholar to Uni
+

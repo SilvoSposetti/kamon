@@ -8,6 +8,7 @@ import {HttpModule} from '@angular/http';
 import {JsonpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
+// App components
 import {AppComponent} from './app.component';
 import {BackgroundComponent} from './background/background.component';
 import {ContentComponent} from './content/content.component';
@@ -16,6 +17,8 @@ import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
 import {ListComponent} from './content/list/list.component';
 import {FuckOffComponent} from './content/fuck-off/fuck-off.component';
+
+// Scenes:
 import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
 import {PhyllotaxyComponent} from './background/scene/phyllotaxy/phyllotaxy.component';
 import {SceneSelectorComponent} from './content/scene-selector/scene-selector.component';
@@ -23,9 +26,13 @@ import {MazeComponent} from './background/scene/maze/maze.component';
 import {PerlinFieldComponent} from './background/scene/perlin-field/perlin-field.component';
 import {RainComponent} from './background/scene/rain/rain.component';
 import {LissajousComponent} from './background/scene/lissajous/lissajous.component';
+import {FunctionsComponent} from './background/scene/functions/functions.component';
+import {HarmonicFunctionsComponent} from './background/scene/harmonic-functions/harmonic-functions.component';
 
+// Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 
+// Services:
 import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';
 import {ScreenSizeService} from './shared/services/screen-size.service';
@@ -33,7 +40,6 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
-import { FunctionsComponent } from './background/scene/functions/functions.component';
 
 
 
@@ -56,7 +62,8 @@ import { FunctionsComponent } from './background/scene/functions/functions.compo
     PerlinFieldComponent,
     RainComponent,
     LissajousComponent,
-    FunctionsComponent],
+    FunctionsComponent,
+    HarmonicFunctionsComponent],
   imports: [
     HttpModule,
     BrowserModule,
