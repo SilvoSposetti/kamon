@@ -1,7 +1,7 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false,
+  "showClock": true ,
   "defaultScene": "harmonic-functions",
   "showFuckOff": false,
   "openLinkInNewTab": true,
@@ -9,6 +9,8 @@
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
+  "allowLocation": true,
+  "showWeather": true,
   "searchEngine": [
     "Google",
     "http://www.google.com/",

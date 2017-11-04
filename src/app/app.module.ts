@@ -40,6 +40,7 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
+import {LocationService} from './shared/services/location.service';
 
 
 
@@ -78,7 +79,7 @@ import {ScenesService} from './shared/services/scenes.service';
     multi: true
   },
     // Add more services here:
-    ClockService, ScreenSizeService, SearchService, FuckOffService, ScenesService],
+    ClockService, ScreenSizeService, SearchService, FuckOffService, ScenesService, LocationService],
   bootstrap: [AppComponent],
 })
 

@@ -11,18 +11,18 @@ import {trigger, animate, style, transition, state} from '@angular/animations';
     trigger(
       'myEnter',
       [
-        transition(":enter", [
-          style({ opacity: 0 }),
-          animate(400, style({ opacity: 1 }))
+        transition(':enter', [
+          style({opacity: 0}),
+          animate(400, style({opacity: 1}))
         ]),
-        transition(":leave", [
-          animate(400, style({ opacity: 0 }))
+        transition(':leave', [
+          animate(400, style({opacity: 0}))
         ])
       ]
     )
   ],
 })
-export class ContentComponent implements   OnInit {
+export class ContentComponent implements OnInit {
 
   @Input() showList: boolean;
   @Input() selectionSuggestion: number;

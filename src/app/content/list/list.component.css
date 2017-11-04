@@ -58,9 +58,9 @@ List element:
   margin-top: 0.5em;
   margin-bottom: 0.5em;
   overflow: hidden;
-  -webkit-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);
-  box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);
+  /*-webkit-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
+  /*-moz-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
+  /*box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
 }
 
 .list-element:hover {

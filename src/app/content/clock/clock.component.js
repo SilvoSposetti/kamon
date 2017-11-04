@@ -12,9 +12,9 @@ var ClockComponent = (function () {
         this.clockService = clockService;
     }
     ClockComponent.prototype.ngOnInit = function () {
-        this.updateTime();
+        this.updateData();
     };
-    ClockComponent.prototype.updateTime = function () {
+    ClockComponent.prototype.updateData = function () {
         var _this = this;
         this.timeSubscription = this.clockService.getSecondsFirstDigit().subscribe(function (value) {
             _this.secondsFirstDigit = value;

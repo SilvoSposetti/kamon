@@ -21,12 +21,12 @@ export class LissajousComponent implements OnInit, OnDestroy {
   // Setting this to 1 will show you the FPS of the last sampled frame only
   public fpsFilter = 100;
 
-  private spacing: number = 100;
+  private spacing: number = 60;
   private columns: number;
   private rows: number;
 
   private counter: number = 0;
-  private frequency: number = 0.01;
+  private frequency: number = 0.005;
   private amplitude: number = (this.spacing * 9 / 10) / 2;
 
   private gridValues: number[][][] = [];
@@ -101,7 +101,16 @@ export class LissajousComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.columns; i++) {
       this.gridValues.push([]);
       for (let j = 0; j < this.rows; j++) {
-        this.gridValues[i].push([i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2, i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2, i + 1, j + 1, i * this.spacing + this.spacing / 2, j * this.spacing + this.spacing / 2]);
+        this.gridValues[i].push(
+          [i * this.spacing + this.spacing / 2,
+            j * this.spacing + this.spacing / 2,
+            i * this.spacing + this.spacing / 2,
+            j * this.spacing + this.spacing / 2,
+            -Math.floor(this.columns / 2) + i + 1,
+            -Math.floor(this.rows / 2) + j + 1,
+            i * this.spacing + this.spacing / 2,
+            j * this.spacing + this.spacing / 2
+          ]);
       }
     }
   }
@@ -115,8 +124,8 @@ export class LissajousComponent implements OnInit, OnDestroy {
         let angularFrequencyY = this.gridValues[i][j][5];
         this.gridValues[i][j][6] = this.gridValues[i][j][0];
         this.gridValues[i][j][7] = this.gridValues[i][j][1];
-        this.gridValues[i][j][0] = centerX + this.amplitude * Math.cos(this.counter * this.frequency * angularFrequencyX);
-        this.gridValues[i][j][1] = centerY + this.amplitude * Math.cos(this.counter * this.frequency * angularFrequencyY);
+        this.gridValues[i][j][0] = centerX + this.amplitude * Math.sin(this.counter * this.frequency * angularFrequencyX);
+        this.gridValues[i][j][1] = centerY + this.amplitude * Math.sin(this.counter * this.frequency * angularFrequencyY);
       }
     }
     this.counter++;

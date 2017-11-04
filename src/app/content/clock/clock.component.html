@@ -1,4 +1,7 @@
 <div class="clock-parent">
+  <div class="weather-container" *ngIf="allowLocation && showWeather">
+    {{sunrise}} - {{sunset}} - {{temperature}} - {{tempMin}} - {{tempMax}} - {{windSpeed}} - {{windDirection}} - {{weather}}
+  </div>
   <div class="dial">
     <div class="hour-digits digits-container">
       <div class="digit">
@@ -29,9 +32,9 @@
   </div>
   <div class="horizontal-line"></div>
   <div class="clock-footer">
-    <div class="place-container">
+    <div class="place-container" *ngIf="allowLocation">
       <div class="place">
-        place
+        {{latitude}}, {{longitude}}, {{locationName}}
       </div>
     </div>
     <div class="date-container">

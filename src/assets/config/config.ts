@@ -10,6 +10,8 @@ export class Configuration {
               public suggestions: boolean,
               public searchDelimiter: string,
               public amountOfSuggestions: number,
+              public allowLocation: boolean,
+              public showWeather: boolean,
               public searchEngine: string[],
               public list: string[][]) {
   }
