@@ -1,9 +1,10 @@
 <div class="content-parent">
   <div class="content-container">
     <app-clock [@myEnter] *ngIf="showClock"></app-clock>
-    <div class="content-separator"></div>
+    <!--<div class="content-separator" *ngIf="showClock && showList"></div>-->
     <app-list [@myEnter] *ngIf="showList"></app-list>
-    <app-search [@myEnter] *ngIf="showSearch" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion" [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
+    <app-search [@myEnter] *ngIf="showSearch" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion"
+                [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
     <app-fuck-off [@myEnter] *ngIf="showFuckOff"></app-fuck-off>
     <app-scene-selector [@myEnter] *ngIf="showSceneSelector"></app-scene-selector>
     <div class="search-input-container">
@@ -17,8 +18,6 @@
                (ngModelChange)="searchInputChanged()"
                #eventName="ngModel">
         <!--(ngModelChange) must be after the [(ngModel)] so that the function can be called after the value changes-->
-        <!--required-->
-        <!--[pattern]="textRegEx"-->
       </form>
     </div>
   </div>

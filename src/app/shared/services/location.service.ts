@@ -11,31 +11,25 @@ export class LocationService {
   private longitudeSubject = new Subject<number>();
   private locationNameSubject = new Subject<string>();
   private weatherSubject = new Subject<string>();
-  private sunriseSubject = new Subject<number>();
-  private sunsetSubject = new Subject<number>();
+  private sunriseSubject = new Subject<string>();
+  private sunsetSubject = new Subject<string>();
   private temperatureSubject = new Subject<number>();
-  private tempMaxSubject = new Subject<number>();
-  private tempMinSubject = new Subject<number>();
-  private windSpeedSubject = new Subject<number>();
-  private windDirectionSubject = new Subject<number>();
+  private weatherIconSubject = new Subject<string>();
 
   private latitude: number = 0;
   private longitude: number = 0;
 
   constructor(private http: Http, private configService: ConfigService) {
-    if(this.configService.getConfig().allowLocation){
-      this.getLocation();
-    }
   }
 
-  private getLocation(): void {
+  public getLocation(): void {
     navigator.geolocation.getCurrentPosition((position) => {
       this.latitude = +position.coords.latitude;
       this.longitude = +position.coords.longitude;
       this.latitudeSubject.next(+this.latitude.toFixed(5));
       this.longitudeSubject.next(+this.longitude.toFixed(5));
       this.locationNameSubject.next('');
-      if (this.configService.getConfig().showWeather){
+      if (this.configService.getConfig().showWeather) {
         this.getWeatherFromEndPoint();
       }
     });
@@ -57,11 +51,11 @@ export class LocationService {
     return this.weatherSubject.asObservable();
   }
 
-  public getSunrise(): Observable<number> {
+  public getSunrise(): Observable<string> {
     return this.sunriseSubject.asObservable();
   }
 
-  public getSunset(): Observable<number> {
+  public getSunset(): Observable<string> {
     return this.sunsetSubject.asObservable();
   }
 
@@ -69,22 +63,9 @@ export class LocationService {
     return this.temperatureSubject.asObservable();
   }
 
-  public getMaxTemperature(): Observable<number> {
-    return this.tempMaxSubject.asObservable();
+  public getWeatherIcon(): Observable<string> {
+    return this.weatherIconSubject.asObservable();
   }
-
-  public getMinTemperature(): Observable<number> {
-    return this.tempMinSubject.asObservable();
-  }
-
-  public getWindSpeed(): Observable<number> {
-    return this.windSpeedSubject.asObservable();
-  }
-
-  public getWindDirection(): Observable<number> {
-    return this.windDirectionSubject.asObservable();
-  }
-
 
 
   public getWeatherFromEndPoint(): void {
@@ -93,16 +74,131 @@ export class LocationService {
     headers.append('Access-Control-Allow-Origin', '*');
     this.http.get('https://fcc-weather-api.glitch.me/api/current?lat=' + this.latitude + '&lon=' + this.longitude, headers).map(res => res.json()).subscribe(response => {
       this.locationNameSubject.next(response.name + ' - ' + response.sys.country);
-      this.weatherSubject.next(response.weather[0].main);
-      this.sunriseSubject.next(response.sys.sunrise);
-      this.sunsetSubject.next(response.sys.sunset);
+      this.weatherSubject.next(response.weather[0].description);
+      this.sunriseSubject.next(this.dateInSecondsToTime(response.sys.sunrise));
+      this.sunsetSubject.next(this.dateInSecondsToTime(response.sys.sunset));
       this.temperatureSubject.next(response.main.temp);
-      this.tempMinSubject.next(response.main.temp_min);
-      this.tempMaxSubject.next(response.main.temp_max);
-      this.windSpeedSubject.next(response.wind.speed);
-      this.windDirectionSubject.next(response.wind.deg);
+      this.weatherIconSubject.next(this.selectIcon(response.weather[0].id, response.sys.sunrise, response.sys.sunset));
+      console.log(response);
     });
   }
 
+  private dateInSecondsToTime(secondsDate: number): string {
+    let date = new Date(secondsDate * 1000);
+    let hours = this.correctLength(date.getHours().toString());
+    let minutes = this.correctLength(date.getMinutes().toString());
+    let seconds = this.correctLength(date.getSeconds().toString());
+    return hours + ' : ' + minutes + ' : ' + seconds;
+  }
 
+  private correctLength(digits: string): string {
+    if (digits.length <= 1) {
+      return '0' + digits;
+    }
+    else {
+      return digits;
+    }
+  }
+
+  private selectIcon(statusId: string, sunriseTime: number, sunsetTime: number): string {
+    let path = '../../../assets/img/weather/';
+    let isDay = false;
+    let now = new Date().getTime();
+    if (sunriseTime <= now && now <= sunsetTime) {
+      isDay = true;
+    }
+    // Switch-case below follows IDs of API defined by OpenWeatherMap
+    // Uses fall-through for each code that has the same image.
+    switch (statusId.toString()) {
+
+      case '800': {
+        if (isDay) {
+          return path + 'day-clear-sky.png';
+        }
+        else {
+          return path + 'night-clear-sky.png';
+        }
+      }
+      case '801': {
+        if (isDay) {
+          return path + 'day-few-clouds.png';
+        }
+        else {
+          return path + 'night-few-clouds.png';
+        }
+      }
+      case '802': {
+        return path + 'scattered-clouds.png';
+      }
+      case '803':
+      case '804': {
+        return path + 'broken-clouds.png';
+      }
+      case '300':
+      case '301':
+      case '302':
+      case '310':
+      case '311':
+      case '312':
+      case '313':
+      case '314':
+      case '321':
+      case '520':
+      case '521':
+      case '522':
+      case '531': {
+        return path + 'shower-rain.png';
+      }
+      case '500':
+      case '501':
+      case '502':
+      case '503':
+      case '504': {
+        if (isDay) {
+          return path + 'day-rain.png';
+        }
+        else {
+          return path + 'night-rain.png';
+        }
+      }
+      case '200':
+      case '201':
+      case '202':
+      case '210':
+      case '211':
+      case '212':
+      case '221':
+      case '230':
+      case '231':
+      case '232': {
+        return path + 'thunderstorm.png';
+      }
+      case '511':
+      case '600':
+      case '601':
+      case '602':
+      case '6011':
+      case '612':
+      case '615':
+      case '616':
+      case '620':
+      case '621':
+      case '622': {
+        return path + 'snow.png';
+      }
+      case '701':
+      case '711':
+      case '721':
+      case '731':
+      case '741':
+      case '751':
+      case '761':
+      case '762':
+      case '771':
+      case '781': {
+        return path + 'mist.png';
+      }
+    }
+    return path + 'empty.png';
+  }
 }

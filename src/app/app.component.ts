@@ -32,8 +32,10 @@ export class AppComponent implements OnInit {
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: any) {
 
-    if (event.ctrlKey) {
-      // do not stopPropagation and preventDefault because it is needed for Ctrl+Shift+i (open browser console)
+    if (event.which === 34) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log('pageDown');
       this.showList = !this.showList;
     }
     else if (event.which === 27) {
@@ -66,29 +68,16 @@ export class AppComponent implements OnInit {
       console.log('home');
       this.showSceneSelector = !this.showSceneSelector;
     }
-    else if (event.which === 35) {
+    else if (event.which === 33) {
       event.preventDefault();
       event.stopPropagation();
-      console.log('end');
+      console.log('pageUp');
       this.showClock = !this.showClock;
     }
 
     //this.keyboardEvent = event;
     //console.log(this.keyboardEvent);
 
-
-    // EXAMPLES:
-    //this.altKey = event.altKey;
-    //this.charCode = event.charCode;
-    //this.code = event.code;
-    //this.ctrlKey = event.ctrlKey;
-    //this.keyCode = event.keyCode;
-    //this.keyIdentifier = event.keyIdentifier;
-    //this.metaKey = event.metaKey;
-    //this.shiftKey = event.shiftKey;
-    //this.timeStamp = event.timeStamp;
-    //this.type = event.type;
-    //this.which = event.which;
 
   }
 

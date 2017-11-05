@@ -6,6 +6,7 @@ SCENE Polar: A number of nice polar functions and curves.
 SCENE Hilbert: A space filling algorithm
 SCENE Stain: A moving and transforming stain over a liquid surface.
 SCENE KD-tree: Subdivide space with rectangles with kd algorithm
+SCENE Functions: cycloid
 position service with city, coordinates, ... weather?
 Loop between scenes when they finish
 shortcuts to Leo for German and some other website for English translations

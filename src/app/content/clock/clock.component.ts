@@ -26,13 +26,10 @@ export class ClockComponent implements OnInit {
   public longitude: number = 0;
   public locationName: string = '';
   public weather: string = '';
-  public sunrise: number = 0;
-  public sunset: number = 0;
+  public sunrise: string = '';
+  public sunset: string = '';
   public temperature: number = 0;
-  public tempMin: number = 0;
-  public tempMax: number = 0;
-  public windSpeed: number = 0;
-  public windDirection: number = 0;
+  public iconPath : string = '../../../assets/img/weather/empty.png';
 
   public allowLocation: boolean = false;
   public showWeather: boolean = false;
@@ -87,8 +84,10 @@ export class ClockComponent implements OnInit {
 
     this.clockService.resetClock();
 
+
     // LOCATION & WEATHER:
     if(this.allowLocation){
+        this.locationService.getLocation();
       this.locationSubscription = this.locationService.getLatitude().subscribe( value =>{
         this.latitude = value;
       });
@@ -113,20 +112,9 @@ export class ClockComponent implements OnInit {
       this.locationSubscription = this.locationService.getTemperature().subscribe( value =>{
         this.temperature = value;
       });
-      this.locationSubscription = this.locationService.getMaxTemperature().subscribe( value =>{
-        this.tempMax = value;
+      this.locationSubscription = this.locationService.getWeatherIcon().subscribe( value =>{
+        this.iconPath = value;
       });
-      this.locationSubscription = this.locationService.getMinTemperature().subscribe( value =>{
-        this.tempMin = value;
-      });
-      this.locationSubscription = this.locationService.getWindSpeed().subscribe( value =>{
-        this.windSpeed = value;
-      });
-      this.locationSubscription = this.locationService.getWindDirection().subscribe( value =>{
-        this.windDirection = value;
-      });
-
-
     }
   }
 

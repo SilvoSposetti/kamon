@@ -1,7 +1,32 @@
 <div class="clock-parent">
-  <div class="weather-container" *ngIf="allowLocation && showWeather">
-    {{sunrise}} - {{sunset}} - {{temperature}} - {{tempMin}} - {{tempMax}} - {{windSpeed}} - {{windDirection}} - {{weather}}
+  <div class="clock-header" *ngIf="allowLocation && showWeather">
+    <div class="header-left-side">
+      <div class="sunrise">
+        <div class="sunrise-time">
+          {{sunrise}}
+        </div>
+        <img class="sun-img" src="../../../assets/img/weather/sunrise.png">
+      </div>
+      <div class="temperature second-row">
+          temp. {{temperature}} °C
+      </div>
+    </div>
+    <div class="header-center">
+      <img class="weather-img" src="{{iconPath}}">
+    </div>
+    <div class="header-right-side">
+      <div class="sunset">
+        <img class="sun-img" src="../../../assets/img/weather/sunset.png">
+        <div class="sunset-time">
+          {{sunset}}
+        </div>
+      </div>
+      <div class="weather second-row">
+        {{weather}}
+      </div>
+    </div>
   </div>
+  <div class="horizontal-line"></div>
   <div class="dial">
     <div class="hour-digits digits-container">
       <div class="digit">
@@ -32,14 +57,20 @@
   </div>
   <div class="horizontal-line"></div>
   <div class="clock-footer">
-    <div class="place-container" *ngIf="allowLocation">
-      <div class="place">
-        {{latitude}}, {{longitude}}, {{locationName}}
-      </div>
+    <div class="coordinate-container" *ngIf="allowLocation">
+      lat. {{latitude}} °<br>lon. {{longitude}} °
     </div>
     <div class="date-container">
+      <div class="day-of-week">
+        {{dayOfWeek}},
+      </div>
       <div class="date">
-        {{dayOfWeek}}, {{day}}.{{month}}.{{year}}
+        {{day}} . {{month}} . {{year}}
+      </div>
+    </div>
+    <div class="place-container" *ngIf="allowLocation">
+      <div class="place">
+        {{locationName}}
       </div>
     </div>
   </div>

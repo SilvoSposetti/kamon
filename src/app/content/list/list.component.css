@@ -4,6 +4,7 @@
   justify-content: center;
   flex-direction: column;
   font-size: var(--list-default-font-size);
+  padding: 1.5em;
 }
 
 .list-separator {

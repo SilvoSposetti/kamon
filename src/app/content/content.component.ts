@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SearchService} from '../shared/services/search.service';
 import {Subscription} from 'rxjs/Subscription';
-import {trigger, animate, style, transition, state} from '@angular/animations';
+import {trigger, animate, style, transition} from '@angular/animations';
 
 @Component({
   selector: 'app-content',
