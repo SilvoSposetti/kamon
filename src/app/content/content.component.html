@@ -2,7 +2,7 @@
   <div class="content-container">
     <app-clock [@myEnter] *ngIf="showClock"></app-clock>
     <!--<div class="content-separator" *ngIf="showClock && showList"></div>-->
-    <app-list [@myEnter] *ngIf="showList" [elements]="elements"></app-list>
+    <app-list [@myEnter] *ngIf="showList" [elements]="elements" [categories]="categories"></app-list>
     <app-search [@myEnter] *ngIf="showSearch" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion"
                 [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
     <app-fuck-off [@myEnter] *ngIf="showFuckOff"></app-fuck-off>
