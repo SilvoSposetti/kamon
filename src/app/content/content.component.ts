@@ -72,7 +72,7 @@ export class ContentComponent implements OnInit {
     });
   }
 
-  private searchInputChanged(): void {
+  public searchInputChanged(): void {
     this.searchService.setSearchString(this.searchText); // Update content of searchString
     this.checkShowSearch();
   }
