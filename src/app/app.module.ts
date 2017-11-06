@@ -41,6 +41,7 @@ import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
+import { MyBlinkDirective } from './shared/directives/my-blink.directive';
 
 
 
@@ -64,7 +65,8 @@ import {LocationService} from './shared/services/location.service';
     RainComponent,
     LissajousComponent,
     FunctionsComponent,
-    HarmonicFunctionsComponent],
+    HarmonicFunctionsComponent,
+    MyBlinkDirective],
   imports: [
     HttpModule,
     BrowserModule,

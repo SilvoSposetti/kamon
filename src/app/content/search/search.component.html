@@ -1,17 +1,17 @@
 <div class="search-parent" [style.background]="shortcut[4]">
   <div class="search-background-diffuse"></div>
   <div class="search-text-container">
-    <div class="search-text">
-      {{searchText}}
-    </div>
+    <div class="search-text">{{searchText}}</div>
+    <div myBlink>|</div>
   </div>
   <div class="suggestions-container">
     <div class="suggestion" *ngFor="let element of searchSuggestions; let i = index">
       <div class="suggestions-separator" *ngIf="i !== 0"></div>
       <div class="suggestion-text"
+           (click)="clickedSuggestion(i)"
            [ngClass]="{suggestionHighlighted: selectionSuggestion === i}"
            [innerHTML]="searchSuggestions[i]"
-      (click)="clickedSuggestion(i)">
+      >
       </div>
     </div>
   </div>

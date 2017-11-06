@@ -32,10 +32,12 @@ Search Text:
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: var(--search-text-font-size);
+
 }
 
 .search-text {
-  font-size: var(--search-text-font-size);
+  white-space: pre;
 }
 
 /***********************************************************************************************************************

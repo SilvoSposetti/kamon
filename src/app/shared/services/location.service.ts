@@ -79,7 +79,6 @@ export class LocationService {
       this.sunsetSubject.next(this.dateInSecondsToTime(response.sys.sunset));
       this.temperatureSubject.next(response.main.temp);
       this.weatherIconSubject.next(this.selectIcon(response.weather[0].id, response.sys.sunrise, response.sys.sunset));
-      console.log(response);
     });
   }
 
@@ -104,7 +103,7 @@ export class LocationService {
     let path = '../../../assets/img/weather/';
     let isDay = false;
     let now = new Date().getTime();
-    if (sunriseTime <= now && now <= sunsetTime) {
+    if (sunriseTime * 1000 <= now && now <= sunsetTime * 1000) {
       isDay = true;
     }
     // Switch-case below follows IDs of API defined by OpenWeatherMap

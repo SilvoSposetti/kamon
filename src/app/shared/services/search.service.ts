@@ -23,20 +23,20 @@ export class SearchService {
 
   private shortcutSubject: Subject<string[]> = new Subject<string[]>();
   private shortcut: string[] = [];
-  private regex = new RegExp('^\\s+$');
+  private regex = new RegExp('^\\s*$');
 
   constructor(private jsonP: Jsonp, private configService: ConfigService) {
   }
 
   public setSearchString(newSearchString: string): void {
-    if(newSearchString.match(this.regex)){
-      this.searchString= '';
+    if (newSearchString.match(this.regex)) {
+      this.searchString = '';
       this.searchStringSubject.next(this.searchString);
       this.updateShortcut();
       this.requestSuggestions();
       this.resetSelection();
     }
-    else{
+    else {
       this.searchStringSubject.next(newSearchString);
       this.searchString = newSearchString;
       this.updateShortcut();
