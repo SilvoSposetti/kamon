@@ -25,7 +25,7 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.running = true;
     this.loadPoints();
-    this.paint();
+    requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {

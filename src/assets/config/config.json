@@ -1,8 +1,8 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": true ,
-  "defaultScene": "lissajous",
+  "showClock": false ,
+  "defaultScene": "tree-map",
   "showFuckOff": false,
   "openLinkInNewTab": false,
   "showList": false,

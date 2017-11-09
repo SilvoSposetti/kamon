@@ -27,13 +27,15 @@ export class LissajousComponent implements OnInit, OnDestroy {
 
   private counter: number = 0;
   private frequency: number = 0.005;
-  private amplitude: number = (this.spacing * 9 / 10) / 2;
+  private amplitude: number;
 
   private gridValues: number[][][] = [];
 
   // [xPos, yPos, xCenterPos, yCenterPos, sinMultiplier, cosMultiplier, previousXPos, previousYPos]
 
   ngOnInit() {
+    this.spacing = this.screenWidth/61;
+    this.amplitude = (this.spacing * 9 / 10) / 2;
     this.running = true;
     this.setup();
     this.paint();
@@ -106,8 +108,8 @@ export class LissajousComponent implements OnInit, OnDestroy {
             j * this.spacing + this.spacing / 2,
             i * this.spacing + this.spacing / 2,
             j * this.spacing + this.spacing / 2,
-            -Math.floor(this.columns / 2) + i + 1,
-            -Math.floor(this.rows / 2) + j + 1,
+            -Math.floor(this.columns / 2) + i,
+            -Math.floor(this.rows / 2) + j,
             i * this.spacing + this.spacing / 2,
             j * this.spacing + this.spacing / 2
           ]);

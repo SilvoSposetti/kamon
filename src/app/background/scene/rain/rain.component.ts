@@ -41,7 +41,7 @@ export class RainComponent implements OnInit, OnDestroy {
     this.running = true;
     this.spacingBetweenUmbrellas = this.screenHeight / (this.numOfUmbrellas + 1);
     this.setup();
-    this.paint();
+    requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {

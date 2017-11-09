@@ -5,8 +5,9 @@ SCENE Shoal: A number of fishes shoaling together (or birds with boids algroithm
 SCENE Polar: A number of nice polar functions and curves.
 SCENE Hilbert: A space filling algorithm
 SCENE Stain: A moving and transforming stain over a liquid surface.
-SCENE KD-tree: Subdivide space with rectangles with kd algorithm
 SCENE Functions: cycloid
+SCENE Sort: various sorting algorithms
+SCENE Polar Roses:
 Loop between scenes when they finish
 shortcuts to Leo for German and some other website for English translations
 Change FOAAS with real citations, because calling an api to get always the same string seems kind of dumb.
@@ -14,4 +15,4 @@ Fix image bug when building with base-href: ./
 add Math category with desmos, wolfram
 add google scholar to Uni
 add click functionality to suggestions (not only select with arrows)
-
+check isRunning for every scene, so that onDestroy it will stop. Then remove console.log('finished')

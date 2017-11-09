@@ -48,8 +48,7 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.running = true;
     this.setup();
-    this.paint();
-
+    requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {

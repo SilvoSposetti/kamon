@@ -36,7 +36,7 @@ export class ScenesService {
 
   public startScenes(): void {
     // Add new scenes in array below!
-    this.scenesArray = ['asteroids', 'phyllotaxy', 'maze', 'perlin-field', 'rain', 'lissajous', 'functions','harmonic-functions'];
+    this.scenesArray = ['asteroids', 'phyllotaxy', 'maze', 'perlin-field', 'rain', 'lissajous', 'functions','harmonic-functions', 'tree-map'];
     this.setSceneFromName(this.configService.getConfig().defaultScene);
   }
 

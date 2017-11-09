@@ -27,11 +27,8 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   // sin, cos
   private rowHeight: number;
   private rowsCenter: number[] = [];
-  private xForward: number[] = [3, 3, 6, 3];
+  private xForward: number[] = [5.5, 4.5, 5, 3.5];
   private loops: number[] = [];
-
-
-
 
   constructor() {
   }
@@ -39,7 +36,7 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.running = true;
     this.setup();
-    this.paint();
+    requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {
@@ -85,8 +82,6 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
       ctx.lineTo(this.functionValues[i][0], this.functionValues[i][1]);
       ctx.closePath();
       ctx.stroke();
-
-
     }
 
 
@@ -140,7 +135,7 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   }
 
   private function0(functionNumber: number, x: number): number {
-    let angularVelocity = 0.05;
+    let angularVelocity = 0.02;
     return this.rowsCenter[functionNumber] + this.rowHeight * 4 / 10 * Math.sin(x * angularVelocity) * Math.pow(-1, this.loops[functionNumber]) * (0.1) * Math.ceil(10 - (this.loops[functionNumber] * 0.5 + 1) % 11);
   }
 
@@ -150,8 +145,8 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   }
 
   private function2(functionNumber: number, x: number): number {
-    let angularVelocity1 = 0.02;
-    let angularVelocity2 = 0.03;
+    let angularVelocity1 = 0.012;
+    let angularVelocity2 = 0.01;
     return this.rowsCenter[functionNumber] + this.rowHeight * 4 / 10 * Math.sin(x * angularVelocity1 + Math.PI * (this.loops[functionNumber] % 16) / 8) * Math.sin(x * angularVelocity2);
   }
 

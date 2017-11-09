@@ -52,7 +52,6 @@ export class ContentComponent implements OnInit {
     this.showSearch = false;
     this.listenForSearch();
     this.configList = this.configService.getConfig().list;
-    console.log(this.configList);
     this.readList();
     this.searchService.setList(this.elements);
   }

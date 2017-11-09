@@ -23,7 +23,7 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.startAsteroids();
     this.running = true;
-    this.paint();
+    requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {

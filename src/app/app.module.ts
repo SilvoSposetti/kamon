@@ -42,6 +42,7 @@ import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
 import { MyBlinkDirective } from './shared/directives/my-blink.directive';
+import { TreeMapComponent } from './background/scene/tree-map/tree-map.component';
 
 
 
@@ -66,7 +67,8 @@ import { MyBlinkDirective } from './shared/directives/my-blink.directive';
     LissajousComponent,
     FunctionsComponent,
     HarmonicFunctionsComponent,
-    MyBlinkDirective],
+    MyBlinkDirective,
+    TreeMapComponent],
   imports: [
     HttpModule,
     BrowserModule,
