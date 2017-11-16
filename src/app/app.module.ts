@@ -43,6 +43,7 @@ import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
 import { MyBlinkDirective } from './shared/directives/my-blink.directive';
 import { TreeMapComponent } from './background/scene/tree-map/tree-map.component';
+import { SortingAlgorithmsComponent } from './background/scene/sorting-algorithms/sorting-algorithms.component';
 
 
 
@@ -68,7 +69,8 @@ import { TreeMapComponent } from './background/scene/tree-map/tree-map.component
     FunctionsComponent,
     HarmonicFunctionsComponent,
     MyBlinkDirective,
-    TreeMapComponent],
+    TreeMapComponent,
+    SortingAlgorithmsComponent],
   imports: [
     HttpModule,
     BrowserModule,

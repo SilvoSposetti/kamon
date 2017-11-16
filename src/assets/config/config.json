@@ -2,7 +2,7 @@
   "useCustomBackgroundImage": false,
   "useScene": true,
   "showClock": false ,
-  "defaultScene": "tree-map",
+  "defaultScene": "sorting-algorithms",
   "showFuckOff": false,
   "openLinkInNewTab": false,
   "showList": false,
@@ -54,7 +54,7 @@
       "Uni",
       "UniMail",
       "u",
-      "https://idlmail05.lotus.uzh.ch/",
+      "https://webmail.uzh.ch/",
       null,
       "#0099ff"
     ],

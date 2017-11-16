@@ -16,3 +16,5 @@ add Math category with desmos, wolfram
 add google scholar to Uni
 add click functionality to suggestions (not only select with arrows)
 check isRunning for every scene, so that onDestroy it will stop. Then remove console.log('finished')
+Add sliders for parameters of scenes
+Fix maze error

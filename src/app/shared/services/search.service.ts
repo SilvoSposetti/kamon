@@ -93,7 +93,7 @@ export class SearchService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin', '*');
-        this.jsonP.request('http://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchString, headers).map(res => res.json()).subscribe(response => {
+        this.jsonP.request('https://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchString, headers).map(res => res.json()).subscribe(response => {
           this.suggestionsArray = response[1].slice(0, this.configService.getConfig().amountOfSuggestions);
           this.suggestionsArraySubject.next(this.suggestionsArray);
           // Reset suggestions styled and elaborate the new ones;
