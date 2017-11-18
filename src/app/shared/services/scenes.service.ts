@@ -46,7 +46,8 @@ export class ScenesService {
       'functions',
       'harmonic-functions',
       'tree-map',
-      'sorting-algorithms'
+      'sorting-algorithms',
+      'boids'
     ];
     this.setSceneFromName(this.configService.getConfig().defaultScene);
   }
