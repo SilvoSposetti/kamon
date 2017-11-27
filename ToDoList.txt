@@ -12,10 +12,7 @@ Loop between scenes when they finish
 shortcuts to Leo for German and some other website for English translations
 Change FOAAS with real citations, because calling an api to get always the same string seems kind of dumb.
 Fix image bug when building with base-href: ./
-add Math category with desmos, wolfram
-add google scholar to Uni
-add click functionality to suggestions (not only select with arrows)
+fix bug of click functionality on suggestions (not only select with arrows)
 check isRunning for every scene, so that onDestroy it will stop. Then remove console.log('finished')
-Add sliders for parameters of scenes
 Fix maze error
 

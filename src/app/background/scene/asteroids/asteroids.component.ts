@@ -14,8 +14,9 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
   private asteroids: number[][] = [];
   // [posX,posY,velX,velY,mass,previousXPos,previousYPos]
   private massInCenter = 10;
-  private gravConst = 100;
-  private nrOfElements = 1000;
+  private gravityConstant = 100;
+  private nrOfElements = 600;
+
 
   constructor() {
   }
@@ -41,18 +42,15 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
 
     ctx.fillStyle = 'rgba(25,25,25,0.05)';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
-    ctx.strokeStyle = '#ffffff';
+
+    ctx.strokeStyle = '#cccccc';
     ctx.beginPath();
+    ctx.lineWidth = 1;
     ctx.arc(this.screenWidth / 2, this.screenHeight / 2, 30, 0, 2 * Math.PI);
     ctx.stroke();
 
     this.updateAsteroids();
-    ctx.fillStyle = 'rgb(255,255,255)';
     for (let i = 0; i < this.nrOfElements; ++i) {
-      //ctx.beginPath();
-      //ctx.save();
-      //ctx.fillRect(this.asteroids[i][0], this.asteroids[i][1], 2, 2);
-      //ctx.restore();
 
       ctx.strokeStyle = '#aaaaaa';
       ctx.lineWidth = 2;
@@ -73,14 +71,17 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.nrOfElements; ++i) {
       let element: number[] = [];
       let randomAngle = this.randomFloat(0, 2 * Math.PI);
-      let x = this.screenWidth / 2 - this.randomFloat(100, 450) * Math.cos(randomAngle);
-      let y = this.screenHeight / 2 - this.randomFloat(100, 450) * Math.sin(randomAngle);
-      let randomAngleTurned = randomAngle + Math.PI / 2;
+      let x = this.screenWidth / 2 - this.randomFloat(100, this.screenWidth/2) * Math.cos(randomAngle);
+      let y = this.screenHeight / 2 - this.randomFloat(100, this.screenWidth/2) * Math.sin(randomAngle);
+      let randomAngleTurned = randomAngle + Math.PI/2;
       element.push(x);
       element.push(y);
-      element.push(1.7 * Math.cos(randomAngleTurned));
-      element.push(1.7 * Math.sin(randomAngleTurned));
-      element.push(Math.random() * 5);
+      let distanceFromCenterX = this.screenWidth/2 -x;
+      let distanceFromCenterY = this.screenHeight/2 -y;
+      let distance = Math.sqrt(Math.pow(distanceFromCenterX,2) + Math.pow(distanceFromCenterY,2));
+      element.push(Math.sqrt((this.gravityConstant*this.massInCenter)/distance) * Math.cos(randomAngleTurned));
+      element.push(Math.sqrt((this.gravityConstant*this.massInCenter)/distance) * Math.sin(randomAngleTurned));
+      element.push(100);
       element.push(x);
       element.push(y);
       this.asteroids.push(element);
@@ -96,7 +97,7 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
       if (distanceSquared <= 10000) {
         distanceSquared = 10000;
       }
-      let force = this.gravConst * this.massInCenter * this.asteroids[i][4] / distanceSquared;
+      let force = this.gravityConstant * this.massInCenter * this.asteroids[i][4] / distanceSquared;
 
       let vectorToCenterLength = Math.sqrt(Math.pow(vectorToCenterX, 2) + Math.pow(vectorToCenterY, 2));
       vectorToCenterX /= vectorToCenterLength;
@@ -109,10 +110,6 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
       this.asteroids[i][1] += this.asteroids[i][3];
 
     }
-  }
-
-  private randomInt(min: number, max: number): number {
-    return Math.floor(Math.random() * (max - min + 1) + min);
   }
 
   private randomFloat(min: number, max: number): number {

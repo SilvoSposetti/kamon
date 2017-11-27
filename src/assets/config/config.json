@@ -2,7 +2,7 @@
   "useCustomBackgroundImage": false,
   "useScene": true,
   "showClock": false ,
-  "defaultScene": "phyllotaxy",
+  "defaultScene": "asteroids",
   "showFuckOff": false,
   "openLinkInNewTab": false,
   "showList": false,
@@ -20,19 +20,19 @@
   "list": [
     [
       "Silvo",
-      "GitHub",
-      "G",
-      "https://github.com",
-      "/search?q={}",
-      "#373737"
-    ],
-    [
-      "Silvo",
       "Gmail",
       "g",
       "https://mail.google.com/mail/u/0/?tab=wm#inbox",
       null,
       "#4285f4"
+    ],
+    [
+      "Silvo",
+      "GitHub",
+      "G",
+      "https://github.com",
+      "/search?q={}",
+      "#373737"
     ],
     [
       "Silvo",
@@ -49,6 +49,14 @@
       "https://web.whatsapp.com/",
       null,
       "#2a948a"
+    ],
+    [
+      "Silvo",
+      "YouTube",
+      "y",
+      "https://www.youtube.com/",
+      "/results?search_query={}",
+      "#fc0101"
     ],
     [
       "Uni",
@@ -76,43 +84,27 @@
     ],
     [
       "Uni",
-      "Grades",
-      "n",
-      "http://www.students.uzh.ch/de/record/uebersicht.html",
+      "Scholar",
+      "s",
+      "https://scholar.google.ch/",
       null,
       "#0099ff"
     ],
     [
-      "Lurk",
-      "Facebook",
-      "f",
-      "https://www.facebook.com",
-      "/search/top/?q={}",
-      "#3b5998"
+      "Uni",
+      "Wolfram Alpha",
+      "W",
+      "https://www.wolframalpha.com/",
+      null,
+      "#FF7D00"
     ],
     [
-      "Lurk",
+      "Fun",
       "Reddit",
       "r",
       "https://www.reddit.com",
       "/search?q={}",
       "#5f99cf"
-    ],
-    [
-      "Lurk",
-      "Deviantart",
-      "D",
-      "https://plasticmushroom.deviantart.com/",
-      null,
-      "#05cc47"
-    ],
-    [
-      "Lurk",
-      "Ektoplazm",
-      "e",
-      "http://www.ektoplazm.com/",
-      null,
-      "#5fcc93"
     ],
     [
       "Fun",
@@ -148,12 +140,21 @@
     ],
     [
       "Other",
-      "StackOverflow",
-      "s",
-      "https://stackoverflow.com/",
+      "Desmos",
+      "D",
+      "https://www.desmos.com/calculator",
       null,
-      "#f48024"
+      "#087B38"
     ],
+    [
+      "Other",
+      "Facebook",
+      "f",
+      "https://www.facebook.com",
+      "/search/top/?q={}",
+      "#3b5998"
+    ],
+
     [
       "Other",
       "Digitec",

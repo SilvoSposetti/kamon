@@ -18,6 +18,7 @@ export class MazeComponent implements OnInit, OnDestroy {
   private rows: number;
   private counter = 0;
   private nrOfElements: number;
+  private nrOfCellsPerFrame: number = 100;
 
   constructor() {
   }
@@ -25,7 +26,7 @@ export class MazeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.running = true;
     this.initSectors();
-    this.paint();
+    requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {
@@ -33,53 +34,55 @@ export class MazeComponent implements OnInit, OnDestroy {
   }
 
   private paint(): void {
-    if (!this.running) {
-      return;
-    }
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     ctx.stroke();
     //for (let k = 0; k < this.columns; k++) {
-      for (let k = 0; k < 50; k++) {
-      let i = this.counter % this.columns;
-      let j = Math.floor(this.counter / this.columns);
+    for (let k = 0; k < this.nrOfCellsPerFrame; k++) {
+      if (this.counter < this.nrOfElements) {
+        let i = this.counter % this.columns;
+        let j = Math.floor(this.counter / this.columns);
 
-      let x = this.sectors[i][j][0];
-      let y = this.sectors[i][j][1];
+        let x = this.sectors[i][j][0];
+        let y = this.sectors[i][j][1];
 
-      // Paint current frame
+        // Paint current frame
 
-      let random = Math.random();
+        let random = Math.random();
 
-      if (random < 0.25) {
-        ctx.beginPath();
-        ctx.strokeStyle = '#dddddd';
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + this.spacing, y + this.spacing);
-        ctx.stroke();
+        if (random < 0.25) {
+          ctx.beginPath();
+          ctx.strokeStyle = '#dddddd';
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + this.spacing, y + this.spacing);
+          ctx.stroke();
+        }
+        else if (random < 0.9) {
+          ctx.beginPath();
+          ctx.strokeStyle = '#dddddd';
+          ctx.moveTo(x + this.spacing, y);
+          ctx.lineTo(x, y + this.spacing);
+          ctx.stroke();
+        }
       }
-      else if(random<0.9){
-        ctx.beginPath();
-        ctx.strokeStyle = '#dddddd';
-        ctx.moveTo(x + this.spacing, y);
-        ctx.lineTo(x, y + this.spacing);
-        ctx.stroke();
-      }
-      else{
+      else {
+        this.running = false;
       }
 
       this.counter++;
     }
-    if (this.counter >= this.nrOfElements) {
-      this.running = false;
+
+    //Schedule next
+    if (this.running) {
+      requestAnimationFrame(() => this.paint());
     }
-     //Schedule next
-    requestAnimationFrame(() => this.paint());
+    else {
+      //console.log('finished');
+    }
   }
 
   private initSectors(): void {
     this.columns = Math.ceil(this.screenWidth / this.spacing);
     this.rows = Math.ceil(this.screenHeight / this.spacing);
-    console.log(this.screenWidth, this.screenHeight, this.columns, this.rows);
     this.nrOfElements = this.rows * this.columns;
     for (let i = 0; i < this.columns; ++i) {
       this.sectors.push([]);

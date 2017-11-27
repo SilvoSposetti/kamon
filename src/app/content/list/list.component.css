@@ -56,8 +56,8 @@ List element:
   flex-direction: row;
   /*border: 1px solid white;*/
   border-radius: 1.5em;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
   overflow: hidden;
   /*-webkit-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
   /*-moz-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
