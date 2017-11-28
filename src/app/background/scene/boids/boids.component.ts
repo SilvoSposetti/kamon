@@ -94,9 +94,7 @@ export class BoidsComponent implements OnInit {
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    //ctx.fillStyle = 'rgba(25,25,25,0.05)';
     ctx.fillStyle = 'rgba(25,25,25,0.9)';
-
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     // ***** DRAW BOIDS *****

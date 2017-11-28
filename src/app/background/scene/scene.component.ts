@@ -15,7 +15,7 @@ export class SceneComponent implements OnInit {
   private scenesSubscription: Subscription;
   public sceneWidth: number;
   public sceneHeight: number;
-  public sceneNr: number;
+  public sceneName: string;
   public scenesArray: string[];
 
   constructor(private screenSizeService: ScreenSizeService, private scenesService: ScenesService) {
@@ -23,7 +23,7 @@ export class SceneComponent implements OnInit {
 
   ngOnInit() {
 
-    this.getSceneNr();
+    this.getSceneName();
     this.scenesArray = this.scenesService.getSceneArray();
     this.updateWindowSize();
     this.scenesService.startScenes();
@@ -41,9 +41,9 @@ export class SceneComponent implements OnInit {
     });
   }
 
-  private getSceneNr(): void {
-    this.scenesSubscription = this.scenesService.getSceneNr().subscribe((value) => {
-      this.sceneNr = value;
+  private getSceneName(): void {
+    this.scenesSubscription = this.scenesService.getSceneName().subscribe((value) => {
+      this.sceneName = value;
     });
   }
 }

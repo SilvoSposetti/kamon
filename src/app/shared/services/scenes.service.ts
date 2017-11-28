@@ -8,8 +8,9 @@ export class ScenesService {
 
   private scenesArray: string[];
   private selectedSceneName: string;
-  private selectedSceneNrSubject: Subject<number> = new Subject<number>();
+  private selectedSceneNameSubject: Subject<string> = new Subject<string>();
   private selectedSceneNr: number;
+  private selectedSceneNrSubject: Subject<number> = new Subject<number>();
 
   constructor(private configService: ConfigService) {
   }
@@ -18,14 +19,19 @@ export class ScenesService {
     this.selectedSceneName = sceneName;
     this.selectedSceneNr = this.scenesArray.indexOf(this.selectedSceneName);
     this.selectedSceneNrSubject.next(this.selectedSceneNr);
+    this.selectedSceneNameSubject.next(this.selectedSceneName);
   }
 
   public setSceneFromNr(sceneNr: number): void {
     this.selectedSceneNr = sceneNr;
     this.selectedSceneName = this.scenesArray[this.selectedSceneNr];
     this.selectedSceneNrSubject.next(this.selectedSceneNr);
+    this.selectedSceneNameSubject.next(this.selectedSceneName);
   }
 
+  public getSceneName(): Observable<string> {
+    return this.selectedSceneNameSubject.asObservable();
+  }
   public getSceneNr(): Observable<number> {
     return this.selectedSceneNrSubject.asObservable();
   }
@@ -33,6 +39,7 @@ export class ScenesService {
   public getSceneArray(): string[] {
     return this.scenesArray;
   }
+
 
   public startScenes(): void {
     // Add new scenes in array below!
@@ -49,6 +56,7 @@ export class ScenesService {
       'sorting-algorithms',
       'boids'
     ];
+    this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);
   }
 

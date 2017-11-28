@@ -1,14 +1,14 @@
 <div class="scene-parent">
-  <app-asteroids *ngIf="sceneNr === 0" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-asteroids>
-  <app-phyllotaxy *ngIf="sceneNr === 1" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-phyllotaxy>
-  <app-maze *ngIf="sceneNr === 2" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-maze>
-  <app-perlin-field *ngIf="sceneNr === 3" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-perlin-field>
-  <app-rain *ngIf="sceneNr === 4" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-rain>
-  <app-lissajous *ngIf="sceneNr === 5" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-lissajous>
-  <app-functions *ngIf="sceneNr === 6" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-functions>
-  <app-harmonic-functions *ngIf="sceneNr === 7" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-harmonic-functions>
-  <app-tree-map *ngIf="sceneNr === 8" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-tree-map>
-  <app-sorting-algorithms *ngIf="sceneNr === 9" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-sorting-algorithms>
-  <app-boids *ngIf="sceneNr === 10" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-boids>
+  <app-asteroids *ngIf="sceneName === 'asteroids'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-asteroids>
+  <app-phyllotaxy *ngIf="sceneName === 'phyllotaxy'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-phyllotaxy>
+  <app-maze *ngIf="sceneName === 'maze'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-maze>
+  <app-perlin-field *ngIf="sceneName === 'perlin-field'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-perlin-field>
+  <app-rain *ngIf="sceneName === 'rain'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-rain>
+  <app-lissajous *ngIf="sceneName === 'lissajous'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-lissajous>
+  <app-functions *ngIf="sceneName === 'functions'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-functions>
+  <app-harmonic-functions *ngIf="sceneName === 'harmonic-functions'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-harmonic-functions>
+  <app-tree-map *ngIf="sceneName === 'tree-map'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-tree-map>
+  <app-sorting-algorithms *ngIf="sceneName === 'sorting-algorithms'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-sorting-algorithms>
+  <app-boids *ngIf="sceneName === 'boids'" [screenWidth]="sceneWidth" [screenHeight]="sceneHeight"></app-boids>
 
 </div>

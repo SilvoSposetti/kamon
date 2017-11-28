@@ -2,7 +2,7 @@
   "useCustomBackgroundImage": false,
   "useScene": true,
   "showClock": false ,
-  "defaultScene": "asteroids",
+  "defaultScene": "maze",
   "showFuckOff": false,
   "openLinkInNewTab": false,
   "showList": false,
