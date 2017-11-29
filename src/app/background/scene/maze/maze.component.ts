@@ -11,14 +11,29 @@ export class MazeComponent implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
 
+  public fps = 0;
+  private now: number;
+  private lastUpdate = new Date().getTime();
+  public frameFps = 0;
+  // The higher this value, the less the FPS will be affected by quick changes
+  // Setting this to 1 will show you the FPS of the last sampled frame only
+  public fpsFilter = 100;
+
+
   private running: boolean;
-  private spacing: number = 15;
+  private spacing: number = 10;
   private sectors: number[][][] = [];
   private columns: number;
   private rows: number;
   private counter = 0;
   private nrOfElements: number;
   private nrOfCellsPerFrame: number = 100;
+
+  private positions: Set<number[]> = new Set<number[]>();
+
+  private blankColour: number = 50;
+  private wallColour: number = 10;
+  private stainColour: number = 200;
 
   constructor() {
   }
@@ -36,7 +51,22 @@ export class MazeComponent implements OnInit, OnDestroy {
   private paint(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     ctx.stroke();
-    //for (let k = 0; k < this.columns; k++) {
+    if (this.counter === 0) {
+      ctx.fillStyle = this.colorToHex(this.blankColour);
+      ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+    }
+
+
+    // Calculates fps
+    this.now = new Date().getTime();
+    this.frameFps = 1000 / (this.now - this.lastUpdate);
+    if (this.now != this.lastUpdate) {
+      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
+      this.frameFps = Math.ceil(this.frameFps);
+      this.lastUpdate = this.now;
+    }
+
+
     for (let k = 0; k < this.nrOfCellsPerFrame; k++) {
       if (this.counter < this.nrOfElements) {
         let i = this.counter % this.columns;
@@ -46,29 +76,28 @@ export class MazeComponent implements OnInit, OnDestroy {
         let y = this.sectors[i][j][1];
 
         // Paint current frame
-
+        ctx.strokeStyle = this.colorToHex(this.wallColour);
         let random = Math.random();
 
         if (random < 0.25) {
           ctx.beginPath();
-          ctx.strokeStyle = '#dddddd';
           ctx.moveTo(x, y);
           ctx.lineTo(x + this.spacing, y + this.spacing);
           ctx.stroke();
         }
         else if (random < 0.9) {
           ctx.beginPath();
-          ctx.strokeStyle = '#dddddd';
           ctx.moveTo(x + this.spacing, y);
           ctx.lineTo(x, y + this.spacing);
           ctx.stroke();
         }
       }
-      else {
-        this.running = false;
-      }
-
       this.counter++;
+    }
+    if (this.counter >= this.nrOfElements) {
+      //this.running = false;
+      this.updatePath();
+
     }
 
     //Schedule next
@@ -94,4 +123,92 @@ export class MazeComponent implements OnInit, OnDestroy {
     }
   }
 
+  private updatePath(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+    let imageData = ctx.getImageData(0, 0, this.screenWidth, this.screenHeight);
+    let data = imageData.data;
+
+    let newSet: Set<number[]> = new Set<number[]>();
+    newSet.clear();
+    // if set is empty then take a random point on the image.
+    if (this.positions.size === 0) {
+      let found = false;
+      let counter = 0;
+      while (!found) {
+        let randomX = Math.floor(Math.random() * this.screenWidth);
+        let randomY = Math.floor(Math.random() * this.screenHeight);
+        let randomPositionDataIndex = this.getImageDataIndex(randomX, randomY);
+        if (data[randomPositionDataIndex] === this.blankColour) {
+          newSet.add([randomX, randomY]);
+          found = true;
+        }
+        if (counter > 10) { // If a blank position is not found after 100 tries, then the canvas is probably all coloured.
+          this.running = false;
+          found = true;
+          console.log('not found 10 times, finished');
+        }
+        counter++;
+      }
+    }
+    else { // Set is not empty, thus need to iterate on each element
+      // for each element: check its color and the one of its neighbours.
+      this.positions.forEach((element) => {
+        // Paint pixel of stain color
+        ctx.fillStyle = this.colorToHex(this.stainColour);
+        ctx.fillRect(element[0], element[1], 1, 1);
+
+        // Define neighbours:
+        let top = [element[0], element[1] - 1];
+        let left = [element[0] - 1, element[1]];
+        let bottom = [element[0], element[1] + 1];
+        let right = [element[0] + 1, element[1]];
+
+        // Check neighbours
+        if (newSet.size < 100) {
+          if (data[this.getImageDataIndex(top[0], top[1])] === this.blankColour && top[1] >= 0) {
+            newSet.add(top);
+          }
+          if (data[this.getImageDataIndex(left[0], left[1])] === this.blankColour && left[0] >= 0) {
+            newSet.add(left);
+          }
+          if (data[this.getImageDataIndex(bottom[0], bottom[1])] === this.blankColour && bottom[1] <= this.screenHeight) {
+            newSet.add(bottom);
+          }
+          if (data[this.getImageDataIndex(right[0], right[1])] === this.blankColour && right[0] <= this.screenWidth) {
+            newSet.add(right);
+          }
+        }
+      });
+    }
+    this.positions = newSet;
+  }
+
+  private getImageDataIndex(xIndex: number, yIndex: number): number {
+    return (yIndex * this.screenWidth + xIndex) * 4;
+
+  }
+
+  private colorToHex(numberBaseTen: number): string {
+    let str = numberBaseTen.toString(16);
+    if (str.length <= 1) {
+      str = '0' + str;
+    }
+    return '#' + str + str + str;
+  }
+
+
+  // WANT TO WRITE YOUR OWN SHADER? :)
+  //if(this.switcherino){
+  //
+  //  let imageData = ctx.getImageData(0, 0, this.screenWidth, this.screenHeight);
+  //  let data = imageData.data;
+  //  for (let i = 0; i < data.length; i += 4) {
+  //    data[i] = 255 - data[i];     // red
+  //    data[i + 1] = 255 - data[i+1]; // green
+  //    data[i + 2] = 255 - data[i+2]; // blue
+  //    data[i + 3] = 255;
+  //  }
+  //  ctx.putImageData(imageData, 3, 3);
+  //  this.switcherino = false;
+  //}
 }

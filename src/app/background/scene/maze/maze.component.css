@@ -4,3 +4,13 @@
   overflow: hidden;
 }
 
+.fps-counter{
+  position: fixed;
+  bottom: 1em;
+  right:1em;
+  display: flex;
+  align-items:flex-end;
+  justify-content: center;
+  flex-direction: column;
+
+}

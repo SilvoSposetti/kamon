@@ -1,13 +1,13 @@
 SCENE Spheres pendulum: Spheres colliding with each other.
 SCENE Root: A "fractal" tree growing from some point on the screen.
 SCENE Squares: rotating black and white squares with center of rotation in the center of the screen.
-SCENE Shoal: A number of fishes shoaling together (or birds with boids algroithm).
 SCENE Polar: A number of nice polar functions and curves.
 SCENE Hilbert: A space filling algorithm
 SCENE Stain: A moving and transforming stain over a liquid surface.
 SCENE Functions: cycloid
 SCENE Sort: various sorting algorithms
 SCENE Polar Roses:
+SCENE Voronoi:
 Loop between scenes when they finish
 shortcuts to Leo for German and some other website for English translations
 Change FOAAS with real citations, because calling an api to get always the same string seems kind of dumb.
