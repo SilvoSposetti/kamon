@@ -21,7 +21,7 @@ export class MazeComponent implements OnInit, OnDestroy {
 
 
   private running: boolean;
-  private spacing: number = 10;
+  private spacing: number = 15;
   private sectors: number[][][] = [];
   private columns: number;
   private rows: number;
@@ -29,7 +29,13 @@ export class MazeComponent implements OnInit, OnDestroy {
   private nrOfElements: number;
   private nrOfCellsPerFrame: number = 100;
 
-  private positions: Set<number[]> = new Set<number[]>();
+  private lineWidth = 5;
+  private pixelsSize = 3;
+
+  private amountOfStains: number = 3;
+  private maxNumberOfElementsInSets = 10;
+  private stainsPositionsSetsArray = [];
+
 
   private blankColour: number = 50;
   private wallColour: number = 10;
@@ -52,7 +58,7 @@ export class MazeComponent implements OnInit, OnDestroy {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     ctx.stroke();
     if (this.counter === 0) {
-      ctx.fillStyle = this.colorToHex(this.blankColour);
+      ctx.fillStyle = this.toHexColour(this.blankColour);
       ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
     }
 
@@ -66,38 +72,42 @@ export class MazeComponent implements OnInit, OnDestroy {
       this.lastUpdate = this.now;
     }
 
+    // LABYRINTH DRAWING PHASE
+    if (this.counter < this.nrOfElements) {
+      for (let k = 0; k < this.nrOfCellsPerFrame; k++) {
+        if (this.counter < this.nrOfElements) {
+          let i = this.counter % this.columns;
+          let j = Math.floor(this.counter / this.columns);
 
-    for (let k = 0; k < this.nrOfCellsPerFrame; k++) {
-      if (this.counter < this.nrOfElements) {
-        let i = this.counter % this.columns;
-        let j = Math.floor(this.counter / this.columns);
+          let x = this.sectors[i][j][0];
+          let y = this.sectors[i][j][1];
 
-        let x = this.sectors[i][j][0];
-        let y = this.sectors[i][j][1];
+          // Paint current frame
+          ctx.strokeStyle = this.toHexColour(this.wallColour);
+          let random = Math.random();
 
-        // Paint current frame
-        ctx.strokeStyle = this.colorToHex(this.wallColour);
-        let random = Math.random();
-
-        if (random < 0.25) {
-          ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + this.spacing, y + this.spacing);
-          ctx.stroke();
+          ctx.lineWidth = this.lineWidth;
+          if (random < 0.45) {
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + this.spacing, y + this.spacing);
+            ctx.stroke();
+          }
+          else if (random < 0.9) {
+            ctx.beginPath();
+            ctx.moveTo(x + this.spacing, y);
+            ctx.lineTo(x, y + this.spacing);
+            ctx.stroke();
+          }
         }
-        else if (random < 0.9) {
-          ctx.beginPath();
-          ctx.moveTo(x + this.spacing, y);
-          ctx.lineTo(x, y + this.spacing);
-          ctx.stroke();
-        }
+        this.counter++;
       }
-      this.counter++;
     }
-    if (this.counter >= this.nrOfElements) {
-      //this.running = false;
-      this.updatePath();
-
+    // STAIN DRAWING PHASE
+    else {
+      for(let i = 0 ; i<this.amountOfStains; i++){
+        this.updatePath(i);
+      }
     }
 
     //Schedule next
@@ -105,11 +115,15 @@ export class MazeComponent implements OnInit, OnDestroy {
       requestAnimationFrame(() => this.paint());
     }
     else {
-      //console.log('finished');
+      console.log('finished');
     }
   }
 
   private initSectors(): void {
+    for (let i = 0; i<this.amountOfStains; i++){
+      this.stainsPositionsSetsArray.push(new Set<number[]>());
+    }
+
     this.columns = Math.ceil(this.screenWidth / this.spacing);
     this.rows = Math.ceil(this.screenHeight / this.spacing);
     this.nrOfElements = this.rows * this.columns;
@@ -123,15 +137,15 @@ export class MazeComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updatePath(): void {
+  private updatePath(stainNr: number): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     let imageData = ctx.getImageData(0, 0, this.screenWidth, this.screenHeight);
     let data = imageData.data;
-
+    
     let newSet: Set<number[]> = new Set<number[]>();
-    newSet.clear();
+
     // if set is empty then take a random point on the image.
-    if (this.positions.size === 0) {
+    if (this.stainsPositionsSetsArray[stainNr].size === 0) {
       let found = false;
       let counter = 0;
       while (!found) {
@@ -142,45 +156,51 @@ export class MazeComponent implements OnInit, OnDestroy {
           newSet.add([randomX, randomY]);
           found = true;
         }
-        if (counter > 10) { // If a blank position is not found after 100 tries, then the canvas is probably all coloured.
+        if (counter > 100) { // If a blank position is not found after 100 tries, then the canvas is probably all coloured.
           this.running = false;
           found = true;
-          console.log('not found 10 times, finished');
+          console.log('not found 100 times');
         }
         counter++;
       }
     }
     else { // Set is not empty, thus need to iterate on each element
       // for each element: check its color and the one of its neighbours.
-      this.positions.forEach((element) => {
+      //this.positions.forEach((element) => {
+      for (let element of this.stainsPositionsSetsArray[stainNr]) {
         // Paint pixel of stain color
-        ctx.fillStyle = this.colorToHex(this.stainColour);
-        ctx.fillRect(element[0], element[1], 1, 1);
+        ctx.fillStyle = this.toHexColour(this.stainColour);
+        ctx.fillRect(element[0], element[1], this.pixelsSize, this.pixelsSize);
 
         // Define neighbours:
-        let top = [element[0], element[1] - 1];
-        let left = [element[0] - 1, element[1]];
-        let bottom = [element[0], element[1] + 1];
-        let right = [element[0] + 1, element[1]];
+        let top = [element[0], element[1] - this.pixelsSize];
+        let left = [element[0] - this.pixelsSize, element[1]];
+        let bottom = [element[0], element[1] + this.pixelsSize];
+        let right = [element[0] + this.pixelsSize, element[1]];
 
         // Check neighbours
-        if (newSet.size < 100) {
+        if (newSet.size <= this.maxNumberOfElementsInSets) {
           if (data[this.getImageDataIndex(top[0], top[1])] === this.blankColour && top[1] >= 0) {
             newSet.add(top);
           }
           if (data[this.getImageDataIndex(left[0], left[1])] === this.blankColour && left[0] >= 0) {
             newSet.add(left);
           }
-          if (data[this.getImageDataIndex(bottom[0], bottom[1])] === this.blankColour && bottom[1] <= this.screenHeight) {
+          if (data[this.getImageDataIndex(bottom[0], bottom[1])] === this.blankColour && bottom[1] < this.screenHeight) {
             newSet.add(bottom);
           }
-          if (data[this.getImageDataIndex(right[0], right[1])] === this.blankColour && right[0] <= this.screenWidth) {
+          if (data[this.getImageDataIndex(right[0], right[1])] === this.blankColour && right[0] < this.screenWidth) {
             newSet.add(right);
           }
         }
-      });
+        else {
+          break;
+        }
+      }
     }
-    this.positions = newSet;
+    this.stainsPositionsSetsArray[stainNr] = newSet;
+
+
   }
 
   private getImageDataIndex(xIndex: number, yIndex: number): number {
@@ -188,7 +208,7 @@ export class MazeComponent implements OnInit, OnDestroy {
 
   }
 
-  private colorToHex(numberBaseTen: number): string {
+  private toHexColour(numberBaseTen: number): string {
     let str = numberBaseTen.toString(16);
     if (str.length <= 1) {
       str = '0' + str;
