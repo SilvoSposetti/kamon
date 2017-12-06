@@ -32,13 +32,12 @@ export class MazeComponent implements OnInit, OnDestroy {
   private lineWidth = 5;
   private pixelsSize = 3;
 
-  private amountOfStains: number = 3;
-  private maxNumberOfElementsInSets = 10;
-  private stainsPositionsSetsArray = [];
+  private positionsArrayMinLength: number = 50;
+  private positionsArrayMaxLength = 50;
+  private positionsArray: number[][] = [];
 
-
-  private blankColour: number = 50;
-  private wallColour: number = 10;
+  private blankColour: number = 10;
+  private wallColour: number = 50;
   private stainColour: number = 200;
 
   constructor() {
@@ -87,13 +86,13 @@ export class MazeComponent implements OnInit, OnDestroy {
           let random = Math.random();
 
           ctx.lineWidth = this.lineWidth;
-          if (random < 0.45) {
+          if (random < 0.5) {
             ctx.beginPath();
             ctx.moveTo(x, y);
             ctx.lineTo(x + this.spacing, y + this.spacing);
             ctx.stroke();
           }
-          else if (random < 0.9) {
+          else if (random < 1) {
             ctx.beginPath();
             ctx.moveTo(x + this.spacing, y);
             ctx.lineTo(x, y + this.spacing);
@@ -105,9 +104,7 @@ export class MazeComponent implements OnInit, OnDestroy {
     }
     // STAIN DRAWING PHASE
     else {
-      for(let i = 0 ; i<this.amountOfStains; i++){
-        this.updatePath(i);
-      }
+      this.updatePath();
     }
 
     //Schedule next
@@ -120,9 +117,6 @@ export class MazeComponent implements OnInit, OnDestroy {
   }
 
   private initSectors(): void {
-    for (let i = 0; i<this.amountOfStains; i++){
-      this.stainsPositionsSetsArray.push(new Set<number[]>());
-    }
 
     this.columns = Math.ceil(this.screenWidth / this.spacing);
     this.rows = Math.ceil(this.screenHeight / this.spacing);
@@ -137,70 +131,73 @@ export class MazeComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updatePath(stainNr: number): void {
+  private updatePath(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     let imageData = ctx.getImageData(0, 0, this.screenWidth, this.screenHeight);
     let data = imageData.data;
-    
-    let newSet: Set<number[]> = new Set<number[]>();
+    let newArray: number[][] = [];
 
-    // if set is empty then take a random point on the image.
-    if (this.stainsPositionsSetsArray[stainNr].size === 0) {
+
+    // If there are not enough elements in the array, then pick some new random ones.
+    if (this.positionsArray.length <= this.positionsArrayMinLength/3) {
       let found = false;
       let counter = 0;
       while (!found) {
-        let randomX = Math.floor(Math.random() * this.screenWidth);
-        let randomY = Math.floor(Math.random() * this.screenHeight);
+        let randomX = this.gridify(Math.floor(Math.random() * this.screenWidth));
+        let randomY = this.gridify(Math.floor(Math.random() * this.screenHeight));
         let randomPositionDataIndex = this.getImageDataIndex(randomX, randomY);
         if (data[randomPositionDataIndex] === this.blankColour) {
-          newSet.add([randomX, randomY]);
+          newArray.push([randomX, randomY]);
           found = true;
         }
-        if (counter > 100) { // If a blank position is not found after 100 tries, then the canvas is probably all coloured.
+        if (counter > 1000) { // If a blank position is not found after 100 tries, then the canvas is probably all coloured.
           this.running = false;
           found = true;
-          console.log('not found 100 times');
         }
         counter++;
       }
     }
-    else { // Set is not empty, thus need to iterate on each element
-      // for each element: check its color and the one of its neighbours.
-      //this.positions.forEach((element) => {
-      for (let element of this.stainsPositionsSetsArray[stainNr]) {
-        // Paint pixel of stain color
-        ctx.fillStyle = this.toHexColour(this.stainColour);
-        ctx.fillRect(element[0], element[1], this.pixelsSize, this.pixelsSize);
 
-        // Define neighbours:
-        let top = [element[0], element[1] - this.pixelsSize];
-        let left = [element[0] - this.pixelsSize, element[1]];
-        let bottom = [element[0], element[1] + this.pixelsSize];
-        let right = [element[0] + this.pixelsSize, element[1]];
+    // for each element in the array: check its color and the one of its neighbours.
+    for (let i = 0; i < this.positionsArray.length; i++) {
 
-        // Check neighbours
-        if (newSet.size <= this.maxNumberOfElementsInSets) {
-          if (data[this.getImageDataIndex(top[0], top[1])] === this.blankColour && top[1] >= 0) {
-            newSet.add(top);
-          }
-          if (data[this.getImageDataIndex(left[0], left[1])] === this.blankColour && left[0] >= 0) {
-            newSet.add(left);
-          }
-          if (data[this.getImageDataIndex(bottom[0], bottom[1])] === this.blankColour && bottom[1] < this.screenHeight) {
-            newSet.add(bottom);
-          }
-          if (data[this.getImageDataIndex(right[0], right[1])] === this.blankColour && right[0] < this.screenWidth) {
-            newSet.add(right);
+      data = imageData.data;
+      let element = this.positionsArray[i];
+      // Paint pixel of stain color
+      ctx.fillStyle = this.toHexColour(this.stainColour);
+      ctx.fillRect(element[0], element[1], this.pixelsSize, this.pixelsSize);
+
+      // Define neighbours:
+      let top = [element[0], element[1] - this.pixelsSize];
+      let left = [element[0] - this.pixelsSize, element[1]];
+      let bottom = [element[0], element[1] + this.pixelsSize];
+      let right = [element[0] + this.pixelsSize, element[1]];
+
+      //Check neighbours
+      if (this.positionsArray.length <= this.positionsArrayMaxLength) {
+        if (data[this.getImageDataIndex(top[0], top[1])] === this.blankColour && top[1] >= 0) {
+          if (this.positionsArray.indexOf(top) === -1) {
+            newArray.push(top);
           }
         }
-        else {
-          break;
+        if (data[this.getImageDataIndex(left[0], left[1])] === this.blankColour && left[0] >= 0) {
+          if (this.positionsArray.indexOf(left) === -1) {
+            newArray.push(left);
+          }
+        }
+        if (data[this.getImageDataIndex(bottom[0], bottom[1])] === this.blankColour && bottom[1] < this.screenHeight) {
+          if (this.positionsArray.indexOf(bottom) === -1) {
+            newArray.push(bottom);
+          }
+        }
+        if (data[this.getImageDataIndex(right[0], right[1])] === this.blankColour && right[0] < this.screenWidth) {
+          if (this.positionsArray.indexOf(right) === -1) {
+            newArray.push(right);
+          }
         }
       }
     }
-    this.stainsPositionsSetsArray[stainNr] = newSet;
-
-
+    this.positionsArray = newArray;
   }
 
   private getImageDataIndex(xIndex: number, yIndex: number): number {
@@ -214,6 +211,10 @@ export class MazeComponent implements OnInit, OnDestroy {
       str = '0' + str;
     }
     return '#' + str + str + str;
+  }
+
+  private gridify(nr: number): number {
+    return Math.floor((nr - nr % this.pixelsSize) - this.pixelsSize / 2);
   }
 
 
@@ -231,4 +232,5 @@ export class MazeComponent implements OnInit, OnDestroy {
   //  ctx.putImageData(imageData, 3, 3);
   //  this.switcherino = false;
   //}
+
 }

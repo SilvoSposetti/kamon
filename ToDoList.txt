@@ -14,5 +14,5 @@ Change FOAAS with real citations, because calling an api to get always the same 
 Fix image bug when building with base-href: ./
 fix bug of click functionality on suggestions (not only select with arrows)
 check isRunning for every scene, so that onDestroy it will stop. Then remove console.log('finished')
-Fix maze error
-
+Fix maze error. sometimes it won't complete all the maze and it gets stuck.
+search component
