@@ -112,7 +112,7 @@ export class SearchService {
 
   public launchSearch(index: number): void {
     if (this.searchString.length < 1) {
-      // do nothing because empty search string
+      //do nothing because empty search string
     }
     else {
       if (this.shortcut[0] !== '') { // Checks if a shortcut has been detected

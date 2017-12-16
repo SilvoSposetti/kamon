@@ -2,7 +2,7 @@
   "useCustomBackgroundImage": false,
   "useScene": true,
   "showClock": false ,
-  "defaultScene": "maze",
+  "defaultScene": "infinite-zoom",
   "showFuckOff": false,
   "openLinkInNewTab": false,
   "showList": false,

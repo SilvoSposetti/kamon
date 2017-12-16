@@ -28,9 +28,15 @@ import {RainComponent} from './background/scene/rain/rain.component';
 import {LissajousComponent} from './background/scene/lissajous/lissajous.component';
 import {FunctionsComponent} from './background/scene/functions/functions.component';
 import {HarmonicFunctionsComponent} from './background/scene/harmonic-functions/harmonic-functions.component';
+import {TreeMapComponent} from './background/scene/tree-map/tree-map.component';
+import {SortingAlgorithmsComponent} from './background/scene/sorting-algorithms/sorting-algorithms.component';
+import {BoidsComponent} from './background/scene/boids/boids.component';
+import {VoronoiComponent} from './background/scene/voronoi/voronoi.component';
+import {InfiniteZoomComponent} from './background/scene/infinite-zoom/infinite-zoom.component';
 
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
+import {MyBlinkDirective} from './shared/directives/my-blink.directive';
 
 // Services:
 import {ConfigService} from './shared/services/config.service';
@@ -41,10 +47,7 @@ import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
-import { MyBlinkDirective } from './shared/directives/my-blink.directive';
-import { TreeMapComponent } from './background/scene/tree-map/tree-map.component';
-import { SortingAlgorithmsComponent } from './background/scene/sorting-algorithms/sorting-algorithms.component';
-import { BoidsComponent } from './background/scene/boids/boids.component';
+
 
 
 
@@ -72,7 +75,9 @@ import { BoidsComponent } from './background/scene/boids/boids.component';
     MyBlinkDirective,
     TreeMapComponent,
     SortingAlgorithmsComponent,
-    BoidsComponent],
+    BoidsComponent,
+    VoronoiComponent,
+    InfiniteZoomComponent],
   imports: [
     HttpModule,
     BrowserModule,

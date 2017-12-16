@@ -62,7 +62,7 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
         let toX = fromX;
         let toY = this.lists[i][1] - height * this.values[i][j];
         // draw lines
-        ctx.strokeStyle = '#ffffff';
+        ctx.strokeStyle = '#aaaaaa';
         ctx.lineWidth = this.lineWidth;
         ctx.beginPath();
         ctx.moveTo(fromX, fromY);

@@ -54,7 +54,9 @@ export class ScenesService {
       'harmonic-functions',
       'tree-map',
       'sorting-algorithms',
-      'boids'
+      'boids',
+      'voronoi',
+      'infinite-zoom'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);

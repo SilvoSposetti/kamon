@@ -5,14 +5,14 @@ SCENE Polar: A number of nice polar functions and curves.
 SCENE Hilbert: A space filling algorithm
 SCENE Stain: A moving and transforming stain over a liquid surface.
 SCENE Functions: cycloid
-SCENE Sort: various sorting algorithms
 SCENE Polar Roses:
+SCENE infinity-zoom: a scene where you have the feeling that you are constantly zooming in or moving forward, using a list of objects to draw
 SCENE Voronoi:
+SCENE Snow: snowflake-like particle that are blown in the wind (kind of like in the Division trailer.
 Loop between scenes when they finish
 shortcuts to Leo for German and some other website for English translations
 Change FOAAS with real citations, because calling an api to get always the same string seems kind of dumb.
 Fix image bug when building with base-href: ./
 fix bug of click functionality on suggestions (not only select with arrows)
 check isRunning for every scene, so that onDestroy it will stop. Then remove console.log('finished')
-Fix maze error. sometimes it won't complete all the maze and it gets stuck.
 search component

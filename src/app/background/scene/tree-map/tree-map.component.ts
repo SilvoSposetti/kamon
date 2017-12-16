@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import OpenSimplexNoise from 'open-simplex-noise';
 
 @Component({
@@ -6,7 +6,7 @@ import OpenSimplexNoise from 'open-simplex-noise';
   templateUrl: './tree-map.component.html',
   styleUrls: ['./tree-map.component.css']
 })
-export class TreeMapComponent implements OnInit {
+export class TreeMapComponent implements OnInit, OnDestroy {
   @ViewChild('myCanvas') canvasRef: ElementRef;
   @Input() screenWidth: number;
   @Input() screenHeight: number;
