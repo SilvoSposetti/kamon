@@ -1,11 +1,11 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false ,
+  "showClock": true ,
   "defaultScene": "infinite-zoom",
   "showFuckOff": false,
   "openLinkInNewTab": false,
-  "showList": false,
+  "showList": true,
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,

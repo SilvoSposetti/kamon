@@ -22,24 +22,24 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
   // Setting this to 1 will show you the FPS of the last sampled frame only
   public fpsFilter = 10;
 
+  private timeToLiveIncrement: number = 0.008;
+  private speedExponent: number = 3;
 
   // Stars:
-  private numOfStars: number = 100;
+  private numOfStars: number = 1000;
   private stars: number[][] = [];
-  private starsSpeedFactor: number = 0.01;
   private starsLineWidth: number = 3;
   private starsCenterDistance: number = 10;
-  // [posX, posY, oldX, oldY, angle]
+  // [posX, posY, oldX, oldY, angle, colorCounter, timeAlive]
 
   // Squares:
-  private numOfSquaresPerLayer: number = 1;
-  private numOfLayers: number = 100; // Must be an even number!
+  private numOfSquaresPerLayer: number = 10;
+  private numOfLayers: number = 10; // Must be an even number!
   private squares: number [][] = [];
   private squaresLineWidth: number = 2;
-  private angleIncrement: number = Math.PI / 500;
-  private sizeIncrement: number = 0.01  ;
+  private angleIncrement: number = Math.PI / 4000;
 
-  // for each layer: [sideLength, rotationAngle1, rotationAngle2, ...]
+  // for each layer: [timeAlive, sideLength, rotationAngle1, rotationAngle2, ...,]
 
 
   constructor() {
@@ -93,29 +93,29 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
-    // Stars.
+    let diagonal: number = Math.sqrt(Math.pow(this.screenWidth, 2) + Math.pow(this.screenHeight, 2));
+    // This value is used as "spacing" between timeLived by square's layers:
+    let squaresTimeToLiveDifference: number = this.sizeToTime(diagonal) / this.numOfLayers;
+    // This is used so that stars don't start "out of the screen"
+    let starsMaxStartTimeLived: number = this.sizeToTime(Math.min(this.screenWidth / 2, this.screenHeight / 2));
+
+    // STARS.
     for (let i = 0; i < this.numOfStars; i++) {
-      let posX = Math.random() * this.screenWidth;
-      let posY = Math.random() * this.screenHeight;
-      let vX = posX - this.screenWidth / 2;
-      let vY = posY - this.screenHeight / 2;
-      let angle = Math.atan(vY / vX);
-      if (posX < this.screenWidth / 2) {
-        angle += Math.PI;
-      }
-      this.stars.push([posX, posY, posX, posY, angle, 0]);
+      let angle = Math.random() * 2 * Math.PI;
+      let timeToLive = Math.random() * starsMaxStartTimeLived;
+      let distance = this.timeToSize(timeToLive);
+      let posX = this.screenWidth / 2 + Math.sin(angle) * distance;
+      let posY = this.screenHeight / 2 + Math.cos(angle) * distance;
+      this.stars.push([posX, posY, posX, posY, angle, 0, timeToLive]);
     }
 
-    // Squares:
-    let diagonal: number = Math.sqrt(Math.pow(this.screenWidth, 2) + Math.pow(this.screenHeight, 2));
-    let firstElementSize = diagonal / this.numOfLayers;
+    // SQUARES:
     for (let i = 0; i < this.numOfLayers; i++) {
       let layer: number[] = [];
-      let value = diagonal/2*Math.pow((1/this.numOfLayers)*(i),this.numOfLayers);
-      //layer.push(firstElementSize + Math.pow(firstElementSize,(i+1)/this.numOfLayers)); // Layer's size.
-      layer.push(value); // Layer's size.
+      layer.push(squaresTimeToLiveDifference * (i + 1)); // Layer's timeAlive.
+      layer.push(this.timeToSize((squaresTimeToLiveDifference * (i + 1)))); // Layer's size.
       for (let j = 0; j < this.numOfSquaresPerLayer; j++) {
-        layer.push((Math.PI * 2 / this.numOfSquaresPerLayer) * j);
+        layer.push((Math.PI / 2 / this.numOfSquaresPerLayer) * j);
       }
       this.squares.push(layer);
     }
@@ -125,32 +125,41 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
    * UPDATE
    ********************************************************************************************************************/
   private updateStars(): void {
+    // [posX, posY, oldX, oldY, angle, colorCounter, timeAlive]
     for (let i = 0; i < this.numOfStars; i++) {
-      let d = Math.sqrt(Math.pow(this.stars[i][2] - this.screenWidth / 2, 2) + Math.pow(this.stars[i][3] - this.screenHeight / 2, 2));
-      if (d <= this.starsCenterDistance) {
-        d = this.starsCenterDistance;
+      let distanceFromCenter = Math.sqrt(Math.pow(this.stars[i][2] - this.screenWidth / 2, 2) + Math.pow(this.stars[i][3] - this.screenHeight / 2, 2));
+      if (distanceFromCenter <= this.starsCenterDistance) {
+        distanceFromCenter = this.starsCenterDistance;
       }
+      //Update old position:
       this.stars[i][2] = this.stars[i][0];
       this.stars[i][3] = this.stars[i][1];
-      this.stars[i][0] += this.starsSpeedFactor * Math.cos(this.stars[i][4]) * d;
-      this.stars[i][1] += this.starsSpeedFactor * Math.sin(this.stars[i][4]) * d;
+      // Update timeLived and decide new position accordingly:
+      this.stars[i][6] += this.timeToLiveIncrement;
+      this.stars[i][0] = this.screenWidth / 2 + this.timeToSize(this.stars[i][6]) * Math.sin(this.stars[i][4]);
+      this.stars[i][1] = this.screenHeight / 2 + this.timeToSize(this.stars[i][6]) * Math.cos(this.stars[i][4]);
 
-      this.stars[i][5] = Math.floor((Math.abs(Math.sin((d - this.starsCenterDistance) / 50)) * 256 % 256));
+      // Update star color:
+      this.stars[i][5] = Math.floor((Math.abs(Math.sin((distanceFromCenter - this.starsCenterDistance) / 10)) * 256 % 256)); // Updates color value
 
+      // Boundary Checking:
       if (this.stars[i][2] > this.screenWidth || this.stars[i][2] < 0 || this.stars[i][3] < 0 || this.stars[i][3] > this.screenHeight) {
         this.stars[i][0] = this.screenWidth / 2;
         this.stars[i][1] = this.screenHeight / 2;
         this.stars[i][2] = this.screenWidth / 2;
         this.stars[i][3] = this.screenHeight / 2;
         this.stars[i][4] = Math.random() * Math.PI * 2;
+        this.stars[i][5] = 0;
+        this.stars[i][6] = 0;
       }
     }
   }
 
   private updateSquares(): void {
+    // for each layer: [timeAlive, sideLength, rotationAngle1, rotationAngle2, ...]
     let halfDiagonal = Math.sqrt(Math.pow(this.screenWidth, 2) + Math.pow(this.screenHeight, 2));
     for (let i = 0; i < this.numOfLayers; i++) {
-      for (let j = 1; j < this.numOfSquaresPerLayer + 1; j++) {
+      for (let j = 2; j < this.numOfSquaresPerLayer + 2; j++) {
         // ROTATE:
         if (i % 2 == 0) {
           this.squares[i][j] += this.angleIncrement;
@@ -158,14 +167,16 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
         else {
           this.squares[i][j] -= this.angleIncrement;
         }
-
-        }
+      }
 
       // INCREASE SIZE:
-      let value = Math.sqrt(this.squares[i][0]/halfDiagonal*2);
-      this.squares[i][0] += this.sizeIncrement * this.squares[i][0];
-      if (this.squares[i][0] >= halfDiagonal) {
-        this.squares[i][0] = 1;
+      this.squares[i][0] += this.timeToLiveIncrement;
+      this.squares[i][1] = this.timeToSize(this.squares[i][0]);
+      // Boundary Checking:
+      // When the square's side is bigger than half the diagonal of the screeen, then recycle it in the middle.
+      // (By setting its timeLived to 0;
+      if (this.squares[i][1] >= halfDiagonal) {
+        this.squares[i][0] = 0;
       }
     }
   }
@@ -179,8 +190,6 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
     ctx.lineWidth = this.starsLineWidth;
     for (let i = 0; i < this.numOfStars; i++) {
       ctx.strokeStyle = this.toHexColour(this.stars[i][5]);
-      //ctx.fillStyle = '#aaaaaa';
-      //ctx.fillRect(this.stars[i][0], this.stars[i][1], 10, 10);
       ctx.beginPath();
       ctx.moveTo(this.stars[i][2], this.stars[i][3]);
       ctx.lineTo(this.stars[i][0], this.stars[i][1]);
@@ -191,9 +200,9 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
 
   private paintSquares(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-
     for (let i = 0; i < this.numOfLayers; i++) {
-      for (let j = 1; j < this.numOfSquaresPerLayer + 1; j++) {
+      for (let j = 2; j < this.numOfSquaresPerLayer + 2; j++) {
+
         // first save the untranslated/un-rotated context
         ctx.save();
 
@@ -206,9 +215,9 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
         // draw the rect on the transformed context
         // Note: after transforming [0,0] is visually [x,y]
         //       so the rect needs to be offset accordingly when drawn
-        ctx.rect(-this.squares[i][0] / 2, -this.squares[i][0] / 2, this.squares[i][0], this.squares[i][0]);
+        ctx.rect(-this.squares[i][1] / 2, -this.squares[i][1] / 2, this.squares[i][1], this.squares[i][1]);
 
-        ctx.strokeStyle = '#aaaaaa';
+        ctx.strokeStyle = this.toHexColour(Math.floor(Math.abs(Math.cos(this.squares[i][j]) * 200)));
         ctx.lineWidth = this.squaresLineWidth;
         ctx.stroke();
         // restore the context to its untranslated/un-rotated state
@@ -229,5 +238,16 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
       str = '0' + str;
     }
     return '#' + str + str + str;
+  }
+
+
+  // Helper function that transform a unit of "timeLived" into the "distance" at which an element should be at that time
+  private timeToSize(time: number): number {
+    return Math.pow(time, this.speedExponent);
+  }
+
+  // Helper function that transform a unit of "distance" into a "timeLived" at which an element should be at that time
+  private sizeToTime(size: number): number {
+    return Math.pow(size, 1 / this.speedExponent);
   }
 }
