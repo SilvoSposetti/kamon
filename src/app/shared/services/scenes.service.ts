@@ -56,7 +56,8 @@ export class ScenesService {
       'sorting-algorithms',
       'boids',
       'voronoi',
-      'infinite-zoom'
+      'infinite-zoom',
+      'modular-multiplication'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);

@@ -2,7 +2,7 @@
   "useCustomBackgroundImage": false,
   "useScene": true,
   "showClock": true ,
-  "defaultScene": "infinite-zoom",
+  "defaultScene": "modular-multiplication",
   "showFuckOff": false,
   "openLinkInNewTab": false,
   "showList": true,

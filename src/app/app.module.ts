@@ -47,6 +47,7 @@ import {SearchService} from './shared/services/search.service';
 import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
+import { ModularMultiplicationComponent } from './background/scene/modular-multiplication/modular-multiplication.component';
 
 
 
@@ -77,7 +78,8 @@ import {LocationService} from './shared/services/location.service';
     SortingAlgorithmsComponent,
     BoidsComponent,
     VoronoiComponent,
-    InfiniteZoomComponent],
+    InfiniteZoomComponent,
+    ModularMultiplicationComponent],
   imports: [
     HttpModule,
     BrowserModule,
