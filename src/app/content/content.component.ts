@@ -29,7 +29,8 @@ export class ContentComponent implements OnInit {
   @Input() selectionSuggestion: number;
   @Input() showSceneSelector: number;
   @Input() showClock: boolean;
-  @Input() showFuckOff: boolean;
+  @Input() showCitations: boolean;
+  @Input() citations: string[][];
 
   public showSearch: boolean;
   public searchText: string;

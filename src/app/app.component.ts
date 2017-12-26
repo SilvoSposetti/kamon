@@ -17,7 +17,8 @@ export class AppComponent implements OnInit {
   public selectionSuggestion: number = -1;
   public showSceneSelector = false;
   public showClock = this.configService.getConfig().showClock;
-  public showFuckOff = this.configService.getConfig().showFuckOff;
+  public showCitations = this.configService.getConfig().showCitations;
+  public citations = this.configService.getConfig().citations;
 
   constructor(private configService: ConfigService,
               private searchService: SearchService) {

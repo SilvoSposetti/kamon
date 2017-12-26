@@ -16,7 +16,8 @@ import {ClockComponent} from './content/clock/clock.component';
 import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
 import {ListComponent} from './content/list/list.component';
-import {FuckOffComponent} from './content/fuck-off/fuck-off.component';
+import {CitationsComponent} from './content/citations/citations.component';
+
 
 // Scenes:
 import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
@@ -33,6 +34,7 @@ import {SortingAlgorithmsComponent} from './background/scene/sorting-algorithms/
 import {BoidsComponent} from './background/scene/boids/boids.component';
 import {VoronoiComponent} from './background/scene/voronoi/voronoi.component';
 import {InfiniteZoomComponent} from './background/scene/infinite-zoom/infinite-zoom.component';
+import {ModularMultiplicationComponent} from './background/scene/modular-multiplication/modular-multiplication.component';
 
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
@@ -44,11 +46,8 @@ import {ClockService} from './shared/services/clock.service';
 import {ScreenSizeService} from './shared/services/screen-size.service';
 import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
-import {FuckOffService} from './shared/services/fuck-off.service';
 import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
-import { ModularMultiplicationComponent } from './background/scene/modular-multiplication/modular-multiplication.component';
-
 
 
 
@@ -63,7 +62,6 @@ import { ModularMultiplicationComponent } from './background/scene/modular-multi
     ListComponent,
     SearchComponent,
     MyFocusDirective,
-    FuckOffComponent,
     AsteroidsComponent,
     PhyllotaxyComponent,
     SceneSelectorComponent,
@@ -79,7 +77,8 @@ import { ModularMultiplicationComponent } from './background/scene/modular-multi
     BoidsComponent,
     VoronoiComponent,
     InfiniteZoomComponent,
-    ModularMultiplicationComponent],
+    ModularMultiplicationComponent,
+    CitationsComponent],
   imports: [
     HttpModule,
     BrowserModule,
@@ -94,7 +93,7 @@ import { ModularMultiplicationComponent } from './background/scene/modular-multi
     multi: true
   },
     // Add more services here:
-    ClockService, ScreenSizeService, SearchService, FuckOffService, ScenesService, LocationService],
+    ClockService, ScreenSizeService, SearchService, ScenesService, LocationService],
   bootstrap: [AppComponent],
 })
 

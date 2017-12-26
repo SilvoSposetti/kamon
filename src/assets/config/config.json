@@ -1,9 +1,9 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false ,
+  "showClock": false,
   "defaultScene": "modular-multiplication",
-  "showFuckOff": false,
+  "showCitations": true,
   "openLinkInNewTab": false,
   "showList": false,
   "suggestions": true,
@@ -154,7 +154,6 @@
       "/search/top/?q={}",
       "#3b5998"
     ],
-
     [
       "Other",
       "Digitec",
@@ -178,6 +177,20 @@
       "https://www.humblebundle.com/",
       null,
       "#3b3e48"
+    ]
+  ],
+  "citations": [
+    [
+      "asd1",
+      "asd1"
+    ],
+    [
+      "asd2",
+      "asd2"
+    ],
+    [
+      "asd3",
+      "asd3"
     ]
   ]
 }

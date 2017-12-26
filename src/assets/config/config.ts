@@ -4,7 +4,7 @@ export class Configuration {
               public useScene: boolean,
               public defaultScene: string,
               public showClock: boolean,
-              public showFuckOff: boolean,
+              public showCitations: boolean,
               public openLinkInNewTab: boolean,
               public showList: boolean,
               public suggestions: boolean,
@@ -13,7 +13,8 @@ export class Configuration {
               public allowLocation: boolean,
               public showWeather: boolean,
               public searchEngine: string[],
-              public list: string[][]) {
+              public list: string[][],
+              public citations: string[][]) {
   }
 
 }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FuckOffComponent } from './fuck-off.component';
+import { CitationsComponent } from './citations.component';
 
-describe('FuckOffComponent', () => {
-  let component: FuckOffComponent;
-  let fixture: ComponentFixture<FuckOffComponent>;
+describe('CitationsComponent', () => {
+  let component: CitationsComponent;
+  let fixture: ComponentFixture<CitationsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FuckOffComponent ]
+      declarations: [ CitationsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FuckOffComponent);
+    fixture = TestBed.createComponent(CitationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

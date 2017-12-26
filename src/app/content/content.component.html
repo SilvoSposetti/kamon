@@ -5,7 +5,7 @@
     <app-list [@myEnter] *ngIf="showList" [elements]="elements" [categories]="categories"></app-list>
     <app-search [@myEnter] *ngIf="showSearch" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion"
                 [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
-    <app-fuck-off [@myEnter] *ngIf="showFuckOff"></app-fuck-off>
+    <app-citations [@myEnter] *ngIf="showCitations" [citations]="citations"></app-citations>
     <app-scene-selector [@myEnter] *ngIf="showSceneSelector"></app-scene-selector>
     <div class="search-input-container">
       <form class="form-container" #searchForm="ngForm" id="searchForm">
