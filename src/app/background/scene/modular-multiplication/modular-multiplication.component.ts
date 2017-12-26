@@ -50,13 +50,13 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   private counter: number = 0;
   private counterIncrement: number = 1;
   private nextCounter: number = 0;
-  private nextCounterIncrement: number = -(1 + Math.sqrt(5))/2;
-  private startAngle = -Math.PI / 2;
+  private nextCounterIncrement: number = -(1 + Math.sqrt(5)) / 2;
+  private startAngle = Math.PI / 2;
   //private startAngle = 0;
 
   private normalCirclePoints = 1000;
   private bigCirclePoints = 1000;
-  private smallCirclePoints = 5;
+  private smallCirclePoints = 1000;
 
   private running: boolean;
 
@@ -73,42 +73,9 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
     this.running = false;
   }
 
-  private paint(): void {
-    // Calculates fps
-    this.now = new Date().getTime();
-    this.frameFps = 1000 / (this.now - this.lastUpdate);
-    if (this.now != this.lastUpdate) {
-      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
-      this.frameFps = Math.ceil(this.frameFps);
-      this.lastUpdate = this.now;
-      if (this.fpsCounter >= this.framesToWaitBeforeMean) {
-        // Update average:
-        this.fpsMean = ((this.fpsMean * this.fpsCounter) + this.frameFps) / (this.fpsCounter + 1);
-        this.fpsMeanFloored = Math.floor(this.fpsMean);
-      }
-      this.fpsCounter++;
-    }
-    // Paint Circles:
-    //if(this.counter === 0){
-    //  this.paintCircles();
-    //}
-
-    // Paint background:
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.008)';
-    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
-
-    // Update data:
-    this.updateLinesToDraw();
-
-    // Paint current frame:
-
-    this.paintLines();
-
-    if (this.running) {
-      requestAnimationFrame(() => this.paint());
-    }
-  }
+  /*********************************************************************************************************************
+   * COMPUTATIONS
+   ********************************************************************************************************************/
 
 
   private setup(): void {
@@ -118,6 +85,7 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
     this.columnsWidth = this.rowsHeight / Math.sqrt(3);
 
     this.bigRadius = this.normalRadius * (2 + Math.sqrt(3) / 2);
+    this.smallRadius = this.normalRadius/3;
 
     this.numOfRows = Math.ceil(this.screenHeight / this.rowsHeight) + 1;
     this.numOfColumns = Math.ceil(this.screenWidth / this.columnsWidth) + 1;
@@ -152,34 +120,26 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
           sector.push([centerX + a, centerY + b]);
           sector.push([centerX + this.normalRadius, centerY + c]);
           this.rhombusSectors.push(sector);
+
+          // Small1 bottom:
+          this.smallCircles.push([centerX + this.smallRadius*2,centerY + b]);
+          this.smallCircles.push([centerX,centerY + b + this.smallRadius*2]);
+          this.smallCircles.push([centerX - this.smallRadius*2,centerY + b]);
+          this.smallCircles.push([centerX,centerY + b - this.smallRadius*2]);
+          // Small1 top:
+          this.smallCircles.push([centerX + this.smallRadius*2,centerY - b]);
+          this.smallCircles.push([centerX,centerY - b + this.smallRadius*2]);
+          this.smallCircles.push([centerX - this.smallRadius*2,centerY - b]);
+          this.smallCircles.push([centerX,centerY - b - this.smallRadius*2]);
         }
         else {
           this.bigCircles.push([centerX, centerY]);
         }
+
       }
     }
   }
 
-  private paintCircles(): void {
-
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.strokeStyle = '#dddddd';
-    ctx.lineWidth = this.circlesLineWidth;
-    for (let i = 0; i < this.rhombusSectors.length; i++) {
-      for (let j = 0; j < 12; j++) { // Don't change upper limit (12)! (Truncated hexagonal tiling is made up of sectors each having 12 circles)
-        ctx.beginPath();
-        ctx.arc(this.rhombusSectors[i][j][0], this.rhombusSectors[i][j][1], this.normalRadius, 0, 2 * Math.PI);
-        ctx.closePath();
-        ctx.stroke();
-      }
-    }
-    for (let i = 0; i < this.bigCircles.length; i++) {
-      ctx.beginPath();
-      ctx.arc(this.bigCircles[i][0], this.bigCircles[i][1], this.bigRadius, 0, 2 * Math.PI);
-      ctx.closePath();
-      ctx.stroke();
-    }
-  }
 
   private updateLinesToDraw(): void {
     this.lines = []; // Reset lines to draw because old ones have been drawn the frame before.
@@ -217,9 +177,92 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
       this.lines.push([fromX, fromY, toX, toY]);
     }
 
+    // Small Circles:
+    for (let i = 0; i < this.smallCircles.length; i++) {
+      fromX = this.smallCircles[i][0] + this.smallRadius * Math.cos(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * (this.nextCounter % this.smallCirclePoints));
+      fromY = this.smallCircles[i][1] + this.smallRadius * Math.sin(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * (this.nextCounter % this.smallCirclePoints));
+      toX = this.smallCircles[i][0] + this.smallRadius * Math.cos(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * ((this.nextCounter + this.smallCirclePoints/2) % this.smallCirclePoints));
+      toY = this.smallCircles[i][1] + this.smallRadius * Math.sin(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * ((this.nextCounter + this.smallCirclePoints/2) % this.smallCirclePoints));
+      this.lines.push([fromX, fromY, toX, toY]);
+    }
+
+
     this.counter += this.counterIncrement;
     this.nextCounter += this.nextCounterIncrement;
   }
+
+  /*********************************************************************************************************************
+   * DRAW
+   ********************************************************************************************************************/
+
+  private paint(): void {
+    // Calculates fps
+    this.now = new Date().getTime();
+    this.frameFps = 1000 / (this.now - this.lastUpdate);
+    if (this.now != this.lastUpdate) {
+      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
+      this.frameFps = Math.ceil(this.frameFps);
+      this.lastUpdate = this.now;
+      if (this.fpsCounter >= this.framesToWaitBeforeMean) {
+        // Update average:
+        this.fpsMean = ((this.fpsMean * this.fpsCounter) + this.frameFps) / (this.fpsCounter + 1);
+        this.fpsMeanFloored = Math.floor(this.fpsMean);
+      }
+      this.fpsCounter++;
+    }
+     //Paint Circles:
+    //if(this.counter === 0){
+    //  this.paintCircles();
+    //}
+
+    // Paint background:
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+    ctx.fillStyle = 'rgba(0,0,0,0.008)';
+    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+
+    // Update data:
+    this.updateLinesToDraw();
+
+    // Paint current frame:
+
+    this.paintLines();
+
+
+    //this.checkCounters();
+    if (this.running) {
+      requestAnimationFrame(() => this.paint());
+    }
+  }
+
+
+
+  private paintCircles(): void {
+
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+    ctx.strokeStyle = '#dddddd';
+    ctx.lineWidth = this.circlesLineWidth;
+    for (let i = 0; i < this.rhombusSectors.length; i++) {
+      for (let j = 0; j < 12; j++) { // Don't change upper limit (12)! (Truncated hexagonal tiling is made up of sectors each having 12 circles)
+        ctx.beginPath();
+        ctx.arc(this.rhombusSectors[i][j][0], this.rhombusSectors[i][j][1], this.normalRadius, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+    for (let i = 0; i < this.bigCircles.length; i++) {
+      ctx.beginPath();
+      ctx.arc(this.bigCircles[i][0], this.bigCircles[i][1], this.bigRadius, 0, 2 * Math.PI);
+      ctx.closePath();
+      ctx.stroke();
+    }
+    for (let i = 0; i < this.smallCircles.length; i++) {
+      ctx.beginPath();
+      ctx.arc(this.smallCircles[i][0], this.smallCircles[i][1], this.smallRadius, 0, 2 * Math.PI);
+      ctx.closePath();
+      ctx.stroke();
+    }
+  }
+
 
   private paintLines(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
@@ -233,4 +276,17 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
       ctx.stroke();
     }
   }
+
+  /*********************************************************************************************************************
+   * OTHER
+   ********************************************************************************************************************/
+
+  //private checkCounters(): void {
+  //  if (this.counter > this.bigCirclePoints * this.smallCirclePoints * this.normalCirclePoints) {
+  //    this.counter = 0;
+  //  }
+  //  if(this.nextCounter < -this.bigCirclePoints*this.smallCirclePoints*this.normalCirclePoints){
+  //    this.nextCounter = 0;
+  //  }
+  //}
 }

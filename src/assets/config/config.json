@@ -1,11 +1,11 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": true ,
+  "showClock": false ,
   "defaultScene": "modular-multiplication",
   "showFuckOff": false,
   "openLinkInNewTab": false,
-  "showList": true,
+  "showList": false,
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
