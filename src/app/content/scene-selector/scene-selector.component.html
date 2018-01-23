@@ -1,7 +1,14 @@
 <div class="scene-selector-parent">
-  <div class="scene-container" *ngFor="let scene of scenesArray, let i = index">
-    <div class="scene-name" [ngClass]="{highlighted: selectedSceneNr === i}" (click)="clickScene(i)" >
-      {{scene}}
+  <div class="alphabetic-blocks" *ngFor="let block of scenesAlphabeticalList, let i = index">
+    <div class="initial-row">
+        {{block[0][0].toUpperCase()}}
+    </div>
+    <div class="scenes-row">
+      <div class="scene-container" *ngFor="let scene of block, let j = index">
+        <div class="scene-name" [ngClass]="{highlighted: selectedSceneNr === getSceneNrFromIAndJ(i,j)}" (click)="clickScene(i,j)">
+          {{scene}}
+        </div>
+      </div>
     </div>
   </div>
 </div>

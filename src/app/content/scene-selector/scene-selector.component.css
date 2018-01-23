@@ -4,33 +4,66 @@
   left: 1em;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-direction: column;
   background: rgba(0, 0, 0, 0.6);
   -webkit-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
   -moz-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
   box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
   border-radius: 0.5em;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.alphabetic-blocks {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  flex-shrink: 0;
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+  /*background: rgba(255, 255, 255, 0.1);*/
+  /*border-radius: 0.5em;*/
+}
+
+.initial-row {
+  width: 1em;
+  height: 1em;
+  padding: 0.2em;
+}
+
+.scenes-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  flex-shrink: 0;
 }
 
 .scene-container {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.highlighted {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.scene-name {
-  padding: 0.5em;
-  margin: 0.1em;
-  border-radius: 0.5em;
-  cursor: pointer;
-  width: 200px;
+  flex-shrink: 0;
 }
 
 .scene-name:hover {
   background: rgba(255, 255, 255, 0.1)
 }
+
+.highlighted {
+  background: rgba(255, 255, 255, 0.2) !important;
+  /* The div must remain highlighted (selected) even when it is hovered. */
+}
+
+.scene-name {
+  padding: 0.2em;
+  margin: 0.1em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  width: 250px;
+}
+
+
+

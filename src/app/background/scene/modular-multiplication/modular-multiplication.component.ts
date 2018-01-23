@@ -10,6 +10,7 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
 
+  // FPS variables:
   public fps = 0;
   private now: number;
   private lastUpdate = new Date().getTime();
@@ -21,8 +22,6 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   private fpsMean = 60;
   public fpsMeanFloored = -1;
   private framesToWaitBeforeMean: number = 10;
-
-  // Todo: make sure circles are drawn only at the beginning, and not each frame!
 
   private circlesLineWidth: number = 1;
   private amountOfNormalRadiiInTheScreenWidth: number = 30; // Defines normalRadius!
@@ -85,7 +84,7 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
     this.columnsWidth = this.rowsHeight / Math.sqrt(3);
 
     this.bigRadius = this.normalRadius * (2 + Math.sqrt(3) / 2);
-    this.smallRadius = this.normalRadius/3;
+    this.smallRadius = this.normalRadius / 3;
 
     this.numOfRows = Math.ceil(this.screenHeight / this.rowsHeight) + 1;
     this.numOfColumns = Math.ceil(this.screenWidth / this.columnsWidth) + 1;
@@ -122,15 +121,15 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
           this.rhombusSectors.push(sector);
 
           // Small1 bottom:
-          this.smallCircles.push([centerX + this.smallRadius*2,centerY + b]);
-          this.smallCircles.push([centerX,centerY + b + this.smallRadius*2]);
-          this.smallCircles.push([centerX - this.smallRadius*2,centerY + b]);
-          this.smallCircles.push([centerX,centerY + b - this.smallRadius*2]);
+          this.smallCircles.push([centerX + this.smallRadius * 2, centerY + b]);
+          this.smallCircles.push([centerX, centerY + b + this.smallRadius * 2]);
+          this.smallCircles.push([centerX - this.smallRadius * 2, centerY + b]);
+          this.smallCircles.push([centerX, centerY + b - this.smallRadius * 2]);
           // Small1 top:
-          this.smallCircles.push([centerX + this.smallRadius*2,centerY - b]);
-          this.smallCircles.push([centerX,centerY - b + this.smallRadius*2]);
-          this.smallCircles.push([centerX - this.smallRadius*2,centerY - b]);
-          this.smallCircles.push([centerX,centerY - b - this.smallRadius*2]);
+          this.smallCircles.push([centerX + this.smallRadius * 2, centerY - b]);
+          this.smallCircles.push([centerX, centerY - b + this.smallRadius * 2]);
+          this.smallCircles.push([centerX - this.smallRadius * 2, centerY - b]);
+          this.smallCircles.push([centerX, centerY - b - this.smallRadius * 2]);
         }
         else {
           this.bigCircles.push([centerX, centerY]);
@@ -181,8 +180,8 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.smallCircles.length; i++) {
       fromX = this.smallCircles[i][0] + this.smallRadius * Math.cos(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * (this.nextCounter % this.smallCirclePoints));
       fromY = this.smallCircles[i][1] + this.smallRadius * Math.sin(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * (this.nextCounter % this.smallCirclePoints));
-      toX = this.smallCircles[i][0] + this.smallRadius * Math.cos(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * ((this.nextCounter + this.smallCirclePoints/2) % this.smallCirclePoints));
-      toY = this.smallCircles[i][1] + this.smallRadius * Math.sin(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * ((this.nextCounter + this.smallCirclePoints/2) % this.smallCirclePoints));
+      toX = this.smallCircles[i][0] + this.smallRadius * Math.cos(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * ((this.nextCounter + this.smallCirclePoints / 2) % this.smallCirclePoints));
+      toY = this.smallCircles[i][1] + this.smallRadius * Math.sin(this.startAngle - Math.pow(-1, i) * (2 * Math.PI / this.smallCirclePoints) * ((this.nextCounter + this.smallCirclePoints / 2) % this.smallCirclePoints));
       this.lines.push([fromX, fromY, toX, toY]);
     }
 
@@ -197,20 +196,9 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
 
   private paint(): void {
     // Calculates fps
-    this.now = new Date().getTime();
-    this.frameFps = 1000 / (this.now - this.lastUpdate);
-    if (this.now != this.lastUpdate) {
-      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
-      this.frameFps = Math.ceil(this.frameFps);
-      this.lastUpdate = this.now;
-      if (this.fpsCounter >= this.framesToWaitBeforeMean) {
-        // Update average:
-        this.fpsMean = ((this.fpsMean * this.fpsCounter) + this.frameFps) / (this.fpsCounter + 1);
-        this.fpsMeanFloored = Math.floor(this.fpsMean);
-      }
-      this.fpsCounter++;
-    }
-     //Paint Circles:
+    this.updateFps();
+
+    //Paint Circles:
     //if(this.counter === 0){
     //  this.paintCircles();
     //}
@@ -289,4 +277,20 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   //    this.nextCounter = 0;
   //  }
   //}
+
+  private updateFps(): void {
+    this.now = new Date().getTime();
+    this.frameFps = 1000 / (this.now - this.lastUpdate);
+    if (this.now != this.lastUpdate) {
+      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
+      this.frameFps = Math.ceil(this.frameFps);
+      this.lastUpdate = this.now;
+      if (this.fpsCounter >= this.framesToWaitBeforeMean) {
+        // Update average:
+        this.fpsMean = ((this.fpsMean * this.fpsCounter) + this.frameFps) / (this.fpsCounter + 1);
+        this.fpsMeanFloored = Math.floor(this.fpsMean);
+      }
+      this.fpsCounter++;
+    }
+  }
 }

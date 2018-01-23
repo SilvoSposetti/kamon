@@ -13,7 +13,7 @@ var SceneSelectorComponent = (function () {
     }
     SceneSelectorComponent.prototype.ngOnInit = function () {
         this.getSceneNr();
-        this.scenesArray = this.scenesService.getSceneArray();
+        this.scenesNamesList = this.scenesService.getSceneArray();
     };
     SceneSelectorComponent.prototype.clickScene = function (index) {
         this.scenesService.setSceneFromNr(index);

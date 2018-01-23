@@ -32,8 +32,14 @@ export class ScenesService {
   public getSceneName(): Observable<string> {
     return this.selectedSceneNameSubject.asObservable();
   }
+
   public getSceneNr(): Observable<number> {
     return this.selectedSceneNrSubject.asObservable();
+  }
+
+  public wake(): void {
+    // Used to re-push the same value once;
+    this.setSceneFromNr(this.selectedSceneNr);
   }
 
   public getSceneArray(): string[] {

@@ -1,19 +1,21 @@
 SCENE Spheres pendulum: Spheres colliding with each other.
 SCENE Root: A "fractal" tree growing from some point on the screen.
-SCENE Squares: rotating black and white squares with center of rotation in the center of the screen.
 SCENE Polar: A number of nice polar functions and curves.
 SCENE Hilbert: A space filling algorithm
 SCENE Stain: A moving and transforming stain over a liquid surface.
 SCENE Functions: cycloid
 SCENE Polar Roses:
-SCENE infinity-zoom: a scene where you have the feeling that you are constantly zooming in or moving forward, using a list of objects to draw
-SCENE Voronoi:
+SCENE Voronoi: too haaaaard
 SCENE Snow: snowflake-like particle that are blown in the wind (kind of like in the Division trailer.
 SCENE Tiling: non-regular tiling of the screen space (like that youtube video I've seen once)
-Loop between scenes when they finish
+SCENE Kaleidoscope: move some lines and then transform and mirror them like a kaleidoscope.
+SCENE Ripple: water drops that fall on water make expanding circles whose lineWidth gets smaller as the circle grows => multiple circles per ripple.
+SCENE Moirèe: create psycho patterns by superimposing and moving two grids which, one slightly smaller than the other.
+SCENE Clock: show a circular clock, colors can be decided based on the rgb values of the hexadecimal number that can be created with hour-minutes-seconds
+Loop between scenes when they finish?
 shortcuts to Leo for German and some other website for English translations
-Change FOAAS with real citations, because calling an api to get always the same string is kind of dumb.
-Fix image bug when building with base-href: ./
 fix bug of click functionality on suggestions (not only select with arrows)
 check isRunning for every scene, so that onDestroy it will stop. Then remove console.log('finished')
-logo ideas: irregular tiling, nautilus spiral
+make weather and location information fade in only when they are available
+improve scene list: make its size variable + maybe one small image per scene
+fix bug: when list with scenes is initialized, then should also have which of the scenes is highlighted.

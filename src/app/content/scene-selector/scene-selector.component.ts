@@ -9,9 +9,12 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class SceneSelectorComponent implements OnInit {
 
-  public scenesArray: string[];
+  private scenesNamesList: string[];
   public selectedSceneNr: number;
   private scenesSubscription: Subscription;
+  public scenesAlphabeticalList: string [][] = [];
+
+  // First element contains first letter, other elements contain scene names.
 
 
   constructor(private scenesService: ScenesService) {
@@ -19,17 +22,44 @@ export class SceneSelectorComponent implements OnInit {
 
   ngOnInit() {
     this.getSceneNr();
-    this.scenesArray = this.scenesService.getSceneArray();
+    this.scenesNamesList = this.scenesService.getSceneArray();
+    this.generateAlphabeticalList();
   }
 
-  public clickScene(index: number): void {
-    this.scenesService.setSceneFromNr(index);
+  public clickScene(i: number, j: number): void {
+    this.scenesService.setSceneFromNr(this.getSceneNrFromIAndJ(i,j));
   }
 
   private getSceneNr(): void {
     this.scenesSubscription = this.scenesService.getSceneNr().subscribe((value) => {
       this.selectedSceneNr = value;
     });
+    this.scenesService.wake();
   }
 
+  private generateAlphabeticalList(): void {
+    let initial = '';
+    let sameInitialBlock: string[] = [];
+    for (let i = 0; i < this.scenesNamesList.length; i++) {
+      if (this.scenesNamesList[i][0].toUpperCase() !== initial) {
+        initial = this.scenesNamesList[i][0].toUpperCase();
+        if (sameInitialBlock.length !== 0) {
+          this.scenesAlphabeticalList.push(sameInitialBlock);
+        }
+        sameInitialBlock = [];
+        sameInitialBlock.push(this.scenesNamesList[i]);
+      }
+      else {
+        sameInitialBlock.push(this.scenesNamesList[i]);
+      }
+    }
+  }
+
+  public getSceneNrFromIAndJ(indexI: number, indexJ: number): number {
+    let result = 0;
+    for (let k = 0; k < indexI; k++) {
+      result += this.scenesAlphabeticalList[k].length;
+    }
+    return result + indexJ;
+  }
 }

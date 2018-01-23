@@ -2,8 +2,8 @@
   "useCustomBackgroundImage": false,
   "useScene": true,
   "showClock": false,
-  "defaultScene": "modular-multiplication",
-  "showCitations": true,
+  "defaultScene": "phyllotaxy",
+  "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
   "suggestions": true,
@@ -181,16 +181,20 @@
   ],
   "citations": [
     [
-      "asd1",
-      "asd1"
+      "Silently judging your font choices.",
+      "Jan Gugler"
     ],
     [
-      "asd2",
-      "asd2"
+      "There is no such thing as enough particles.",
+      "Luka Lapanashvili"
     ],
     [
-      "asd3",
-      "asd3"
+      "Duuuuuude",
+      "Silvo Sposetti"
+    ],
+    [
+      "Rest in pepperoni.",
+      "Everybody to Luka"
     ]
   ]
 }
