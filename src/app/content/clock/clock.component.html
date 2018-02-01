@@ -1,76 +1,78 @@
 <div class="clock-parent">
-  <div class="clock-header" *ngIf="allowLocation && showWeather">
-    <div class="header-left-side">
-      <div class="sunrise">
-        <div class="sunrise-time">
-          {{sunrise}}
+  <div class="clock-container">
+    <div class="clock-header" *ngIf="allowLocation && showWeather">
+      <div class="header-left-side">
+        <div class="sunrise">
+          <div class="sunrise-time">
+            {{sunrise}}
+          </div>
+          <img class="sun-img" src="../../../assets/img/weather/sunrise.png">
         </div>
-        <img class="sun-img" src="../../../assets/img/weather/sunrise.png">
-      </div>
-      <div class="temperature second-row">
+        <div class="temperature second-row">
           temp. {{temperature}} °C
-      </div>
-    </div>
-    <div class="header-center">
-      <img class="weather-img" src="{{iconPath}}">
-    </div>
-    <div class="header-right-side">
-      <div class="sunset">
-        <img class="sun-img" src="../../../assets/img/weather/sunset.png">
-        <div class="sunset-time">
-          {{sunset}}
         </div>
       </div>
-      <div class="weather second-row">
-        {{weather}}
+      <div class="header-center">
+        <img class="weather-img" src="{{iconPath}}">
+      </div>
+      <div class="header-right-side">
+        <div class="sunset">
+          <img class="sun-img" src="../../../assets/img/weather/sunset.png">
+          <div class="sunset-time">
+            {{sunset}}
+          </div>
+        </div>
+        <div class="weather second-row">
+          {{weather}}
+        </div>
       </div>
     </div>
-  </div>
-  <div class="horizontal-line"></div>
-  <div class="dial">
-    <div class="hour-digits digits-container">
-      <div class="digit">
-        {{hoursFirstDigit}}
+    <div class="horizontal-line"></div>
+    <div class="dial">
+      <div class="hour-digits digits-container">
+        <div class="digit">
+          {{hoursFirstDigit}}
+        </div>
+        <div class="digit">
+          {{hoursSecondDigit}}
+        </div>
       </div>
-      <div class="digit">
-        {{hoursSecondDigit}}
+      <div class="dial-separator"></div>
+      <div class="minute-digits digits-container">
+        <div class="digit">
+          {{minutesFirstDigit}}
+        </div>
+        <div class="digit">
+          {{minutesSecondDigit}}
+        </div>
       </div>
-    </div>
-    <div class="dial-separator"></div>
-    <div class="minute-digits digits-container">
-      <div class="digit">
-        {{minutesFirstDigit}}
-      </div>
-      <div class="digit">
-        {{minutesSecondDigit}}
-      </div>
-    </div>
-    <div class="dial-separator"></div>
-    <div class="second-digits digits-container">
-      <div class="digit">
-        {{secondsFirstDigit}}
-      </div>
-      <div class="digit">
-        {{secondsSecondDigit}}
-      </div>
-    </div>
-  </div>
-  <div class="horizontal-line"></div>
-  <div class="clock-footer">
-    <div class="coordinate-container" *ngIf="allowLocation">
-      lat. {{latitude}} °<br>lon. {{longitude}} °
-    </div>
-    <div class="date-container">
-      <div class="day-of-week">
-        {{dayOfWeek}},
-      </div>
-      <div class="date">
-        {{day}} . {{month}} . {{year}}
+      <div class="dial-separator"></div>
+      <div class="second-digits digits-container">
+        <div class="digit">
+          {{secondsFirstDigit}}
+        </div>
+        <div class="digit">
+          {{secondsSecondDigit}}
+        </div>
       </div>
     </div>
-    <div class="place-container" *ngIf="allowLocation">
-      <div class="place">
-        {{locationName}}
+    <div class="horizontal-line"></div>
+    <div class="clock-footer">
+      <div class="coordinate-container" *ngIf="allowLocation">
+        lat. {{latitude}} °<br>lon. {{longitude}} °
+      </div>
+      <div class="date-container">
+        <div class="day-of-week">
+          {{dayOfWeek}},
+        </div>
+        <div class="date">
+          {{day}} . {{month}} . {{year}}
+        </div>
+      </div>
+      <div class="place-container" *ngIf="allowLocation">
+        <div class="place">
+          {{locationName}}
+        </div>
       </div>
     </div>
   </div>

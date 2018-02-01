@@ -9,7 +9,6 @@ SCENE Voronoi: too haaaaard
 SCENE Snow: snowflake-like particle that are blown in the wind (kind of like in the Division trailer.
 SCENE Tiling: non-regular tiling of the screen space (like that youtube video I've seen once)
 SCENE Kaleidoscope: move some lines and then transform and mirror them like a kaleidoscope.
-SCENE Ripple: water drops that fall on water make expanding circles whose lineWidth gets smaller as the circle grows => multiple circles per ripple.
 SCENE Moirèe: create psycho patterns by superimposing and moving two grids which, one slightly smaller than the other.
 SCENE Clock: show a circular clock, colors can be decided based on the rgb values of the hexadecimal number that can be created with hour-minutes-seconds
 Loop between scenes when they finish?

@@ -9,7 +9,7 @@
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
-  "allowLocation": true,
+  "allowLocation": false,
   "showWeather": true,
   "searchEngine": [
     "Google",

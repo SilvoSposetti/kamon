@@ -1,10 +1,22 @@
 .list-parent {
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.list-container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   font-size: var(--list-default-font-size);
   padding: 1.5em;
+
 }
 
 .list-separator {
