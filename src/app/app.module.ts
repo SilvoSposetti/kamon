@@ -35,6 +35,7 @@ import {BoidsComponent} from './background/scene/boids/boids.component';
 import {VoronoiComponent} from './background/scene/voronoi/voronoi.component';
 import {InfiniteZoomComponent} from './background/scene/infinite-zoom/infinite-zoom.component';
 import {ModularMultiplicationComponent} from './background/scene/modular-multiplication/modular-multiplication.component';
+import {DropsComponent} from './background/scene/drops/drops.component';
 
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
@@ -78,7 +79,8 @@ import {LocationService} from './shared/services/location.service';
     VoronoiComponent,
     InfiniteZoomComponent,
     ModularMultiplicationComponent,
-    CitationsComponent],
+    CitationsComponent,
+    DropsComponent],
   imports: [
     HttpModule,
     BrowserModule,

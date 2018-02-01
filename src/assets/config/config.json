@@ -1,11 +1,11 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false,
+  "showClock": true,
   "defaultScene": "phyllotaxy",
-  "showCitations": false,
+  "showCitations": true,
   "openLinkInNewTab": false,
-  "showList": false,
+  "showList": true,
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
@@ -195,6 +195,18 @@
     [
       "Rest in pepperoni.",
       "Everybody to Luka"
+    ],
+    [
+      "It should be both noted and ignored, embraced and dismissed, laughed at and revered.",
+      "Nobody000 on the Urban Dictionary"
+    ],
+    [
+      "The heart beat function for a dead guy is defined by f(x) = 0.",
+      "35093731895230467514051"
+    ],
+    [
+      "If a flight-simulator could transport you from A to B, then it would be a flight-emulator.",
+      "Henk Holterman"
     ]
   ]
 }

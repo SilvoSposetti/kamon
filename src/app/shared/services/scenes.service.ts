@@ -63,7 +63,8 @@ export class ScenesService {
       'boids',
       'voronoi',
       'infinite-zoom',
-      'modular-multiplication'
+      'modular-multiplication',
+      'drops'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);

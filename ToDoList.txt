@@ -18,4 +18,10 @@ fix bug of click functionality on suggestions (not only select with arrows)
 check isRunning for every scene, so that onDestroy it will stop. Then remove console.log('finished')
 make weather and location information fade in only when they are available
 improve scene list: make its size variable + maybe one small image per scene
-fix bug: when list with scenes is initialized, then should also have which of the scenes is highlighted.
+add performance hit information for all scenes
+improve Github readme.
+improve mobile support.
+add credits component on the bottom right.
+improve clock bottom spacing
+add to-do-list with its own JSON, either stored in a JSON file, or taken from the browser's localstorage.
+IF to-do-list works, then save config JSON also in localstorage to make the app usable by more people.
