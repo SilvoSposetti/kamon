@@ -108,19 +108,19 @@ export class ContentComponent implements OnInit {
     }
   }
 
-  private sceneSelectorHoverIn(): void {
+  public sceneSelectorHoverIn(): void {
     this.showSceneSelector = true;
   }
 
-  private sceneSelectorHoverOut(): void {
+  public sceneSelectorHoverOut(): void {
     this.showSceneSelector = false;
   }
 
-  private creditsHoverIn(): void {
+  public creditsHoverIn(): void {
     this.showCredits = true;
   }
 
-  private creditsHoverOut(): void {
+  public creditsHoverOut(): void {
     this.showCredits = false;
   }
 
