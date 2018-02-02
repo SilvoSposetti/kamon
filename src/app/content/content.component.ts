@@ -17,6 +17,7 @@ import {ConfigService} from '../shared/services/config.service';
           animate(400, style({opacity: 1}))
         ]),
         transition(':leave', [
+          style({opacity: 1}),
           animate(400, style({opacity: 0}))
         ])
       ]
@@ -27,11 +28,12 @@ export class ContentComponent implements OnInit {
 
   @Input() showList: boolean;
   @Input() selectionSuggestion: number;
-  @Input() showSceneSelector: number;
   @Input() showClock: boolean;
   @Input() showCitations: boolean;
   @Input() citations: string[][];
 
+  public showSceneSelector: boolean = false;
+  public showCredits: boolean = false;
   public showSearch: boolean;
   public searchText: string;
   public searchSuggestions: string[];
@@ -40,7 +42,7 @@ export class ContentComponent implements OnInit {
   private suggestionsSubscription: Subscription;
   private shortcutSubscription: Subscription;
 
-  private configList : string[][];
+  private configList: string[][];
   public elements: string[][][] = [];
   public categories: string[] = [];
 
@@ -104,6 +106,22 @@ export class ContentComponent implements OnInit {
       }
       this.elements[indexOfCategory].push(elementValues);
     }
+  }
+
+  private sceneSelectorHoverIn(): void {
+    this.showSceneSelector = true;
+  }
+
+  private sceneSelectorHoverOut(): void {
+    this.showSceneSelector = false;
+  }
+
+  private creditsHoverIn(): void {
+    this.showCredits = true;
+  }
+
+  private creditsHoverOut(): void {
+    this.showCredits = false;
   }
 
 }

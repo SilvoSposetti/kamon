@@ -1,0 +1,47 @@
+.credits-parent {
+  position:absolute;
+  bottom:0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  border-radius: var(--credits-hover-square-size);
+  width: 21em;
+}
+
+.credits-text {
+  font-size: 0.8em;
+  margin:1em;
+}
+
+.credits-image {
+  width: var(--credits-hover-square-size);
+  height: var(--credits-hover-square-size);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/*LINK*/
+/* unvisited link */
+a:link {
+  color: white;
+}
+
+/* visited link */
+a:visited {
+  color: lightgrey;
+}
+
+/* mouse over link */
+a:hover {
+  color: lightgrey;
+}
+
+/* selected link */
+a:active {
+  color: white;
+}

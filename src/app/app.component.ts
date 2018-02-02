@@ -67,7 +67,6 @@ export class AppComponent implements OnInit {
       event.preventDefault();
       event.stopPropagation();
       console.log('home');
-      this.showSceneSelector = !this.showSceneSelector;
     }
     else if (event.which === 33) {
       event.preventDefault();

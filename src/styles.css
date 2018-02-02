@@ -18,15 +18,18 @@
   --search-background-color: rgba(0,0,0,0.7);
   --search-font-color: white;
 
+  /*Background */
+
 
   /*SEARCH COMPONENT*/
   --search-text-font-size: 2em;
   --suggestions-font-size: 1em;
   --shortcut-found-font-size:1.2em;
 
-  /*FUCK OFF COMPONENT*/
-  --fuck-off-message-font-size: 1em;
-  --fuck-off-author-font-size: 0.7em;
+  /*CREDITS*/
+  --credits-height: 5em;
+  --credits-border: 15em;
+  --credits-hover-square-size:5em;
 
 
   /*--setting-color: linear-gradient(141deg, #10afa3 0%, #10998e 25%, #177181 51%, #1b5978 75%, #1b4564 100%);*/

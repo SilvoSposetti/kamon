@@ -1,7 +1,7 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false,
+  "showClock": true,
   "defaultScene": "phyllotaxy",
   "showCitations": false,
   "openLinkInNewTab": false,
@@ -9,7 +9,7 @@
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
-  "allowLocation": false,
+  "allowLocation": true,
   "showWeather": true,
   "searchEngine": [
     "Google",

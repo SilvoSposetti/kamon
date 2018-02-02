@@ -5,7 +5,7 @@ import {Subscription} from 'rxjs/Subscription';
 @Component({
   selector: 'app-scene-selector',
   templateUrl: './scene-selector.component.html',
-  styleUrls: ['./scene-selector.component.css']
+  styleUrls: ['./scene-selector.component.css'],
 })
 export class SceneSelectorComponent implements OnInit {
 
@@ -13,7 +13,6 @@ export class SceneSelectorComponent implements OnInit {
   public selectedSceneNr: number;
   private scenesSubscription: Subscription;
   public scenesAlphabeticalList: string [][] = [];
-
   // First element contains first letter, other elements contain scene names.
 
 
@@ -27,7 +26,7 @@ export class SceneSelectorComponent implements OnInit {
   }
 
   public clickScene(i: number, j: number): void {
-    this.scenesService.setSceneFromNr(this.getSceneNrFromIAndJ(i,j));
+    this.scenesService.setSceneFromNr(this.getSceneNrFromIAndJ(i, j));
   }
 
   private getSceneNr(): void {

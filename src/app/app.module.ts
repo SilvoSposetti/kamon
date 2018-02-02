@@ -49,6 +49,7 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
+import { CreditsComponent } from './content/credits/credits.component';
 
 
 
@@ -80,7 +81,8 @@ import {LocationService} from './shared/services/location.service';
     InfiniteZoomComponent,
     ModularMultiplicationComponent,
     CitationsComponent,
-    DropsComponent],
+    DropsComponent,
+    CreditsComponent],
   imports: [
     HttpModule,
     BrowserModule,
