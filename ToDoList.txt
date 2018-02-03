@@ -4,7 +4,6 @@ SCENE Polar: A number of nice polar functions and curves.
 SCENE Hilbert: A space filling algorithm
 SCENE Stain: A moving and transforming stain over a liquid surface.
 SCENE Functions: cycloid.
-SCENE Polar Roses:
 SCENE Voronoi: too haaaaard.
 SCENE Snow: snowflake-like particle that are blown in the wind (kind of like in the Division trailer.
 SCENE Tiling: non-regular tiling of the screen space (like that youtube video I've seen once).
@@ -25,3 +24,8 @@ IF to-do-list works, then save config JSON also in localstorage to make the app 
 add information about browser support (only chrome and firefox) on the readme.
 redefine each css variable in styles.css.
 make temperature display no digits after comma.
+replace search text with actual form.
+do icons for edit, completed, !completed, save, delete, addNew
+rename 'functions' scene in 'polar-function' or 'polar roses' and improve it!
+edit harmonic-functions so that the period matches exactly with the screen width.
+take to-do data from localstorage when already available, otherwise generate it.

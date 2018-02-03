@@ -1,0 +1,106 @@
+.to-do-parent {
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  -moz-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  border-radius: 0.5em;
+  max-width: 30em;
+}
+
+.to-do-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+/***********************************************************************************************************************
+* NEW-TO-DOs
+***********************************************************************************************************************/
+
+.new-to-do-container {
+  min-height: 0.5em;
+  max-height: 0.5em;
+  min-width: 100%;
+  /*border: 1px solid white;*/
+  background: #373737;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/***********************************************************************************************************************
+* TO-DOs
+***********************************************************************************************************************/
+.to-do {
+  margin: 0.2em;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+}
+
+.form-container {
+  padding: 0;
+  margin: 0;
+}
+.to-do-text{
+  max-width: 90%;
+  width:85%;
+  word-wrap: break-word;
+
+}
+.to-do-edit-text {
+  width: 100%;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.edit-to-do-input {
+  width:90%;
+  border: 2px solid white;
+  border-radius: 0.5em;
+  background: black;
+  color: var(--default-font-color);
+  padding: 0.5em;
+  font-size: 1em;
+}
+
+.to-do-button {
+  min-width: 2em;
+  max-width: 2em;
+  min-height: 2em;
+  max-height: 2em;
+  border: 1px solid white;
+  /*border-radius: 0.5em;*/
+  overflow: hidden;
+}
+
+/*.to-do-up-down {*/
+/*display: flex;*/
+/*align-items: center;*/
+/*justify-content: center;*/
+/*flex-direction: column;*/
+/*}*/
+
+/***********************************************************************************************************************
+* BUTTON STYLES
+***********************************************************************************************************************/
+
+.button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 0.5em;
+}
+
+.button:hover {
+  background-color: #555555;
+}

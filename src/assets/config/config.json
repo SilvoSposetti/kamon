@@ -1,7 +1,7 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": true,
+  "showClock": false,
   "defaultScene": "phyllotaxy",
   "showCitations": false,
   "openLinkInNewTab": false,

@@ -34,6 +34,7 @@ export class ContentComponent implements OnInit {
 
   public showSceneSelector: boolean = false;
   public showCredits: boolean = false;
+  public showToDo: boolean = false;
   public showSearch: boolean;
   public searchText: string;
   public searchSuggestions: string[];
@@ -122,6 +123,13 @@ export class ContentComponent implements OnInit {
 
   public creditsHoverOut(): void {
     this.showCredits = false;
+  }
+
+  public toDoHoverIn(): void{
+    this.showToDo = true;
+  }
+  public toDoHoverOut(): void{
+    this.showToDo = false;
   }
 
 }

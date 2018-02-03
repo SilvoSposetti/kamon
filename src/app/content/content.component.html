@@ -1,18 +1,26 @@
 <div class="content-parent">
   <div class="content-container">
     <app-clock [@myEnter] *ngIf="showClock"></app-clock>
+
     <!--<div class="content-separator" *ngIf="showClock && showList"></div>-->
     <app-list [@myEnter] *ngIf="showList" [elements]="elements" [categories]="categories"></app-list>
+
     <app-search [@myEnter] *ngIf="showSearch" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion"
                 [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
     <app-citations [@myEnter] *ngIf="showCitations" [citations]="citations"></app-citations>
+
     <div class="scene-selector-hover" (mouseenter)="sceneSelectorHoverIn()" (mouseleave)="sceneSelectorHoverOut()">
       <app-scene-selector [@myEnter] *ngIf="showSceneSelector"></app-scene-selector>
     </div>
+
     <div class="credits-hover" (mouseenter)="creditsHoverIn()" (mouseleave)="creditsHoverOut()">
       <app-credits [@myEnter] *ngIf="showCredits"></app-credits>
-
     </div>
+
+    <div class="to-do-hover" (mouseenter)="toDoHoverIn()" (mouseleave)="toDoHoverOut()">
+      <app-to-do [@myEnter] *ngIf="showToDo"></app-to-do>
+    </div>
+
     <div class="search-input-container">
       <form class="form-container" #searchForm="ngForm" id="searchForm">
         <label for="search-input">Search</label>

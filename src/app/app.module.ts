@@ -17,7 +17,8 @@ import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
 import {ListComponent} from './content/list/list.component';
 import {CitationsComponent} from './content/citations/citations.component';
-
+import {CreditsComponent} from './content/credits/credits.component';
+import {ToDoComponent} from './content/to-do/to-do.component';
 
 // Scenes:
 import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
@@ -49,7 +50,7 @@ import {SearchComponent} from './content/search/search.component';
 import {SearchService} from './shared/services/search.service';
 import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
-import { CreditsComponent } from './content/credits/credits.component';
+import {ToDoService} from './shared/services/to-do.service';
 
 
 
@@ -82,7 +83,8 @@ import { CreditsComponent } from './content/credits/credits.component';
     ModularMultiplicationComponent,
     CitationsComponent,
     DropsComponent,
-    CreditsComponent],
+    CreditsComponent,
+    ToDoComponent],
   imports: [
     HttpModule,
     BrowserModule,
@@ -97,7 +99,12 @@ import { CreditsComponent } from './content/credits/credits.component';
     multi: true
   },
     // Add more services here:
-    ClockService, ScreenSizeService, SearchService, ScenesService, LocationService],
+    ClockService,
+    ScreenSizeService,
+    SearchService,
+    ScenesService,
+    LocationService,
+    ToDoService],
   bootstrap: [AppComponent],
 })
 

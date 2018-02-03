@@ -72,7 +72,7 @@ export class LocationService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
-    this.http.get('https://fcc-weather-api.glitch.me/api/current?lat=' + this.latitude + '&lon=' + this.longitude, headers).map(res => res.json()).subscribe(response => {
+    this.http.get('https://fcc-weather-api.glitch.me/api/current?lat=' + this.latitude + '&lon=' + this.longitude).map(res => res.json()).subscribe(response => {
       this.locationNameSubject.next(response.name + ' - ' + response.sys.country);
       this.weatherSubject.next(response.weather[0].description);
       this.sunriseSubject.next(this.dateInSecondsToTime(response.sys.sunrise));

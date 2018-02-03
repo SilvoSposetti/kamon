@@ -11,7 +11,7 @@
   -moz-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
   box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
   border-radius: 0.5em;
-  max-height: 90vh;
+  max-height: 75vh;
   overflow-y: auto;
 }
 

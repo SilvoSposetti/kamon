@@ -52,13 +52,13 @@ export class AppComponent implements OnInit {
       this.searchService.launchSearch(this.selectionSuggestion);
     }
     else if (event.which === 37 || event.which === 38) {
-      event.preventDefault();
+      //event.preventDefault();
       event.stopPropagation();
       console.log('arrowLeft');
       this.searchService.selectLeft();
     }
     else if (event.which === 39 || event.which === 40) {
-      event.preventDefault();
+      //event.preventDefault();
       event.stopPropagation();
       console.log('arrowRight');
       this.searchService.selectRight();
