@@ -29,3 +29,5 @@ do icons for edit, completed, !completed, save, delete, addNew
 rename 'functions' scene in 'polar-function' or 'polar roses' and improve it!
 edit harmonic-functions so that the period matches exactly with the screen width.
 take to-do data from localstorage when already available, otherwise generate it.
+add a boolean 'showFPS' in config.json and manage to show/display FPS count only when wanted.
+maybe

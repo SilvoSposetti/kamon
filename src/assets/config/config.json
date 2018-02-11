@@ -1,8 +1,8 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false,
-  "defaultScene": "phyllotaxy",
+  "showClock": true,
+  "defaultScene": "diffusion-limited-aggregation",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
@@ -10,6 +10,9 @@
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
   "allowLocation": true,
+  "useToDoList": false,
+  "useCredits": true,
+  "showFPS": true,
   "showWeather": true,
   "searchEngine": [
     "Google",

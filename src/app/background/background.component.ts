@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ConfigService} from '../shared/services/config.service';
 
 @Component({
@@ -7,6 +7,7 @@ import {ConfigService} from '../shared/services/config.service';
   styleUrls: ['./background.component.css']
 })
 export class BackgroundComponent implements OnInit {
+  @Input() showFPS: boolean;
 
   public useScene = this.configService.getConfig().useScene;
 

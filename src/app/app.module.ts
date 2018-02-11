@@ -51,6 +51,7 @@ import {SearchService} from './shared/services/search.service';
 import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
 import {ToDoService} from './shared/services/to-do.service';
+import { DiffusionLimitedAggregationComponent } from './background/scene/diffusion-limited-aggregation/diffusion-limited-aggregation.component';
 
 
 
@@ -84,7 +85,8 @@ import {ToDoService} from './shared/services/to-do.service';
     CitationsComponent,
     DropsComponent,
     CreditsComponent,
-    ToDoComponent],
+    ToDoComponent,
+    DiffusionLimitedAggregationComponent],
   imports: [
     HttpModule,
     BrowserModule,

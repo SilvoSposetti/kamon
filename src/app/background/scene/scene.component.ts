@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {ScreenSizeService} from '../../shared/services/screen-size.service';
 import {ScenesService} from '../../shared/services/scenes.service';
@@ -9,6 +9,7 @@ import {ScenesService} from '../../shared/services/scenes.service';
   styleUrls: ['./scene.component.css']
 })
 export class SceneComponent implements OnInit {
+  @Input() showFPS: boolean;
 
   private widthSubscription: Subscription;
   private heightSubscription: Subscription;

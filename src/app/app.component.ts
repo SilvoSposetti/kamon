@@ -19,6 +19,9 @@ export class AppComponent implements OnInit {
   public showClock = this.configService.getConfig().showClock;
   public showCitations = this.configService.getConfig().showCitations;
   public citations = this.configService.getConfig().citations;
+  public useToDoList = this.configService.getConfig().useToDoList;
+  public showFPS = this.configService.getConfig().showFPS;
+  public useCredits = this.configService.getConfig().useCredits;
 
   constructor(private configService: ConfigService,
               private searchService: SearchService) {

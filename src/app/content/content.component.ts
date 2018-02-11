@@ -31,6 +31,9 @@ export class ContentComponent implements OnInit {
   @Input() showClock: boolean;
   @Input() showCitations: boolean;
   @Input() citations: string[][];
+  @Input() useToDoList: boolean;
+  @Input() useCredits: boolean;
+
 
   public showSceneSelector: boolean = false;
   public showCredits: boolean = false;
@@ -118,18 +121,18 @@ export class ContentComponent implements OnInit {
   }
 
   public creditsHoverIn(): void {
-    this.showCredits = true;
+    this.showCredits = this.useCredits;
   }
 
   public creditsHoverOut(): void {
-    this.showCredits = false;
+    this.showCredits = false && this.useCredits;
   }
 
   public toDoHoverIn(): void{
-    this.showToDo = true;
+    this.showToDo =  this.useToDoList;
   }
   public toDoHoverOut(): void{
-    this.showToDo = false;
+    this.showToDo = false && this.useToDoList;
   }
 
 }
