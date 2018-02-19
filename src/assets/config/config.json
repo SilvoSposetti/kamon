@@ -1,8 +1,8 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": true,
-  "defaultScene": "diffusion-limited-aggregation",
+  "showClock": false,
+  "defaultScene": "game-of-life",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
@@ -210,6 +210,18 @@
     [
       "If a flight-simulator could transport you from A to B, then it would be a flight-emulator.",
       "Henk Holterman"
+    ],
+    [
+      "Ich habe sogar vergessen wie geil bier schmeckt",
+      "Luka Lapanashvili"
+    ],
+    [
+      "1: Wear pants. 2: Your own pants.",
+      "Ze Frank"
+    ],
+    [
+      "I'm sad that I like the talent to make this shit up.",
+      "JonTron"
     ]
   ]
 }

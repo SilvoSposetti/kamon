@@ -52,6 +52,7 @@ import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
 import {ToDoService} from './shared/services/to-do.service';
 import { DiffusionLimitedAggregationComponent } from './background/scene/diffusion-limited-aggregation/diffusion-limited-aggregation.component';
+import { GameOfLifeComponent } from './background/scene/game-of-life/game-of-life.component';
 
 
 
@@ -86,7 +87,8 @@ import { DiffusionLimitedAggregationComponent } from './background/scene/diffusi
     DropsComponent,
     CreditsComponent,
     ToDoComponent,
-    DiffusionLimitedAggregationComponent],
+    DiffusionLimitedAggregationComponent,
+    GameOfLifeComponent],
   imports: [
     HttpModule,
     BrowserModule,

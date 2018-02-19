@@ -65,7 +65,8 @@ export class ScenesService {
       'infinite-zoom',
       'modular-multiplication',
       'drops',
-      'diffusion-limited-aggregation'
+      'diffusion-limited-aggregation',
+      'game-of-life'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);
