@@ -1,8 +1,8 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false,
-  "defaultScene": "game-of-life",
+  "showClock": true,
+  "defaultScene": "kaleidoscope",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,

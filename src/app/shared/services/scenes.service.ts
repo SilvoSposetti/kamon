@@ -66,7 +66,8 @@ export class ScenesService {
       'modular-multiplication',
       'drops',
       'diffusion-limited-aggregation',
-      'game-of-life'
+      'game-of-life',
+      'kaleidoscope'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);
