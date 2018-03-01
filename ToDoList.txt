@@ -1,6 +1,5 @@
 SCENE Spheres pendulum: Spheres colliding with each other.
 SCENE Root: A "fractal" tree growing from some point on the screen.
-SCENE Polar: A number of nice polar functions and curves.
 SCENE Hilbert: A space filling algorithm
 SCENE Stain: A moving and transforming stain over a liquid surface.
 SCENE Functions: cycloid.

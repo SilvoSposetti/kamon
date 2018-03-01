@@ -56,7 +56,6 @@ export class ScenesService {
       'perlin-field',
       'rain',
       'lissajous',
-      'functions',
       'harmonic-functions',
       'tree-map',
       'sorting-algorithms',
@@ -67,7 +66,8 @@ export class ScenesService {
       'drops',
       'diffusion-limited-aggregation',
       'game-of-life',
-      'kaleidoscope'
+      'kaleidoscope',
+      'polar-functions'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);

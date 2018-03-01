@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FunctionsComponent } from './functions.component';
+import { PolarFunctionsComponent } from './polar-functions.component';
 
-describe('FunctionsComponent', () => {
-  let component: FunctionsComponent;
-  let fixture: ComponentFixture<FunctionsComponent>;
+describe('PolarFunctionsComponent', () => {
+  let component: PolarFunctionsComponent;
+  let fixture: ComponentFixture<PolarFunctionsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FunctionsComponent ]
+      declarations: [ PolarFunctionsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FunctionsComponent);
+    fixture = TestBed.createComponent(PolarFunctionsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

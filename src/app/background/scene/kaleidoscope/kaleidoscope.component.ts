@@ -96,7 +96,7 @@ export class KaleidoscopeComponent implements OnInit, OnDestroy {
     // Circles:
     let circlesDistance: number = 2;
     let firstCircleRadius: number = 10;
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 12; i++) {
       // Circles:
       this.kaleidoCircle(circlesDistance + firstCircleRadius * i, Math.pow(-1, i) * Math.cos(this.fpsCounter / 30), firstCircleRadius * (i + 1));
       // Squares:

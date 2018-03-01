@@ -28,7 +28,6 @@ import {MazeComponent} from './background/scene/maze/maze.component';
 import {PerlinFieldComponent} from './background/scene/perlin-field/perlin-field.component';
 import {RainComponent} from './background/scene/rain/rain.component';
 import {LissajousComponent} from './background/scene/lissajous/lissajous.component';
-import {FunctionsComponent} from './background/scene/functions/functions.component';
 import {HarmonicFunctionsComponent} from './background/scene/harmonic-functions/harmonic-functions.component';
 import {TreeMapComponent} from './background/scene/tree-map/tree-map.component';
 import {SortingAlgorithmsComponent} from './background/scene/sorting-algorithms/sorting-algorithms.component';
@@ -54,6 +53,7 @@ import {ToDoService} from './shared/services/to-do.service';
 import { DiffusionLimitedAggregationComponent } from './background/scene/diffusion-limited-aggregation/diffusion-limited-aggregation.component';
 import { GameOfLifeComponent } from './background/scene/game-of-life/game-of-life.component';
 import { KaleidoscopeComponent } from './background/scene/kaleidoscope/kaleidoscope.component';
+import { PolarFunctionsComponent } from './background/scene/polar-functions/polar-functions.component';
 
 
 
@@ -75,7 +75,6 @@ import { KaleidoscopeComponent } from './background/scene/kaleidoscope/kaleidosc
     PerlinFieldComponent,
     RainComponent,
     LissajousComponent,
-    FunctionsComponent,
     HarmonicFunctionsComponent,
     MyBlinkDirective,
     TreeMapComponent,
@@ -90,7 +89,8 @@ import { KaleidoscopeComponent } from './background/scene/kaleidoscope/kaleidosc
     ToDoComponent,
     DiffusionLimitedAggregationComponent,
     GameOfLifeComponent,
-    KaleidoscopeComponent],
+    KaleidoscopeComponent,
+    PolarFunctionsComponent],
   imports: [
     HttpModule,
     BrowserModule,
