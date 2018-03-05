@@ -11,11 +11,11 @@ import {ScenesService} from '../../shared/services/scenes.service';
 export class SceneComponent implements OnInit {
   @Input() showFPS: boolean;
 
-  private widthSubscription: Subscription;
-  private heightSubscription: Subscription;
   private scenesSubscription: Subscription;
-  public sceneWidth: number;
-  public sceneHeight: number;
+  @Input()  screenWidth: number;
+  @Input() public screenHeight: number;
+  @Input()  public isWide: boolean;
+  @Input() public isTall: boolean;
   public sceneName: string;
   public scenesArray: string[];
 
@@ -23,23 +23,9 @@ export class SceneComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.getSceneName();
     this.scenesArray = this.scenesService.getSceneArray();
-    this.updateWindowSize();
     this.scenesService.startScenes();
-
-  }
-
-  private updateWindowSize(): void {
-    this.widthSubscription = this.screenSizeService.getWidth().subscribe(
-      value => {
-        this.sceneWidth = value;
-      }
-    );
-    this.heightSubscription = this.screenSizeService.getHeight().subscribe(value => {
-      this.sceneHeight = value;
-    });
   }
 
   private getSceneName(): void {

@@ -21,10 +21,10 @@ var SceneComponent = (function () {
     SceneComponent.prototype.updateWindowSize = function () {
         var _this = this;
         this.widthSubscription = this.screenSizeService.getWidth().subscribe(function (value) {
-            _this.sceneWidth = value;
+            _this.screenWidth = value;
         });
         this.heightSubscription = this.screenSizeService.getHeight().subscribe(function (value) {
-            _this.sceneHeight = value;
+            _this.screenHeight = value;
         });
     };
     SceneComponent.prototype.getSceneNr = function () {

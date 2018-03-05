@@ -1,8 +1,22 @@
 <div class="app-parent">
   <div class="content">
-    <app-content [showClock]="showClock" [showList]="showList" [showCitations]="showCitations" [selectionSuggestion]="selectionSuggestion" [citations]="citations" [useToDoList]="useToDoList" [useCredits]="useCredits"></app-content>
+    <app-content [showClock]="showClock"
+                 [showList]="showList"
+                 [showCitations]="showCitations"
+                 [selectionSuggestion]="selectionSuggestion"
+                 [citations]="citations"
+                 [useToDoList]="useToDoList"
+                 [useCredits]="useCredits"
+                 [screenHeight]="screenHeight"
+                 [screenWidth]="screenWidth"
+                 [isWide]="isWide"
+                 [isTall]="isTall"></app-content>
   </div>
   <div class="background">
-    <app-background [showFPS]="showFPS"></app-background>
+    <app-background [showFPS]="showFPS"
+                    [screenHeight]="screenHeight"
+                    [screenWidth]="screenWidth"
+                    [isWide]="isWide"
+                    [isTall]="isTall"></app-background>
   </div>
 </div>

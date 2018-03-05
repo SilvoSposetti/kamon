@@ -7,9 +7,12 @@ import {ConfigService} from '../shared/services/config.service';
   styleUrls: ['./background.component.css']
 })
 export class BackgroundComponent implements OnInit {
-  @Input() showFPS: boolean;
-
-  public useScene = this.configService.getConfig().useScene;
+  @Input() public showFPS: boolean;
+  @Input() public screenWidth: number;
+  @Input() public screenHeight: number;
+  @Input() public isWide: boolean;
+  @Input() public isTall: boolean;
+  @Input() public useScene = this.configService.getConfig().useScene;
 
   constructor(private configService: ConfigService) {
   }

@@ -33,7 +33,10 @@ export class ContentComponent implements OnInit {
   @Input() citations: string[][];
   @Input() useToDoList: boolean;
   @Input() useCredits: boolean;
-
+  @Input() public screenWidth: number;
+  @Input() public screenHeight: number;
+  @Input() public isWide: boolean;
+  @Input() public isTall: boolean;
 
   public showSceneSelector: boolean = false;
   public showCredits: boolean = false;

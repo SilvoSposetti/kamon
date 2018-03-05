@@ -9,6 +9,8 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
   @ViewChild('myCanvas') canvasRef: ElementRef;
   @Input() screenWidth: number;
   @Input() screenHeight: number;
+  @Input() showFPS: boolean;
+
 
   // FPS variables:
   public fps = 0;

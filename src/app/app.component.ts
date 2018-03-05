@@ -2,6 +2,7 @@ import {Component, HostListener, OnInit} from '@angular/core';
 import {ConfigService} from './shared/services/config.service';
 import {SearchService} from './shared/services/search.service';
 import {Subscription} from 'rxjs/Subscription';
+import {ScreenSizeService} from './shared/services/screen-size.service';
 
 @Component({
   selector: 'app-root',
@@ -23,12 +24,26 @@ export class AppComponent implements OnInit {
   public showFPS = this.configService.getConfig().showFPS;
   public useCredits = this.configService.getConfig().useCredits;
 
+  private widthThreshold = 769; // Values bigger or equal threshold are considered wide.
+  private heightThreshold = 500; // Values bigger or equal threshold are considered tall.
+  public screenWidth: number;
+  public screenHeight: number;
+  public isWide: boolean;
+  public isTall: boolean;
+  // env = environment.envName;
+
+  private widthSubscription: Subscription;
+  private heightSubscription: Subscription;
+
+
   constructor(private configService: ConfigService,
-              private searchService: SearchService) {
+              private searchService: SearchService,
+              private screenSizeService: ScreenSizeService) {
   }
 
   ngOnInit() {
     this.listenForSelection();
+    this.updateWindowSize();
   }
 
 
@@ -89,4 +104,19 @@ export class AppComponent implements OnInit {
       this.selectionSuggestion = value);
   }
 
+
+  updateWindowSize(): void {
+    this.widthSubscription = this.screenSizeService.getWidth().subscribe(
+      value => {
+        this.screenWidth = value;
+        this.isWide = value >= this.widthThreshold;
+      }
+    );
+    this.heightSubscription = this.screenSizeService.getHeight().subscribe(
+      value => {
+        this.screenHeight = value;
+        this.isTall = value >= this.heightThreshold;
+      }
+    );
+  }
 }

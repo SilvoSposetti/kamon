@@ -10,6 +10,7 @@ export class TreeMapComponent implements OnInit, OnDestroy {
   @ViewChild('myCanvas') canvasRef: ElementRef;
   @Input() screenWidth: number;
   @Input() screenHeight: number;
+  @Input() showFPS: boolean;
 
   private running: boolean;
 

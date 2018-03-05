@@ -1,8 +1,8 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": true,
-  "defaultScene": "polar-functions",
+  "showClock": false,
+  "defaultScene": "phyllotaxy",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,

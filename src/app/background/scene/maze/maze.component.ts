@@ -10,6 +10,8 @@ export class MazeComponent implements OnInit, OnDestroy {
   @ViewChild('myCanvas') canvasRef: ElementRef;
   @Input() screenWidth: number;
   @Input() screenHeight: number;
+  @Input() showFPS: boolean;
+
 
   public fps = 0;
   private now: number;

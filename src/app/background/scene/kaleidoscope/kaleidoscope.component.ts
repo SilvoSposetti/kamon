@@ -9,6 +9,8 @@ export class KaleidoscopeComponent implements OnInit, OnDestroy {
   @ViewChild('myCanvas') canvasRef: ElementRef;
   @Input() screenWidth: number;
   @Input() screenHeight: number;
+  @Input() showFPS: boolean;
+
 
 
   // FPS variables:
