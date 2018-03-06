@@ -1,4 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FpsService} from '../../../shared/services/fps.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-rain',
@@ -11,6 +13,8 @@ export class RainComponent implements OnInit, OnDestroy {
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  private fpsValues: number[] = [0, 0];
 
   private running: boolean;
 
@@ -36,25 +40,30 @@ export class RainComponent implements OnInit, OnDestroy {
 
 
 
-  constructor() {
+  constructor(private fpsService: FpsService) {
   }
 
   ngOnInit() {
     this.running = true;
     this.spacingBetweenUmbrellas = this.screenHeight / (this.numOfUmbrellas + 1);
     this.setup();
+    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+      this.fpsValues = value;
+    });
     requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {
     this.running = false;
+    this.fpsService.reset();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   private paint(): void {
     // Check that we're still running.
-    if (!this.running) {
-      return;
-    }
+
+    this.fpsService.updateFps();
     this.updateUmbrellas();
     this.updateRainDrops();
     // Paint current frame
@@ -92,7 +101,9 @@ export class RainComponent implements OnInit, OnDestroy {
     //}
 
     //Schedule next
-    requestAnimationFrame(() => this.paint());
+    if(this.running){
+      requestAnimationFrame(() => this.paint());
+    }
   }
 
   private setup(): void {

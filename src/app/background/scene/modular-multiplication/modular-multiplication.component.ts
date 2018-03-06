@@ -1,4 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FpsService} from '../../../shared/services/fps.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-modular-multiplication',
@@ -11,19 +13,8 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-
-  // FPS variables:
-  public fps = 0;
-  private now: number;
-  private lastUpdate = new Date().getTime();
-  public frameFps = 0;
-  // The higher this value, the less the FPS will be affected by quick changes
-  // Setting this to 1 will show the FPS of the last sampled frame only
-  public fpsFilter = 50;
-  private fpsCounter = 0;
-  private fpsMean = 60;
-  public fpsMeanFloored = -1;
-  private framesToWaitBeforeMean: number = 10;
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  private fpsValues: number[] = [0, 0];
 
   private circlesLineWidth: number = 1;
   private amountOfNormalRadiiInTheScreenWidth: number = 30; // Defines normalRadius!
@@ -61,17 +52,23 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
 
   private running: boolean;
 
-  constructor() {
+  constructor(private fpsService: FpsService) {
   }
 
   ngOnInit() {
     this.running = true;
     this.setup();
+    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+      this.fpsValues = value;
+    });
     requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {
     this.running = false;
+    this.fpsService.reset();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   /*********************************************************************************************************************
@@ -198,7 +195,7 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
 
   private paint(): void {
     // Calculates fps
-    this.updateFps();
+    this.fpsService.updateFps();
 
     //Paint Circles:
     //if(this.counter === 0){
@@ -280,19 +277,4 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   //  }
   //}
 
-  private updateFps(): void {
-    this.now = new Date().getTime();
-    this.frameFps = 1000 / (this.now - this.lastUpdate);
-    if (this.now != this.lastUpdate) {
-      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
-      this.frameFps = Math.ceil(this.frameFps);
-      this.lastUpdate = this.now;
-      if (this.fpsCounter >= this.framesToWaitBeforeMean) {
-        // Update average:
-        this.fpsMean = ((this.fpsMean * this.fpsCounter) + this.frameFps) / (this.fpsCounter + 1);
-        this.fpsMeanFloored = Math.floor(this.fpsMean);
-      }
-      this.fpsCounter++;
-    }
-  }
 }

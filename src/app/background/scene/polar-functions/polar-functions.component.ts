@@ -1,4 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FpsService} from '../../../shared/services/fps.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-polar-functions',
@@ -11,20 +13,8 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-
-  // FPS variables:
-  public fps = 0;
-  private now: number;
-  private lastUpdate = new Date().getTime();
-  public frameFps = 0;
-  // The higher this value, the less the FPS will be affected by quick changes
-  // Setting this to 1 will show the FPS of the last sampled frame only
-  public fpsFilter = 50;
-  private fpsCounter = 0;
-  private fpsMean = 60;
-  public fpsMeanFloored = -1;
-  private framesToWaitBeforeMean: number = 40;
-
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  private fpsValues: number[] = [0, 0];
 
   private running: boolean;
 
@@ -39,31 +29,39 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
   private k: number = (1 + Math.sqrt(5)) / 2;
   private lineWidth: number = 3;
 
-  constructor() {
+  constructor(private fpsService: FpsService) {
   }
 
   ngOnInit() {
     this.running = true;
     this.setup();
+    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+      this.fpsValues = value;
+    });
     requestAnimationFrame(() => this.loop());
   }
 
   ngOnDestroy() {
     this.running = false;
+    this.fpsService.reset();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   private loop(): void {
-    this.updateFps();
+    this.fpsService.updateFps();
     this.updateFunctions();
     this.drawBackground();
     this.drawFunctions();
-    requestAnimationFrame(() => this.loop());
+    if (this.running) {
+      requestAnimationFrame(() => this.loop());
+    }
   }
 
   private setup(): void {
-    this.delimiter = this.screenHeight/3.8;
-    this.epicycloidRadius = this.delimiter/(this.k*2);
-    this.hypocylcloidRadius = this.delimiter*(this.k*2);
+    this.delimiter = this.screenHeight / 3.8;
+    this.epicycloidRadius = this.delimiter / (this.k * 2);
+    this.hypocylcloidRadius = this.delimiter * (this.k * 2);
     for (let i = 0; i < this.numOfEpicycloids; i++) {
       let startingAngle = this.k * 10 * i;
       let angleIncrement = 0.005 + (i + 1) * 0.00001;
@@ -133,22 +131,6 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
     let x = (radius * (k - 1)) * Math.cos(angle) + radius * Math.cos((k - 1) * angle);
     let y = (radius * (k - 1)) * Math.sin(angle) - radius * Math.sin((k - 1) * angle);
     return [x, y];
-  }
-
-  private updateFps(): void {
-    this.now = new Date().getTime();
-    this.frameFps = 1000 / (this.now - this.lastUpdate);
-    if (this.now != this.lastUpdate) {
-      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
-      this.frameFps = Math.ceil(this.frameFps);
-      this.lastUpdate = this.now;
-      if (this.fpsCounter >= this.framesToWaitBeforeMean) {
-        // Update average:
-        this.fpsMean = ((this.fpsMean * this.fpsCounter) + this.frameFps) / (this.fpsCounter + 1);
-        this.fpsMeanFloored = Math.floor(this.fpsMean);
-      }
-      this.fpsCounter++;
-    }
   }
 
 }

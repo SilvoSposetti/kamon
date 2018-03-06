@@ -1,4 +1,6 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {FpsService} from '../../../shared/services/fps.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-boids',
@@ -11,16 +13,10 @@ export class BoidsComponent implements OnInit {
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  private fpsValues: number[] = [0, 0];
 
   private running: boolean;
-
-  public fps = 0;
-  private now: number;
-  private lastUpdate = new Date().getTime();
-  public frameFps = 0;
-  // The higher this value, the less the FPS will be affected by quick changes
-  // Setting this to 1 will show you the FPS of the last sampled frame only
-  public fpsFilter = 100;
 
   private numOfBoids: number = 600;
   private boids: number[][] = [];
@@ -64,17 +60,23 @@ export class BoidsComponent implements OnInit {
   private boidsRule5ExtremeDistance: number = 10;
 
 
-  constructor() {
+  constructor(private fpsService: FpsService) {
   }
 
   ngOnInit() {
     this.running = true;
     this.setup();
+    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+      this.fpsValues = value;
+    });
     requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {
     this.running = false;
+    this.fpsService.reset();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   private paint(): void {
@@ -84,13 +86,7 @@ export class BoidsComponent implements OnInit {
     }
 
     // Calculates fps
-    this.now = new Date().getTime();
-    this.frameFps = 1000 / (this.now - this.lastUpdate);
-    if (this.now != this.lastUpdate) {
-      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
-      this.frameFps = Math.ceil(this.frameFps);
-      this.lastUpdate = this.now;
-    }
+    this.fpsService.updateFps();
 
 
     // Paint current frame
@@ -100,7 +96,6 @@ export class BoidsComponent implements OnInit {
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     // ***** DRAW BOIDS *****
-
     for (let i = 0; i < this.numOfBoids; i++) {
       ctx.strokeStyle = 'rgba(200,200,200,1)';
       let angle = Math.atan(this.boids[i][3] / this.boids[i][2]);

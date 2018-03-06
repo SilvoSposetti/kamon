@@ -1,16 +1,14 @@
 SCENE Spheres pendulum: Spheres colliding with each other.
 SCENE Hilbert: A space filling algorithm
 SCENE Stain: A moving and transforming stain over a liquid surface.
-SCENE Functions: cycloid.
 SCENE Voronoi: too haaaaard.
 SCENE Snow: snowflake-like particle that are blown in the wind (kind of like in the Division trailer.
 SCENE Tiling: non-regular tiling of the screen space (like that youtube video I've seen once).
 SCENE Moirèe: create psycho patterns by superimposing and moving two grids which, one slightly smaller than the other.
 SCENE Clock: show a circular clock, colors can be decided based on the rgb values of the hexadecimal number that can be created with hour-minutes-seconds.
 SCENE Double Pendulum: just like the one Daniel Shiffman did (see on YT)
-Loop between scenes when they finish?
+SCENE FPS: show a graph of how many fps the scene is currently doing. Can also
 fix bug of click functionality on suggestions (not only select with arrows).
-check isRunning for every scene, so that onDestroy it will stop. Then remove console.log('finished').
 make weather and location information fade in only when they are available.
 add performance hit information for all scenes.
 improve Github readme.
@@ -22,9 +20,7 @@ redefine each css variable in styles.css.
 make temperature display no digits after comma.
 replace search text with actual form?
 do icons for edit, completed, !completed, save, delete, addNew
-rename 'functions' scene in 'polar-function' or 'polar roses' and improve it!
 edit harmonic-functions so that the period matches exactly with the screen width.
 take to-do data from localstorage when already available, otherwise generate it.
-add a boolean 'showFPS' in config.json and manage to show/display FPS count only when wanted.
 improve selection of autocomplete suggestions (first 'down', then left and right, then 'up' to exti seletion.
-fix '+' bug when typing mathematical expressions.
+fix '+' bug when typing mathematical expressions in search.

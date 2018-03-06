@@ -1,4 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FpsService} from '../../../shared/services/fps.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-asteroids',
@@ -11,6 +13,9 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  private fpsValues: number[] = [0, 0];
+
   private running: boolean;
   private asteroids: number[][] = [];
   // [posX,posY,velX,velY,mass,previousXPos,previousYPos]
@@ -19,17 +24,23 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
   private nrOfElements = 600;
 
 
-  constructor() {
+  constructor(private fpsService: FpsService) {
   }
 
   ngOnInit() {
     this.startAsteroids();
     this.running = true;
+    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+      this.fpsValues = value;
+    });
     requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {
     this.running = false;
+    this.fpsService.reset();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   private paint(): void {
@@ -51,6 +62,7 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     ctx.stroke();
 
     this.updateAsteroids();
+    this.fpsService.updateFps();
     for (let i = 0; i < this.nrOfElements; ++i) {
 
       ctx.strokeStyle = '#aaaaaa';
@@ -72,16 +84,16 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.nrOfElements; ++i) {
       let element: number[] = [];
       let randomAngle = this.randomFloat(0, 2 * Math.PI);
-      let x = this.screenWidth / 2 - this.randomFloat(100, this.screenWidth/2) * Math.cos(randomAngle);
-      let y = this.screenHeight / 2 - this.randomFloat(100, this.screenWidth/2) * Math.sin(randomAngle);
-      let randomAngleTurned = randomAngle + Math.PI/2;
+      let x = this.screenWidth / 2 - this.randomFloat(100, this.screenWidth / 2) * Math.cos(randomAngle);
+      let y = this.screenHeight / 2 - this.randomFloat(100, this.screenWidth / 2) * Math.sin(randomAngle);
+      let randomAngleTurned = randomAngle + Math.PI / 2;
       element.push(x);
       element.push(y);
-      let distanceFromCenterX = this.screenWidth/2 -x;
-      let distanceFromCenterY = this.screenHeight/2 -y;
-      let distance = Math.sqrt(Math.pow(distanceFromCenterX,2) + Math.pow(distanceFromCenterY,2));
-      element.push(Math.sqrt((this.gravityConstant*this.massInCenter)/distance) * Math.cos(randomAngleTurned));
-      element.push(Math.sqrt((this.gravityConstant*this.massInCenter)/distance) * Math.sin(randomAngleTurned));
+      let distanceFromCenterX = this.screenWidth / 2 - x;
+      let distanceFromCenterY = this.screenHeight / 2 - y;
+      let distance = Math.sqrt(Math.pow(distanceFromCenterX, 2) + Math.pow(distanceFromCenterY, 2));
+      element.push(Math.sqrt((this.gravityConstant * this.massInCenter) / distance) * Math.cos(randomAngleTurned));
+      element.push(Math.sqrt((this.gravityConstant * this.massInCenter) / distance) * Math.sin(randomAngleTurned));
       element.push(100);
       element.push(x);
       element.push(y);
@@ -103,8 +115,8 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
       let vectorToCenterLength = Math.sqrt(Math.pow(vectorToCenterX, 2) + Math.pow(vectorToCenterY, 2));
       vectorToCenterX /= vectorToCenterLength;
       vectorToCenterY /= vectorToCenterLength;
-      this.asteroids[i][5]= this.asteroids[i][0];
-      this.asteroids[i][6]= this.asteroids[i][1];
+      this.asteroids[i][5] = this.asteroids[i][0];
+      this.asteroids[i][6] = this.asteroids[i][1];
       this.asteroids[i][2] += force * vectorToCenterX / this.asteroids[i][4];
       this.asteroids[i][3] += force * vectorToCenterY / this.asteroids[i][4];
       this.asteroids[i][0] += this.asteroids[i][2];

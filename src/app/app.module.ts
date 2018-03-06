@@ -36,6 +36,10 @@ import {VoronoiComponent} from './background/scene/voronoi/voronoi.component';
 import {InfiniteZoomComponent} from './background/scene/infinite-zoom/infinite-zoom.component';
 import {ModularMultiplicationComponent} from './background/scene/modular-multiplication/modular-multiplication.component';
 import {DropsComponent} from './background/scene/drops/drops.component';
+import {DiffusionLimitedAggregationComponent} from './background/scene/diffusion-limited-aggregation/diffusion-limited-aggregation.component';
+import {GameOfLifeComponent} from './background/scene/game-of-life/game-of-life.component';
+import {KaleidoscopeComponent} from './background/scene/kaleidoscope/kaleidoscope.component';
+import {PolarFunctionsComponent} from './background/scene/polar-functions/polar-functions.component';
 
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
@@ -50,10 +54,7 @@ import {SearchService} from './shared/services/search.service';
 import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
 import {ToDoService} from './shared/services/to-do.service';
-import { DiffusionLimitedAggregationComponent } from './background/scene/diffusion-limited-aggregation/diffusion-limited-aggregation.component';
-import { GameOfLifeComponent } from './background/scene/game-of-life/game-of-life.component';
-import { KaleidoscopeComponent } from './background/scene/kaleidoscope/kaleidoscope.component';
-import { PolarFunctionsComponent } from './background/scene/polar-functions/polar-functions.component';
+import {FpsService} from './shared/services/fps.service';
 
 
 
@@ -110,7 +111,7 @@ import { PolarFunctionsComponent } from './background/scene/polar-functions/pola
     SearchService,
     ScenesService,
     LocationService,
-    ToDoService],
+    ToDoService, FpsService],
   bootstrap: [AppComponent],
 })
 

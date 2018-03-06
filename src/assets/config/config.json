@@ -1,9 +1,9 @@
 {
   "useCustomBackgroundImage": false,
   "useScene": true,
-  "showClock": false,
-  "defaultScene": "phyllotaxy",
-  "showCitations": false,
+  "showClock": true,
+  "defaultScene": "polar-functions",
+  "showCitations": true,
   "openLinkInNewTab": false,
   "showList": false,
   "suggestions": true,
@@ -222,6 +222,10 @@
     [
       "I'm sad that I like the talent to make this shit up.",
       "JonTron"
+    ],
+    [
+      "It is ridiculous and unnecessary, but when has that ever stopped programmers?",
+      "Tom Scott"
     ]
   ]
 }

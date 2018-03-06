@@ -1,4 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FpsService} from '../../../shared/services/fps.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-phyllotaxy',
@@ -12,6 +14,9 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  private fpsValues: number[] = [0, 0];
+
   private running: boolean;
 
   private points: number[][] = [];
@@ -22,17 +27,23 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
   private elementsPerFrame = 1;
   private c = 20;
 
-  constructor() {
+  constructor(private fpsService: FpsService) {
   }
 
   ngOnInit() {
     this.running = true;
     this.loadPoints();
+    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+      this.fpsValues = value;
+    });
     requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {
     this.running = false;
+    this.fpsService.reset();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   private paint(): void {
@@ -46,6 +57,7 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.fpsService.updateFps();
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 

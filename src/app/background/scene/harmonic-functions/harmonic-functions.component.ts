@@ -1,4 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FpsService} from '../../../shared/services/fps.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-harmonic-functions',
@@ -12,16 +14,10 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  private fpsValues: number[] = [0, 0];
 
   private running: boolean;
-
-  public fps = 0;
-  private now: number;
-  private lastUpdate = new Date().getTime();
-  public frameFps = 0;
-  // The higher this value, the less the FPS will be affected by quick changes
-  // Setting this to 1 will show you the FPS of the last sampled frame only
-  public fpsFilter = 100;
 
   private functionValues: number[][];
   // [xPos, yPos, previousXPos, previousYPos]
@@ -32,17 +28,23 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   private xForward: number[] = [5.5, 4.5, 5, 3.5];
   private loops: number[] = [];
 
-  constructor() {
+  constructor(private fpsService: FpsService) {
   }
 
   ngOnInit() {
     this.running = true;
     this.setup();
+    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+      this.fpsValues = value;
+    });
     requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {
     this.running = false;
+    this.fpsService.reset();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   private paint(): void {
@@ -51,13 +53,7 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
       return;
     }
     // Calculates fps
-    this.now = new Date().getTime();
-    this.frameFps = 1000 / (this.now - this.lastUpdate);
-    if (this.now != this.lastUpdate) {
-      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
-      this.frameFps = Math.ceil(this.frameFps);
-      this.lastUpdate = this.now;
-    }
+    this.fpsService.updateFps();
 
     // Update data
     this.update();

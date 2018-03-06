@@ -1,4 +1,6 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {FpsService} from '../../../shared/services/fps.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-infinite-zoom',
@@ -13,16 +15,10 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  private fpsValues: number[] = [0, 0];
 
   private running: boolean;
-
-  public fps = 0;
-  private now: number;
-  private lastUpdate = new Date().getTime();
-  public frameFps = 0;
-  // The higher this value, the less the FPS will be affected by quick changes
-  // Setting this to 1 will show you the FPS of the last sampled frame only
-  public fpsFilter = 10;
 
   private timeToLiveIncrement: number = 0.008;
   private speedExponent: number = 3;
@@ -44,17 +40,23 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
   // for each layer: [timeAlive, sideLength, rotationAngle1, rotationAngle2, ...,]
 
 
-  constructor() {
+  constructor(private fpsService: FpsService) {
   }
 
   ngOnInit() {
     this.running = true;
     this.setup();
+    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+      this.fpsValues = value;
+    });
     requestAnimationFrame(() => this.paint());
   }
 
   ngOnDestroy() {
     this.running = false;
+    this.fpsService.reset();
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   private paint(): void {
@@ -63,13 +65,7 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
       return;
     }
     // Calculates fps
-    this.now = new Date().getTime();
-    this.frameFps = 1000 / (this.now - this.lastUpdate);
-    if (this.now != this.lastUpdate) {
-      this.fps += (this.frameFps - this.fps) / this.fpsFilter;
-      this.frameFps = Math.ceil(this.frameFps);
-      this.lastUpdate = this.now;
-    }
+    this.fpsService.updateFps();
 
 
     // Paint current frame
