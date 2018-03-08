@@ -7,8 +7,9 @@ import {ConfigService} from './config.service';
 @Injectable()
 export class SearchService {
 
-  private searchStringSubject: Subject<string> = new Subject<string>(); // Passed to components as observable
+  private searchStringSubject: Subject<string> = new Subject<string>(); // Passed to components as Observable
   private searchString: string = ''; // Updated and used only here for requestSuggestions();
+  private searchStringEncoded: string = '';
 
   private suggestionsArraySubject: Subject<string[]> = new Subject<string[]>();
   private suggestionsArray: string[] = [];
@@ -23,23 +24,26 @@ export class SearchService {
 
   private shortcutSubject: Subject<string[]> = new Subject<string[]>();
   private shortcut: string[] = [];
-  private regex = new RegExp('^\\s*$');
+  private nullStringRegEx = new RegExp('^\\s*$');
 
   constructor(private jsonP: Jsonp, private configService: ConfigService) {
   }
 
   public setSearchString(newSearchString: string): void {
-    if (newSearchString.match(this.regex)) {
+    if (newSearchString.match(this.nullStringRegEx)) {
       this.searchString = '';
+      this.searchStringEncoded = '';
       this.searchStringSubject.next(this.searchString);
       this.updateShortcut();
       this.requestSuggestions();
       this.resetSelection();
     }
     else {
+      this.searchStringEncoded = newSearchString.split('+').join('%2B');
+        this.searchString = newSearchString;
       this.searchStringSubject.next(newSearchString);
-      this.searchString = newSearchString;
       this.updateShortcut();
+
       this.requestSuggestions();
       this.resetSelection();
     }
@@ -48,6 +52,7 @@ export class SearchService {
   public resetSearchString() {
     this.searchStringSubject.next('');
     this.searchString = '';
+    this.searchStringEncoded = '';
     this.suggestionsArraySubject.next([]);
     this.resetSelection();
   }
@@ -78,7 +83,7 @@ export class SearchService {
   }
 
   private requestSuggestions(): void {
-    if (this.searchString.length < 1) {
+    if (this.searchStringEncoded.length < 1) {
       // Do not send an empty suggestion request.
       // Thus return empty array.
       this.suggestionsArray = [];
@@ -93,7 +98,7 @@ export class SearchService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin', '*');
-        this.jsonP.request('https://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchString, headers).map(res => res.json()).subscribe(response => {
+        this.jsonP.request('https://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchStringEncoded).map(res => res.json()).subscribe(response => {
           this.suggestionsArray = response[1].slice(0, this.configService.getConfig().amountOfSuggestions);
           this.suggestionsArraySubject.next(this.suggestionsArray);
           // Reset suggestions styled and elaborate the new ones;
@@ -111,12 +116,12 @@ export class SearchService {
   }
 
   public launchSearch(index: number): void {
-    if (this.searchString.length < 1) {
+    if (this.searchStringEncoded.length < 1) {
       //do nothing because empty search string
     }
     else {
       if (this.shortcut[0] !== '') { // Checks if a shortcut has been detected
-        if (this.searchString.length === 1) { //Need to open start page of shortcut
+        if (this.searchStringEncoded.length === 1) { //Need to open start page of shortcut
           this.openShortcut();
         }
         else { // Need to open custom search in shortcut
@@ -164,15 +169,15 @@ export class SearchService {
   }
 
   public updateShortcut(): void {
-    if (this.searchString.length < 1) {
+    if (this.searchStringEncoded.length < 1) {
       // Do nothing because empty search string;
     }
     else {
-      if (this.searchString.length === 1 || this.searchString.substring(1, 2) === this.configService.getConfig().searchDelimiter) {
+      if (this.searchStringEncoded.length === 1 || this.searchStringEncoded.substring(1, 2) === this.configService.getConfig().searchDelimiter) {
         // Update shortcut only if the string is 1 char long or the delimiter is found in the second position of the string.
         let elementFound: string[] = [];
         let found = false;
-        let firstChar = this.searchString.substring(0, 1);
+        let firstChar = this.searchStringEncoded.substring(0, 1);
         for (let i = 0; i < this.elements.length; i++) {
           for (let j = 0; j < this.elements[i].length; j++) {
             if (this.elements[i][j][1] === firstChar) {
@@ -203,7 +208,7 @@ export class SearchService {
   private standardSearch(index: number): void {
     let keyword: string = '';
     if (index === -1) { // No suggestion was selected
-      keyword = this.searchString;
+      keyword = this.searchStringEncoded;
     }
     else { // A suggestion was selected
       keyword = this.suggestionsArray[index];
@@ -221,7 +226,7 @@ export class SearchService {
     let link = this.shortcut[2];
     if (this.shortcut[3] !== null) {
       link += this.shortcut[3];
-      link = link.replace('{}', this.searchString.substring(2));
+      link = link.replace('{}', this.searchStringEncoded.substring(2));
     }
     this.openLink(link);
   }

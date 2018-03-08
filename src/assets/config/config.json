@@ -3,7 +3,7 @@
   "useScene": true,
   "showClock": true,
   "defaultScene": "polar-functions",
-  "showCitations": true,
+  "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
   "suggestions": true,
