@@ -23,4 +23,4 @@ do icons for edit, completed, !completed, save, delete, addNew
 edit harmonic-functions so that the period matches exactly with the screen width.
 take to-do data from localstorage when already available, otherwise generate it.
 improve selection of autocomplete suggestions (first 'down', then left and right, then 'up' to exti seletion.
-fix '+' bug when typing mathematical expressions in search.
+adjust each subscription with the .takeUntil() new standard notation.

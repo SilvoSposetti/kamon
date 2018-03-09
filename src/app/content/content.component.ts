@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {SearchService} from '../shared/services/search.service';
-import {Subscription} from 'rxjs/Subscription';
-import {trigger, animate, style, transition} from '@angular/animations';
+import {animate, style, transition, trigger} from '@angular/animations';
 import {ConfigService} from '../shared/services/config.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-content',
@@ -24,7 +24,7 @@ import {ConfigService} from '../shared/services/config.service';
     )
   ],
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, OnDestroy {
 
   @Input() showList: boolean;
   @Input() selectionSuggestion: number;
@@ -45,9 +45,8 @@ export class ContentComponent implements OnInit {
   public searchText: string;
   public searchSuggestions: string[];
   public shortcut: string[];
-  private searchSubscription: Subscription;
-  private suggestionsSubscription: Subscription;
-  private shortcutSubscription: Subscription;
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
+
 
   private configList: string[][];
   public elements: string[][][] = [];
@@ -66,17 +65,22 @@ export class ContentComponent implements OnInit {
     this.searchService.setList(this.elements);
   }
 
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   private listenForSearch(): void {
-    this.searchSubscription = this.searchService.getSearch().subscribe((value) => {
+    this.searchService.getSearch().takeUntil(this.ngUnsubscribe).subscribe((value) => {
       this.searchText = value;
       if (value.length === 0) {
         this.checkShowSearch();
       }
     });
-    this.suggestionsSubscription = this.searchService.getSuggestions().subscribe((value) => {
+    this.searchService.getSuggestions().takeUntil(this.ngUnsubscribe).subscribe((value) => {
       this.searchSuggestions = value;
     });
-    this.shortcutSubscription = this.searchService.getShortcut().subscribe((value) => {
+    this.searchService.getShortcut().takeUntil(this.ngUnsubscribe).subscribe((value) => {
       this.shortcut = value;
     });
   }
@@ -131,10 +135,11 @@ export class ContentComponent implements OnInit {
     this.showCredits = false && this.useCredits;
   }
 
-  public toDoHoverIn(): void{
-    this.showToDo =  this.useToDoList;
+  public toDoHoverIn(): void {
+    this.showToDo = this.useToDoList;
   }
-  public toDoHoverOut(): void{
+
+  public toDoHoverOut(): void {
     this.showToDo = false && this.useToDoList;
   }
 

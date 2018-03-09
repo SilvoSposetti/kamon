@@ -7,7 +7,6 @@ import {Component, OnInit} from '@angular/core';
 })
 export class CreditsComponent implements OnInit {
 
-  public hover: boolean = false;
 
   constructor() {
   }

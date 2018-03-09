@@ -1,18 +1,19 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ScenesService} from '../../shared/services/scenes.service';
-import {Subscription} from 'rxjs/Subscription';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-scene-selector',
   templateUrl: './scene-selector.component.html',
   styleUrls: ['./scene-selector.component.css'],
 })
-export class SceneSelectorComponent implements OnInit {
+export class SceneSelectorComponent implements OnInit, OnDestroy {
 
   private scenesNamesList: string[];
   public selectedSceneNr: number;
-  private scenesSubscription: Subscription;
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
   public scenesAlphabeticalList: string [][] = [];
+
   // First element contains first letter, other elements contain scene names.
 
 
@@ -25,12 +26,17 @@ export class SceneSelectorComponent implements OnInit {
     this.generateAlphabeticalList();
   }
 
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   public clickScene(i: number, j: number): void {
     this.scenesService.setSceneFromNr(this.getSceneNrFromIAndJ(i, j));
   }
 
   private getSceneNr(): void {
-    this.scenesSubscription = this.scenesService.getSceneNr().subscribe((value) => {
+    this.scenesService.getSceneNr().takeUntil(this.ngUnsubscribe).subscribe((value) => {
       this.selectedSceneNr = value;
     });
     this.scenesService.wake();

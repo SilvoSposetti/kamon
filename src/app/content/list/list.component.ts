@@ -12,13 +12,11 @@ export class ListComponent implements OnInit {
   @Input() elements: string[][][]; // Tri-dimensional array!
   // First level are categories, second the element of each category, and third the values of each element
 
-  constructor(private configService: ConfigService, private searchService: SearchService) {
+  constructor(private configService: ConfigService) {
   }
 
   ngOnInit() {
   }
-
-
 
   openLink(i: number, j: number) {
     if (this.configService.getConfig().openLinkInNewTab) {

@@ -1,6 +1,6 @@
 <div class="clock-parent">
   <div class="clock-container">
-    <div class="clock-header" *ngIf="allowLocation && showWeather">
+    <div class="clock-header" [@myEnter] *ngIf="allowLocation && showWeather && allDataGathered">
       <div class="header-left-side">
         <div class="sunrise">
           <div class="sunrise-time">
@@ -58,7 +58,7 @@
     </div>
     <div class="horizontal-line"></div>
     <div class="clock-footer">
-      <div class="coordinate-container" *ngIf="allowLocation">
+      <div class="coordinate-container" [@myEnter] *ngIf="allowLocation && allDataGathered">
         lat. {{latitude}} °<br>lon. {{longitude}} °
       </div>
       <div class="date-container">
@@ -69,7 +69,7 @@
           {{day}} . {{month}} . {{year}}
         </div>
       </div>
-      <div class="place-container" *ngIf="allowLocation">
+      <div class="place-container" [@myEnter] *ngIf="allowLocation && allDataGathered">
         <div class="place">
           {{locationName}}
         </div>

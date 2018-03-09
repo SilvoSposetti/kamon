@@ -1,22 +1,20 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ConfigService} from './shared/services/config.service';
 import {SearchService} from './shared/services/search.service';
-import {Subscription} from 'rxjs/Subscription';
 import {ScreenSizeService} from './shared/services/screen-size.service';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 
   private keyboardEvent: any;
   //private altKeyAction: boolean;
   public showList: boolean = this.configService.getConfig().showList;
-  private selectionSubscription: Subscription;
   public selectionSuggestion: number = -1;
-  public showSceneSelector = false;
   public showClock = this.configService.getConfig().showClock;
   public showCitations = this.configService.getConfig().showCitations;
   public citations = this.configService.getConfig().citations;
@@ -32,8 +30,7 @@ export class AppComponent implements OnInit {
   public isTall: boolean;
   // env = environment.envName;
 
-  private widthSubscription: Subscription;
-  private heightSubscription: Subscription;
+  private ngUnsubscribe: Subject<any> = new Subject<any>();
 
 
   constructor(private configService: ConfigService,
@@ -44,6 +41,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.listenForSelection();
     this.updateWindowSize();
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
 
@@ -100,19 +102,19 @@ export class AppComponent implements OnInit {
   }
 
   private listenForSelection() {
-    this.selectionSubscription = this.searchService.getSelection().subscribe((value) =>
+    this.searchService.getSelection().takeUntil(this.ngUnsubscribe).subscribe((value) =>
       this.selectionSuggestion = value);
   }
 
 
   updateWindowSize(): void {
-    this.widthSubscription = this.screenSizeService.getWidth().subscribe(
+    this.screenSizeService.getWidth().takeUntil(this.ngUnsubscribe).subscribe(
       value => {
         this.screenWidth = value;
         this.isWide = value >= this.widthThreshold;
       }
     );
-    this.heightSubscription = this.screenSizeService.getHeight().subscribe(
+    this.screenSizeService.getHeight().takeUntil(this.ngUnsubscribe).subscribe(
       value => {
         this.screenHeight = value;
         this.isTall = value >= this.heightThreshold;

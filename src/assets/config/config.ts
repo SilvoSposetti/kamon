@@ -14,7 +14,6 @@ export class Configuration {
               public useCredits: boolean,
               public showFPS: boolean,
               public allowLocation: boolean,
-              public showWeather: boolean,
               public searchEngine: string[],
               public list: string[][],
               public citations: string[][]) {

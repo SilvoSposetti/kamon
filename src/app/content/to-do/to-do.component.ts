@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ToDoService} from '../../shared/services/to-do.service';
-import {Subscription} from 'rxjs/Subscription';
 import {ToDo} from '../../shared/models/ToDo';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-to-do',
@@ -10,7 +10,7 @@ import {ToDo} from '../../shared/models/ToDo';
 })
 export class ToDoComponent implements OnInit, OnDestroy {
 
-  private toDoSubscription: Subscription;
+  private toDoUnsubscribe: Subject<any> = new Subject<any>();
   public toDoList: ToDo[] = [];
   public editingElement: number = -1;
   public editingElementText: string = '';
@@ -23,11 +23,12 @@ export class ToDoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.toDoSubscription.unsubscribe();
+    this.toDoUnsubscribe.next();
+    this.toDoUnsubscribe.complete();
   }
 
   private getToDos(): void {
-    this.toDoSubscription = this.toDoService.getToDos().subscribe(value => {
+    this.toDoService.getToDos().takeUntil(this.toDoUnsubscribe).subscribe(value => {
       this.toDoList = value;
     });
   }

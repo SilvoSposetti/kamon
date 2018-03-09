@@ -1,15 +1,31 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ClockService} from '../../shared/services/clock.service';
-import {Subscription} from 'rxjs/Subscription';
 import {LocationService} from '../../shared/services/location.service';
 import {ConfigService} from '../../shared/services/config.service';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {Subject} from 'rxjs/Subject';
 
 @Component({
   selector: 'app-clock',
   templateUrl: './clock.component.html',
-  styleUrls: ['./clock.component.css']
+  styleUrls: ['./clock.component.css'],
+  animations: [
+    trigger(
+      'myEnter',
+      [
+        transition(':enter', [
+          style({opacity: 0}),
+          animate(400, style({opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({opacity: 1}),
+          animate(400, style({opacity: 0}))
+        ])
+      ]
+    )
+  ],
 })
-export class ClockComponent implements OnInit {
+export class ClockComponent implements OnInit, OnDestroy {
 
   public secondsFirstDigit: string;
   public secondsSecondDigit: string;
@@ -29,13 +45,14 @@ export class ClockComponent implements OnInit {
   public sunrise: string = '';
   public sunset: string = '';
   public temperature: number = 0;
-  public iconPath : string = '../../../assets/img/weather/empty.png';
+  public iconPath: string = '../../../assets/img/weather/empty.png';
+  public allDataGathered: boolean = false;
 
   public allowLocation: boolean = false;
   public showWeather: boolean = false;
 
-  private timeSubscription: Subscription;
-  private locationSubscription: Subscription;
+  private ngUnsubscribeTime: Subject<any> = new Subject<any>();
+  private ngUnsubscribeLocation: Subject<any> = new Subject<any>();
 
   constructor(private clockService: ClockService,
               private locationService: LocationService,
@@ -44,41 +61,47 @@ export class ClockComponent implements OnInit {
 
   ngOnInit() {
     this.allowLocation = this.configService.getConfig().allowLocation;
-    this.showWeather = this.configService.getConfig().showWeather;
     this.updateData();
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribeLocation.next();
+    this.ngUnsubscribeLocation.complete();
+    this.ngUnsubscribeTime.next();
+    this.ngUnsubscribeTime.complete();
   }
 
   updateData(): void {
 
     // CLOCK
-    this.timeSubscription = this.clockService.getSecondsFirstDigit().subscribe(value => {
+    this.clockService.getSecondsFirstDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.secondsFirstDigit = value;
     });
-    this.timeSubscription = this.clockService.getSecondsSecondDigit().subscribe(value => {
+    this.clockService.getSecondsSecondDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.secondsSecondDigit = value;
     });
-    this.timeSubscription = this.clockService.getMinutesFirstDigit().subscribe(value => {
+    this.clockService.getMinutesFirstDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.minutesFirstDigit = value;
     });
-    this.timeSubscription = this.clockService.getMinutesSecondDigit().subscribe(value => {
+    this.clockService.getMinutesSecondDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.minutesSecondDigit = value;
     });
-    this.timeSubscription = this.clockService.getHoursFirstDigit().subscribe(value => {
+    this.clockService.getHoursFirstDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.hoursFirstDigit = value;
     });
-    this.timeSubscription = this.clockService.getHoursSecondDigit().subscribe(value => {
+    this.clockService.getHoursSecondDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.hoursSecondDigit = value;
     });
-    this.timeSubscription = this.clockService.getDate().subscribe(value => {
+    this.clockService.getDate().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.day = value;
     });
-    this.timeSubscription = this.clockService.getMonth().subscribe(value => {
+    this.clockService.getMonth().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.month = value;
     });
-    this.timeSubscription = this.clockService.getYear().subscribe(value => {
+    this.clockService.getYear().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.year = value;
     });
-    this.timeSubscription = this.clockService.getDay().subscribe(value => {
+    this.clockService.getDay().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
       this.dayOfWeek = value;
     });
 
@@ -86,34 +109,37 @@ export class ClockComponent implements OnInit {
 
 
     // LOCATION & WEATHER:
-    if(this.allowLocation){
-        this.locationService.getLocation();
-      this.locationSubscription = this.locationService.getLatitude().subscribe( value =>{
+    if (this.allowLocation) {
+      this.locationService.getLocation();
+      this.locationService.getLatitude().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
         this.latitude = value;
       });
-      this.locationSubscription = this.locationService.getLongitude().subscribe( value =>{
+      this.locationService.getLongitude().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
         this.longitude = value;
       });
-      this.locationSubscription = this.locationService.getLocationName().subscribe( value =>{
+      this.locationService.getLocationName().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
         this.locationName = value;
       });
-      this.locationSubscription = this.locationService.getWeather().subscribe( value =>{
+      this.locationService.getWeather().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
         this.weather = value;
       });
-      this.locationSubscription = this.locationService.getLongitude().subscribe( value =>{
+      this.locationService.getLongitude().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
         this.longitude = value;
       });
-      this.locationSubscription = this.locationService.getSunrise().subscribe( value =>{
+      this.locationService.getSunrise().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
         this.sunrise = value;
       });
-      this.locationSubscription = this.locationService.getSunset().subscribe( value =>{
+      this.locationService.getSunset().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
         this.sunset = value;
       });
-      this.locationSubscription = this.locationService.getTemperature().subscribe( value =>{
+      this.locationService.getTemperature().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
         this.temperature = value;
       });
-      this.locationSubscription = this.locationService.getWeatherIcon().subscribe( value =>{
+      this.locationService.getWeatherIcon().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
         this.iconPath = value;
+      });
+      this.locationService.getAllDataGathered().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+        this.allDataGathered = value;
       });
     }
   }

@@ -15,24 +15,24 @@ export class LocationService {
   private sunsetSubject = new Subject<string>();
   private temperatureSubject = new Subject<number>();
   private weatherIconSubject = new Subject<string>();
+  private allDataGatheredSubject = new Subject<boolean>();
 
   private latitude: number = 0;
   private longitude: number = 0;
 
   constructor(private http: Http, private configService: ConfigService) {
+    this.allDataGatheredSubject.next(false);
   }
 
   public getLocation(): void {
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.latitude = +position.coords.latitude;
-      this.longitude = +position.coords.longitude;
-      this.latitudeSubject.next(+this.latitude.toFixed(5));
-      this.longitudeSubject.next(+this.longitude.toFixed(5));
-      this.locationNameSubject.next('');
-      if (this.configService.getConfig().showWeather) {
+    if (this.configService.getConfig().allowLocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = +position.coords.latitude;
+        this.longitude = +position.coords.longitude;
+        this.locationNameSubject.next('');
         this.getWeatherFromEndPoint();
-      }
-    });
+      });
+    }
   }
 
   public getLatitude(): Observable<any> {
@@ -67,6 +67,10 @@ export class LocationService {
     return this.weatherIconSubject.asObservable();
   }
 
+  public getAllDataGathered(): Observable<boolean> {
+    return this.allDataGatheredSubject.asObservable();
+  }
+
 
   public getWeatherFromEndPoint(): void {
     let headers = new Headers();
@@ -77,8 +81,11 @@ export class LocationService {
       this.weatherSubject.next(response.weather[0].description);
       this.sunriseSubject.next(this.dateInSecondsToTime(response.sys.sunrise));
       this.sunsetSubject.next(this.dateInSecondsToTime(response.sys.sunset));
-      this.temperatureSubject.next(response.main.temp);
+      this.temperatureSubject.next(Math.round(response.main.temp));
       this.weatherIconSubject.next(this.selectIcon(response.weather[0].id, response.sys.sunrise, response.sys.sunset));
+      this.latitudeSubject.next(+this.latitude.toFixed(5));
+      this.longitudeSubject.next(+this.longitude.toFixed(5));
+      this.allDataGatheredSubject.next(true);
     });
   }
 

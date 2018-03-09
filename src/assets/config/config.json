@@ -13,7 +13,6 @@
   "useToDoList": false,
   "useCredits": true,
   "showFPS": true,
-  "showWeather": true,
   "searchEngine": [
     "Google",
     "http://www.google.com/",
