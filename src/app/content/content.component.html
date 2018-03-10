@@ -13,7 +13,7 @@
       <app-scene-selector [@myEnter] *ngIf="showSceneSelector"></app-scene-selector>
     </div>
 
-    <div class="credits-hover" *ngIf="showCredits" (mouseenter)="creditsHoverIn()" (mouseleave)="creditsHoverOut()">
+    <div class="credits-hover" *ngIf="useCredits" (mouseenter)="creditsHoverIn()" (mouseleave)="creditsHoverOut()">
       <app-credits [@myEnter] *ngIf="showCredits"></app-credits>
     </div>
 

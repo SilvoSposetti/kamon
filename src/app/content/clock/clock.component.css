@@ -17,7 +17,7 @@
   flex-direction: column;
   font-size: 1.1rem;
   border-radius: 3em;
-  padding: 1.5em;
+  /*padding: 1.5em;*/
   width: 25em;
   font-weight: 200;
 }
@@ -25,12 +25,21 @@
 /***********************************************************************************************************************
 Clock Header
 ***********************************************************************************************************************/
+.clock-header-padding{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  min-height: 20px;
+}
 .clock-header {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: row;
   width: 100%;
+  min-height: 90px;
 }
 
 .header-left-side {
@@ -76,8 +85,10 @@ Clock Header
 }
 
 .weather-img {
-  width: 100px;
-  height: 100px;
+  min-width: 70px;
+  max-width: 70px;
+  min-height: 70px;
+  max-height: 70px;
 }
 
 .second-row {
@@ -135,6 +146,7 @@ Clock Footer
   justify-content: center;
   flex-direction: row;
   width: 100%;
+  min-height: 90px;
 }
 
 .coordinate-container {

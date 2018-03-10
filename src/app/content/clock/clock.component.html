@@ -1,7 +1,8 @@
 <div class="clock-parent">
   <div class="clock-container">
-    <div class="clock-header" [@myEnter] *ngIf="allowLocation && allDataGathered">
-      <div class="header-left-side">
+    <div class="clock-header-padding" *ngIf="!allowLocation"></div>
+    <div class="clock-header" [@myEnter] *ngIf="allowLocation">
+      <div class="header-left-side" [@myEnter] *ngIf="allDataGathered">
         <div class="sunrise">
           <div class="sunrise-time">
             {{sunrise}}
@@ -12,10 +13,10 @@
           temp. {{temperature}} °C
         </div>
       </div>
-      <div class="header-center">
+      <div class="header-center" [@myEnter] *ngIf="allDataGathered">
         <img class="weather-img" src="{{iconPath}}">
       </div>
-      <div class="header-right-side">
+      <div class="header-right-side" [@myEnter] *ngIf="allDataGathered">
         <div class="sunset">
           <img class="sun-img" src="../../../assets/img/weather/sunset.png">
           <div class="sunset-time">

@@ -1,5 +1,5 @@
 {
-  "useCustomBackgroundImage": true,
+  "useCustomBackgroundImage": false,
   "useScene": true,
   "showClock": true,
   "defaultScene": "polar-functions",
@@ -9,7 +9,7 @@
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
-  "allowLocation": true,
+  "allowLocation": false,
   "useToDoList": false,
   "useCredits": true,
   "showFPS": true,
