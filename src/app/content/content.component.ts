@@ -125,7 +125,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   public sceneSelectorHoverOut(): void {
-    this.showSceneSelector = false;
+    this.showSceneSelector = true;
   }
 
   public creditsHoverIn(): void {
