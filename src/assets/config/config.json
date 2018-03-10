@@ -1,5 +1,5 @@
 {
-  "useCustomBackgroundImage": false,
+  "useCustomBackgroundImage": true,
   "useScene": true,
   "showClock": true,
   "defaultScene": "polar-functions",

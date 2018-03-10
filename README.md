@@ -1,88 +1,89 @@
 # Kamon
 
+This is a browser start-page made with Angular 4, deployed [here](https://kamon-startpage.firebaseapp.com/) and developed as a single-page app.
+
+It's main functional purpose is to replace browser bookmarks by combining keyboard shortcuts and search-engines' search into one app.
+
+It's second purpose is to look cool. It thus contains some background scenes that use the HTML5 canvas in order to generate various animation.
+
+This is a side project that I am doing just for fun, mostly because I like both getting to know and write algorithms that generate cool animations. As such it is only optimized for Chrome and Firefox, because those are the browsers I use.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.4.3.
 
-### Development server
+## How to use
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Buttons
 
+While the page is focused, you can write something at any time to trigger a search page and get search suggestions. Hit `Enter` to be redirected on a search engine's results page when what you tipped suits you. You can reset the search term by pressing `Esc`
 
-# Build local version
-To build a version which runs with the 'file:////' protocol then you need to build with the base -href flag set to './'
+Suggestions during typing are selectable, just use your `Arrow Keys` to select which one you are interested in. When a suggestion is selected, just hit `Enter` to search for that particular search key.
 
-> ng build --base-href ./
-
-Then you can place the content of the dist folder in any folder on your pc, open index.html with your browser and set the page as your homepage.
+Other primary buttons are `PageUp` and `PageDown`, the first displays and hides the clock, while the second does the same for the list of shortcuts.
 
 
-# Kamon
+### Hovering
+Hovering on the `top-left` will display a list of the selectable scenes and let you choose from one. Be careful because some are computationally intensive and might reduce a laptop battery faster than usual.
 
-This is a browser starting page made with Angular 2+. It's main purpose is to replace browser bookmarks by combining keyboard shortcuts and google search into one app.
-It's second purpose is to look cool, and thus it contains some background 'scenes' that use the HTML5 canvas in order to generate various animation.
-This is a side project that I am doing just for fun, mostly because I like algorithms that generate cool animations.
+Hovering on the `bottom-right` will display information about the page. As well as a link to this GitHub repo.
 
+## Future features
 
+I am planning to add also a server that handles login credentials, so that anyone can easily create and save it's own shortcuts, default scenes and various settings preferences.
+
+At the moment the page is not mobile-friendly, even though on mobile it won't be as usable as on a desktop, this would be a nice feature to have.
+
+I am looking into adding interactive scenes, fancy term for saying that it would be cool to add games that also use the HTML5 canvas as display.
+
+A to-do list is on it's way, something that can help keeping track of various personal tasks. This feature requires user profiles to be fully usable by anyone else but me, so don't expect it any time soon
+.
 ## Getting Started
 
-If you want to.
+If you, want to fork, be my guest :)
 
 ### Prerequisites
 
-What things you need to install the software and how to install them
+Download the source code, then execute 
 
 ```
-Give examples
+npm install
 ```
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
+ 
+in the main project folderd. Then run 
 ```
-Give the example
+ng serve
 ```
+ for a locally run development server.
+ 
+ Navigate to `http://localhost:4200/` (default port).
+ 
+ The app will automatically reload if you change any of the source files.
+ 
+ Interrupt the `ng serve` process to stop the development server.
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Deployment
 
-I will now and then update the version of the app on firebase so that you can try it if you want
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+I will now and then update the version of the app on Firebase as a demo for anyone interested.
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+As this is my personal project, I'm the only contributor.
+If you would like to report a bug or have a functionality added, just hit me up with an issue.
 
 ## Versioning
 
-There is no particular versioning, only what I feel to add to the app.
+There is no particular versioning at the moment.
 
 ## Authors
 
-* **Silvo Sposetti** - Being the only one makes a bulleted list superfluous.
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Silvo Sposetti** - Being the only one makes a bulleted list superfluous, even though it looks cool.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License.
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
-* Inspiration
-* etc
+* Many of the scenes that I use for background are inspired by the [Coding Challenges](https://www.youtube.com/watch?v=17WoOqgXsRM&list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH), a YouTube segment of the brilliant [Daniel Shiffman](http://shiffman.net/).
+* I am using [joshforisha](https://github.com/joshforisha)'s [Open Simplex Noise](https://github.com/joshforisha/open-simplex-noise-js) implementation, so cudos to him ;)
 

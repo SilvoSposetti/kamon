@@ -33,6 +33,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   @Input() citations: string[][];
   @Input() useToDoList: boolean;
   @Input() useCredits: boolean;
+  @Input() useScene: boolean;
   @Input() public screenWidth: number;
   @Input() public screenHeight: number;
   @Input() public isWide: boolean;

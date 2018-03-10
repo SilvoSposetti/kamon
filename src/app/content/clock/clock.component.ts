@@ -49,7 +49,6 @@ export class ClockComponent implements OnInit, OnDestroy {
   public allDataGathered: boolean = false;
 
   public allowLocation: boolean = false;
-  public showWeather: boolean = false;
 
   private ngUnsubscribeTime: Subject<any> = new Subject<any>();
   private ngUnsubscribeLocation: Subject<any> = new Subject<any>();

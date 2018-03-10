@@ -21,6 +21,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public useToDoList = this.configService.getConfig().useToDoList;
   public showFPS = this.configService.getConfig().showFPS;
   public useCredits = this.configService.getConfig().useCredits;
+  public useScene = this.configService.getConfig().useScene;
 
   private widthThreshold = 769; // Values bigger or equal threshold are considered wide.
   private heightThreshold = 500; // Values bigger or equal threshold are considered tall.

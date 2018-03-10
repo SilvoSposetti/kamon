@@ -9,11 +9,11 @@
                 [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
     <app-citations [@myEnter] *ngIf="showCitations" [citations]="citations"></app-citations>
 
-    <div class="scene-selector-hover" (mouseenter)="sceneSelectorHoverIn()" (mouseleave)="sceneSelectorHoverOut()">
+    <div class="scene-selector-hover" *ngIf="useScene || showSceneSelector" (mouseenter)="sceneSelectorHoverIn()" (mouseleave)="sceneSelectorHoverOut()">
       <app-scene-selector [@myEnter] *ngIf="showSceneSelector"></app-scene-selector>
     </div>
 
-    <div class="credits-hover" (mouseenter)="creditsHoverIn()" (mouseleave)="creditsHoverOut()">
+    <div class="credits-hover" *ngIf="showCredits" (mouseenter)="creditsHoverIn()" (mouseleave)="creditsHoverOut()">
       <app-credits [@myEnter] *ngIf="showCredits"></app-credits>
     </div>
 

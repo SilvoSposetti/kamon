@@ -12,9 +12,9 @@ export class BackgroundComponent implements OnInit {
   @Input() public screenHeight: number;
   @Input() public isWide: boolean;
   @Input() public isTall: boolean;
-  @Input() public useScene = this.configService.getConfig().useScene;
+  @Input() public useScene: boolean;
 
-  constructor(private configService: ConfigService) {
+  constructor() {
   }
 
   ngOnInit() {
