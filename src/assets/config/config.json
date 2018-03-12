@@ -1,6 +1,6 @@
 {
   "useCustomBackgroundImage": false,
-  "useScene": true,
+  "useScene": false,
   "showClock": true,
   "defaultScene": "phyllotaxy",
   "showCitations": false,
@@ -9,8 +9,8 @@
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
-  "allowLocation": false,
-  "useToDoList": false,
+  "allowLocation": true,
+  "useToDoList": true,
   "useCredits": true,
   "showFPS": true,
   "searchEngine": [

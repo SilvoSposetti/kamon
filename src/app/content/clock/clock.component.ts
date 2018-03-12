@@ -25,6 +25,7 @@ import {Subject} from 'rxjs/Subject';
     )
   ],
 })
+
 export class ClockComponent implements OnInit, OnDestroy {
 
   public secondsFirstDigit: string;

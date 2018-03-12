@@ -1,10 +1,11 @@
 .clock-parent {
   width: 100vw;
-  background: rgba(0, 0, 0, 0.6);
-  -webkit-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
-  -moz-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
-  box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  background: var(--default-background-color);
+  -webkit-box-shadow: var(--default-box-shadow);
+  -moz-box-shadow: var(--default-box-shadow);
+  box-shadow: var(--default-box-shadow);
   display: flex;
+  color: var(--default-font-color);
   align-items: center;
   justify-content: center;
 }
@@ -15,7 +16,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  font-size: 1.1rem;
+  font-size: var(--clock-info-font-size);
   border-radius: 3em;
   /*padding: 1.5em;*/
   width: 25em;
@@ -25,7 +26,7 @@
 /***********************************************************************************************************************
 Clock Header
 ***********************************************************************************************************************/
-.clock-header-padding{
+.clock-header-padding {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -33,6 +34,7 @@ Clock Header
   width: 100%;
   min-height: 20px;
 }
+
 .clock-header {
   display: flex;
   align-items: center;
@@ -107,7 +109,7 @@ Dial
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  font-size: 4.5rem;
+  font-size: var(--clock-dial-font-size);
   font-weight: 100;
 }
 
@@ -117,7 +119,6 @@ Dial
   align-items: center;
   justify-content: center;
   flex-direction: row;
-
 }
 
 .digit {
@@ -134,7 +135,7 @@ Horizontal Line
 ***********************************************************************************************************************/
 .horizontal-line {
   width: 80%;
-  border-top: 1px solid black;
+  border-top: var(--clock-lines-color);
 }
 
 /***********************************************************************************************************************

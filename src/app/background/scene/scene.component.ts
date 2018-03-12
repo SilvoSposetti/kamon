@@ -11,10 +11,11 @@ import {ScenesService} from '../../shared/services/scenes.service';
 export class SceneComponent implements OnInit {
   @Input() showFPS: boolean;
 
+  //TODO: adjust subscription
   private scenesSubscription: Subscription;
-  @Input()  screenWidth: number;
+  @Input() screenWidth: number;
   @Input() public screenHeight: number;
-  @Input()  public isWide: boolean;
+  @Input() public isWide: boolean;
   @Input() public isTall: boolean;
   public sceneName: string;
   public scenesArray: string[];

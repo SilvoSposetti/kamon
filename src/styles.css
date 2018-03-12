@@ -1,39 +1,50 @@
-/*!*CUSTOM VARIABLES*/
-/*FOR THE WHOLE PROJECT*!*/
+/*!****** CUSTOM VARIABLES FOR THE WHOLE PROJECT ******!*/
 :root {
 
-  /*CUSTOM FONT SIZES*!*/
+  /* Root Font Size*/
   --default-font-size: 20px;
 
-  /*CLOCK PARAMETERS*/
+  /* Custom Colors */
+  --default-font-color: white;
+  --default-background-color: rgba(0, 0, 0, 0.6);
+  --default-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 1);
 
-  /*LIST PARAMETERS*/
+  /*background: var(--default-background-color);*/
+  /*-webkit-box-shadow: var(--default-box-shadow);*/
+  /*-moz-box-shadow: var(--default-box-shadow);*/
+  /*box-shadow: var(--default-box-shadow);*/
+
+  /*********** BACKGROUND / SETTING ***********/
+  /*--setting-color: linear-gradient(141deg, #10afa3 0%, #10998e 25%, #177181 51%, #1b5978 75%, #1b4564 100%);*/
+  --setting-color: linear-gradient(141deg,#13E2B5 0%, #009DE0 100%);
+  /*--setting-color: #121212;*/
+
+  /*********** CONTENT ***********/
+
+  /* Citations */
+  --citation-message-font-size: 1em;
+  --citation-author-font-size: 0.8em;
+
+  /* Clock*/
+  --clock-info-font-size: 0.9em;
+  --clock-dial-font-size: 4.5em;
+  --clock-lines-color: 1px solid rgba(255, 255, 255, 0.3);
+
+  /* List */
   --list-category-font-size: 1.2em;
   --list-default-font-size: 1em;
-
-
-  /*CUSTOM COLORS*/
-  --default-font-color: white;
-  --default-background-color: #373737;
-  --search-background-color: rgba(0,0,0,0.7);
-  --search-font-color: white;
-
-  /*Background */
-
 
   /*SEARCH COMPONENT*/
   --search-text-font-size: 2em;
   --suggestions-font-size: 1em;
-  --shortcut-found-font-size:1.2em;
+  --shortcut-found-font-size: 1.2em;
+  --search-background-color: rgba(0, 0, 0, 0.7);
 
   /*CREDITS*/
+  --credits-font-size: 0.8em;
   --credits-height: 5em;
   --credits-border: 15em;
-  --credits-hover-square-size:5em;
-
-
-  /*--setting-color: linear-gradient(141deg, #10afa3 0%, #10998e 25%, #177181 51%, #1b5978 75%, #1b4564 100%);*/
-  --setting-color: #121212;
+  --credits-hover-square-size: 5em;
 
   /*OTHER*/
   /*.ng-valid[required], .ng-valid.required {*/
@@ -54,22 +65,21 @@
 SCENES:
 ***********************************************************************************************************************/
 
-.scene-canvas-container{
+.scene-canvas-container {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
 }
 
-.scene-fps-counter{
+.scene-fps-counter {
   position: fixed;
   bottom: 1em;
-  right:1em;
+  right: 1em;
   display: flex;
-  align-items:flex-end;
+  align-items: flex-end;
   justify-content: center;
   flex-direction: column;
 }
-
 
 /***********************************************************************************************************************
 index.html:
@@ -102,4 +112,28 @@ index.html:
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+/***********************************************************************************************************************
+links:
+***********************************************************************************************************************/
+
+/* unvisited link */
+a:link {
+  color: white;
+}
+
+/* visited link */
+a:visited {
+  color: lightgrey;
+}
+
+/* mouse over link */
+a:hover {
+  color: lightgrey;
+}
+
+/* selected link */
+a:active {
+  color: white;
 }
