@@ -1,4 +1,4 @@
-<div class="clock-parent">
+<div class="clock-parent" [ngClass]="{'clock-parent-if-alone': !showList, 'clock-parent-if-not-alone': showList}">
   <div class="clock-container">
     <div class="clock-header-padding" *ngIf="!allowLocation"></div>
     <div class="clock-header" [@myEnter] *ngIf="allowLocation">

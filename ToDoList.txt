@@ -20,3 +20,6 @@ edit harmonic-functions so that the period matches exactly with the screen width
 take to-do data from localstorage when already available, otherwise generate it.
 improve selection of autocomplete suggestions (first 'down', then left and right, then 'up' to exti seletion.
 improve keyboard inputs. maybe handle all inputs with a service?
+Make setting colors fade between each other at different times of the day, or simply use red during the night and blue during the day
+display background gradient only when no scene is active, also add a 'none' scene
+add a mehtod to handle user inputs for games, suggestion selections, to-do lists etc...

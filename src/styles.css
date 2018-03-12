@@ -3,11 +3,13 @@
 
   /* Root Font Size*/
   --default-font-size: 20px;
-
+  --default-font-weight: 200;
   /* Custom Colors */
   --default-font-color: white;
   --default-background-color: rgba(0, 0, 0, 0.6);
   --default-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 1);
+  --default-box-shadow-up: 0 -30px 30px -30px rgba(0, 0, 0, 1); /* Used only for clock and list when they coexist */
+  --default-box-shadow-down: 0 30px 30px -30px rgba(0, 0, 0, 1); /* Used only for clock and list when they coexist */
 
   /*background: var(--default-background-color);*/
   /*-webkit-box-shadow: var(--default-box-shadow);*/
@@ -16,7 +18,8 @@
 
   /*********** BACKGROUND / SETTING ***********/
   /*--setting-color: linear-gradient(141deg, #10afa3 0%, #10998e 25%, #177181 51%, #1b5978 75%, #1b4564 100%);*/
-  --setting-color: linear-gradient(141deg,#13E2B5 0%, #009DE0 100%);
+  --setting-color: linear-gradient(141deg, #13E2B5 0%, #009DE0 100%);
+  /*--setting-color: linear-gradient(141deg, #FFAF2E 0%, #F70B66 100%);*/
   /*--setting-color: #121212;*/
 
   /*********** CONTENT ***********/

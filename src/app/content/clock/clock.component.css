@@ -1,13 +1,26 @@
 .clock-parent {
-  width: 100vw;
+  /*110 because otherwise the box shadow makes strange effects ath the page edges*/
+  width: 110vw;
   background: var(--default-background-color);
-  -webkit-box-shadow: var(--default-box-shadow);
-  -moz-box-shadow: var(--default-box-shadow);
-  box-shadow: var(--default-box-shadow);
+  /*-webkit-box-shadow: var(--default-box-shadow);*/
+  /*-moz-box-shadow: var(--default-box-shadow);*/
+  /*box-shadow: var(--default-box-shadow);*/
   display: flex;
   color: var(--default-font-color);
   align-items: center;
   justify-content: center;
+}
+
+.clock-parent-if-alone {
+  -webkit-box-shadow: var(--default-box-shadow);
+  -moz-box-shadow: var(--default-box-shadow);
+  box-shadow: var(--default-box-shadow);
+}
+
+.clock-parent-if-not-alone {
+  -webkit-box-shadow: var(--default-box-shadow-up);
+  -moz-box-shadow: var(--default-box-shadow-up);
+  box-shadow: var(--default-box-shadow-up);
 }
 
 .clock-container {

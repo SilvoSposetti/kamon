@@ -1,5 +1,6 @@
 .list-parent {
-  width: 100vw;
+  /*110 because otherwise the box shadow makes strange effects ath the page edges*/
+  width: 110vw;
   background: var(--default-background-color);
   -webkit-box-shadow: var(--default-box-shadow);
   -moz-box-shadow: var(--default-box-shadow);
@@ -10,6 +11,18 @@
   font-size: var(--default-font-size);
   color: var(--default-font-color);
 
+}
+
+.list-parent-if-alone {
+  -webkit-box-shadow: var(--default-box-shadow);
+  -moz-box-shadow: var(--default-box-shadow);
+  box-shadow: var(--default-box-shadow);
+}
+
+.list-parent-if-not-alone {
+  -webkit-box-shadow: var(--default-box-shadow-down);
+  -moz-box-shadow: var(--default-box-shadow-down);
+  box-shadow: var(--default-box-shadow-down);
 }
 
 .list-container {
