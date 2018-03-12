@@ -1,13 +1,9 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule, Renderer2} from '@angular/core';
 import {environment} from '../environments/environment';
 import {FormsModule} from '@angular/forms';
-
-import {APP_INITIALIZER} from '@angular/core';
-import {HttpModule} from '@angular/http';
-import {JsonpModule} from '@angular/http';
+import {HttpModule, JsonpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
 // App components
 import {AppComponent} from './app.component';
 import {BackgroundComponent} from './background/background.component';
@@ -19,7 +15,6 @@ import {ListComponent} from './content/list/list.component';
 import {CitationsComponent} from './content/citations/citations.component';
 import {CreditsComponent} from './content/credits/credits.component';
 import {ToDoComponent} from './content/to-do/to-do.component';
-
 // Scenes:
 import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
 import {PhyllotaxyComponent} from './background/scene/phyllotaxy/phyllotaxy.component';
@@ -40,11 +35,9 @@ import {DiffusionLimitedAggregationComponent} from './background/scene/diffusion
 import {GameOfLifeComponent} from './background/scene/game-of-life/game-of-life.component';
 import {KaleidoscopeComponent} from './background/scene/kaleidoscope/kaleidoscope.component';
 import {PolarFunctionsComponent} from './background/scene/polar-functions/polar-functions.component';
-
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 import {MyBlinkDirective} from './shared/directives/my-blink.directive';
-
 // Services:
 import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';
@@ -111,7 +104,8 @@ import {FpsService} from './shared/services/fps.service';
     SearchService,
     ScenesService,
     LocationService,
-    ToDoService, FpsService],
+    ToDoService,
+    FpsService],
   bootstrap: [AppComponent],
 })
 

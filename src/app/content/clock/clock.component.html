@@ -1,7 +1,7 @@
 <div class="clock-parent" [ngClass]="{'clock-parent-if-alone': !showList, 'clock-parent-if-not-alone': showList}">
   <div class="clock-container">
-    <div class="clock-header-padding" *ngIf="!allowLocation"></div>
-    <div class="clock-header" [@myEnter] *ngIf="allowLocation">
+    <div class="clock-header-padding" *ngIf="!allowLocation || !isWide"></div>
+    <div class="clock-header" [@myEnter] *ngIf="allowLocation && isWide">
       <div class="header-left-side" [@myEnter] *ngIf="allDataGathered">
         <div class="sunrise">
           <div class="sunrise-time">
@@ -59,7 +59,7 @@
     </div>
     <div class="horizontal-line"></div>
     <div class="clock-footer">
-      <div class="coordinate-container" [@myEnter] *ngIf="allowLocation && allDataGathered">
+      <div class="coordinate-container" [@myEnter] *ngIf="allowLocation && allDataGathered && isWide">
         lat. {{latitude}} °<br>lon. {{longitude}} °
       </div>
       <div class="date-container">
@@ -70,7 +70,7 @@
           {{day}} . {{month}} . {{year}}
         </div>
       </div>
-      <div class="place-container" [@myEnter] *ngIf="allowLocation && allDataGathered">
+      <div class="place-container" [@myEnter] *ngIf="allowLocation && allDataGathered && isWide">
         <div class="place">
           {{locationName}}
         </div>

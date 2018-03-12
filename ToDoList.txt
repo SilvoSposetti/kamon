@@ -10,7 +10,6 @@ SCENE Double Pendulum: just like the one Daniel Shiffman did (see on YT)
 SCENE FPS: show a graph of how many fps the scene is currently doing. Can also
 fix bug of click functionality on suggestions (not only select with arrows).
 add performance hit information for all scenes. Then if games are implemented. add game icon to the scenes, or maybe add a whole new selector for games.
-improve mobile support.
 add to-do-list with its own JSON, either stored in a JSON file, or taken from the browser's localstorage.
 IF to-do-list works, then save config JSON also in localstorage to make the app usable by more people.
 redefine each css variable in styles.css.
@@ -23,3 +22,6 @@ improve keyboard inputs. maybe handle all inputs with a service?
 Make setting colors fade between each other at different times of the day, or simply use red during the night and blue during the day
 display background gradient only when no scene is active, also add a 'none' scene
 add a mehtod to handle user inputs for games, suggestion selections, to-do lists etc...
+move clock and list smoothly when they get generated.
+add gradients to loading screen
+add small icon only for the credits.

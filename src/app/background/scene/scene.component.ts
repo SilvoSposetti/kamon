@@ -25,8 +25,8 @@ export class SceneComponent implements OnInit {
 
   ngOnInit() {
     this.getSceneName();
+    this.scenesService.wake();
     this.scenesArray = this.scenesService.getSceneArray();
-    this.scenesService.startScenes();
   }
 
   private getSceneName(): void {

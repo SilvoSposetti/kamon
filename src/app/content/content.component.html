@@ -1,23 +1,24 @@
 <div class="content-parent">
   <div class="content-container">
-    <app-clock [@myEnter] *ngIf="showClock" [showList]="showList" ></app-clock>
+    <app-clock [@myEnter] *ngIf="showClock" [showList]="showList" [isWide]="isWide"></app-clock>
 
     <!--<div class="content-separator" *ngIf="showClock && showList"></div>-->
-    <app-list [@myEnter] *ngIf="showList" [elements]="elements" [categories]="categories" [showClock]="showClock"></app-list>
+    <app-list [@myEnter] *ngIf="showList && isWide" [elements]="elements" [categories]="categories" [showClock]="showClock"></app-list>
 
-    <app-search [@myEnter] *ngIf="showSearch" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion"
+    <app-search [@myEnter] *ngIf="showSearch && isWide" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion"
                 [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
     <app-citations [@myEnter] *ngIf="showCitations" [citations]="citations"></app-citations>
 
-    <div class="scene-selector-hover" *ngIf="useScene || showSceneSelector" (mouseenter)="sceneSelectorHoverIn()" (mouseleave)="sceneSelectorHoverOut()">
+
+    <div class="scene-selector-hover" *ngIf="isWide" (mouseenter)="sceneSelectorHoverIn()" (mouseleave)="sceneSelectorHoverOut()">
       <app-scene-selector [@myEnter] *ngIf="showSceneSelector"></app-scene-selector>
     </div>
 
-    <div class="credits-hover" *ngIf="useCredits" (mouseenter)="creditsHoverIn()" (mouseleave)="creditsHoverOut()">
+    <div class="credits-hover" (mouseenter)="creditsHoverIn()" (mouseleave)="creditsHoverOut()">
       <app-credits [@myEnter] *ngIf="showCredits"></app-credits>
     </div>
 
-    <div class="to-do-hover" (mouseenter)="toDoHoverIn()" (mouseleave)="toDoHoverOut()">
+    <div class="to-do-hover" *ngIf="isWide" (mouseenter)="toDoHoverIn()" (mouseleave)="toDoHoverOut()">
       <app-to-do [@myEnter] *ngIf="showToDo"></app-to-do>
     </div>
 

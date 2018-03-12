@@ -19,6 +19,18 @@
   min-width: 19em;
 }
 
+.deactivate-scene-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width:100%;
+  cursor: pointer;
+}
+.deactivate-scene-container:hover {
+  background: rgba(255, 255, 255, 0.1)
+}
+
 .alphabetic-blocks {
   display: flex;
   align-items: flex-start;

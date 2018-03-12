@@ -67,4 +67,8 @@ export class SceneSelectorComponent implements OnInit, OnDestroy {
     }
     return result + indexJ;
   }
+
+  public deactivate(): void{
+    this.scenesService.setNone();
+  }
 }

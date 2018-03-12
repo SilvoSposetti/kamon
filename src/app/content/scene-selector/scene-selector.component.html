@@ -1,4 +1,9 @@
 <div class="scene-selector-parent">
+  <div class="deactivate-scene-container" (click)="deactivate()" [ngClass]="{highlighted: selectedSceneNr === getSceneNrFromIAndJ(i,j)}">
+    <div class="deactivate-scene">
+      Deactivate
+    </div>
+  </div>
   <div class="alphabetic-blocks" *ngFor="let block of scenesAlphabeticalList, let i = index">
     <div class="initial-column">
       {{block[0][0].toUpperCase()}}
