@@ -12,7 +12,6 @@
   border-radius: var(--credits-hover-square-size);
   color: var(--default-font-color);
   width: 21em;
-  font-size: var(--default-font-size);
 }
 
 .credits-text {

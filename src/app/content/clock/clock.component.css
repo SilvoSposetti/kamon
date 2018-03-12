@@ -45,7 +45,7 @@ Clock Header
   justify-content: center;
   flex-direction: row;
   width: 100%;
-  min-height: 20px;
+  min-height: 1em;
 }
 
 .clock-header {
@@ -54,7 +54,7 @@ Clock Header
   justify-content: center;
   flex-direction: row;
   width: 100%;
-  min-height: 90px;
+  min-height: 4.5em;
 }
 
 .header-left-side {
@@ -94,20 +94,20 @@ Clock Header
 }
 
 .sun-img {
-  width: 30px;
-  height: 30px;
-  margin: 5px;
+  width: 1.5em;
+  height: 1.5em;
+  margin: 0.25em;
 }
 
 .weather-img {
-  min-width: 70px;
-  max-width: 70px;
-  min-height: 70px;
-  max-height: 70px;
+  min-width: 3.5em;
+  max-width: 3.5em;
+  min-height: 3.5em;
+  max-height: 3.5em;
 }
 
 .second-row {
-  height: 40px;
+  height: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -139,15 +139,15 @@ Dial
 }
 
 .dial-separator {
-  width: 20px;
-  height: 20px;
+  width: 0.4em;
+  height: 0.4em;
 }
 
 /***********************************************************************************************************************
 Horizontal Line
 ***********************************************************************************************************************/
 .horizontal-line {
-  width: 80%;
+  width: 27em;
   border-top: var(--clock-lines-color);
 }
 
@@ -160,7 +160,7 @@ Clock Footer
   justify-content: center;
   flex-direction: row;
   width: 100%;
-  min-height: 90px;
+  min-height: 4.5em;
 }
 
 .coordinate-container {

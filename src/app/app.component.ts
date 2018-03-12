@@ -114,7 +114,7 @@ export class AppComponent implements OnInit, OnDestroy {
       value => {
         this.screenWidth = value;
         this.isWide = value >= this.widthThreshold || !environment.production;
-        this.isWide = value >= this.widthThreshold;
+        //this.isWide = value >= this.widthThreshold;
         // If in production env then the screen is always wide.
         // This is because most of the development process is done for wide screens.
       }
@@ -123,7 +123,7 @@ export class AppComponent implements OnInit, OnDestroy {
       value => {
         this.screenHeight = value;
         this.isTall = value >= this.heightThreshold || !environment.production;
-        this.isTall = value >= this.heightThreshold;
+        //this.isTall = value >= this.heightThreshold;
         // If in production env then the screen is always tall.
         // This is because most of the development process is done for tall screens.
 

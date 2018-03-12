@@ -9,7 +9,6 @@
   border-radius: 0.5em;
   max-width: 30em;
   color: var(--default-font-color);
-  font-size: var(--default-font-size);
 }
 
 .to-do-container {

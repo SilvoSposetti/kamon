@@ -3,6 +3,7 @@
 
   /* Root Font Size*/
   --default-font-size: 20px;
+  --default-mobile-font-size: 10px;
   --default-font-weight: 200;
   /* Custom Colors */
   --default-font-color: white;

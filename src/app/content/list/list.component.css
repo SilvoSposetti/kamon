@@ -8,7 +8,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--default-font-size);
   color: var(--default-font-color);
 
 }
@@ -36,8 +35,8 @@
 }
 
 .list-separator {
-  width: 20px;
-  height: 20px;
+  width: 1em;
+  height: 1em;
 }
 
 /***********************************************************************************************************************
@@ -53,7 +52,7 @@ List category:
 
 .list-category {
   width: 15vw;
-  min-width: 200px;
+  min-width: 10em;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -82,14 +81,10 @@ List element:
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
-  /*border: 1px solid white;*/
   border-radius: 1.5em;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   overflow: hidden;
-  /*-webkit-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
-  /*-moz-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
-  /*box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
 }
 
 .list-element:hover {
@@ -100,7 +95,6 @@ List element:
 .shortcut-indicator-container {
   min-width: 1.7em;
   min-height: 1.7em;
-  /*border-left: 15px solid;*/
   color: white;
   background: black;
   border-radius: 50%;

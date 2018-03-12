@@ -1,8 +1,15 @@
 .app-parent {
   width: 100vw;
   height: 100vh;
-  font-size: var(--default-font-size);
   font-family: 'Montserrat', sans-serif;
   font-weight: var(--default-font-weight);
   color: var(--default-font-color);
+}
+
+.app-desktop{
+  font-size: var(--default-font-size);
+}
+
+.app-mobile{
+  font-size: var(--default-mobile-font-size);
 }

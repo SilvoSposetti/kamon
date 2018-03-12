@@ -10,7 +10,6 @@
   -webkit-box-shadow: var(--default-box-shadow);
   -moz-box-shadow: var(--default-box-shadow);
   box-shadow: var(--default-box-shadow);
-  font-size: var(--default-font-size);
   color: var(--default-font-color);
   border-radius: 0.5em;
   max-height: 75vh;

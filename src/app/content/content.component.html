@@ -3,14 +3,14 @@
     <app-clock [@myEnter] *ngIf="showClock" [showList]="showList" [isWide]="isWide"></app-clock>
 
     <!--<div class="content-separator" *ngIf="showClock && showList"></div>-->
-    <app-list [@myEnter] *ngIf="showList && isWide" [elements]="elements" [categories]="categories" [showClock]="showClock"></app-list>
+    <app-list [@myEnter] *ngIf="showList" [elements]="elements" [categories]="categories" [showClock]="showClock"></app-list>
 
     <app-search [@myEnter] *ngIf="showSearch && isWide" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion"
                 [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
     <app-citations [@myEnter] *ngIf="showCitations" [citations]="citations"></app-citations>
 
 
-    <div class="scene-selector-hover" *ngIf="isWide" (mouseenter)="sceneSelectorHoverIn()" (mouseleave)="sceneSelectorHoverOut()">
+    <div class="scene-selector-hover" (mouseenter)="sceneSelectorHoverIn()" (mouseleave)="sceneSelectorHoverOut()">
       <app-scene-selector [@myEnter] *ngIf="showSceneSelector"></app-scene-selector>
     </div>
 

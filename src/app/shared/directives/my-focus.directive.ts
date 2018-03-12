@@ -6,7 +6,7 @@ import {ScreenSizeService} from '../services/screen-size.service';
 })
 export class MyFocusDirective {
   @Input('myFocus') isFocused: boolean;
-  private isWide : boolean;
+  private isWide: boolean;
   private widthThreshold = 769;
 
 
@@ -19,12 +19,8 @@ export class MyFocusDirective {
 
   // Used to focus on #search-input input at application startup
   private autoFocus(): void {
-    if (document.activeElement.className.substring(0, 16) !== 'edit-to-do-input') {
-      //console.log(document.getElementById('search-input'));
-      //if (document.getElementsByClassName('search-input').length >0){
-      if (this.isWide){
+    if (document.activeElement.className.substring(0, 16) !== 'edit-to-do-input' && this.isWide) {
       this.renderer.selectRootElement('#search-input').focus();
-      }
     }
   }
 
