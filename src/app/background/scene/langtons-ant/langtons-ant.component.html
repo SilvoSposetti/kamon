@@ -1,0 +1,6 @@
+<div class="scene-canvas-container">
+  <canvas #myCanvas class="my-canvas" width="{{screenWidth}}" height="{{screenHeight}}"></canvas>
+  <div class="scene-fps-counter" *ngIf="showFPS">
+    current: {{fpsValues[0]}} - mean: {{fpsValues[1]}}
+  </div>
+</div>

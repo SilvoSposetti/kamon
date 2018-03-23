@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {APP_INITIALIZER, NgModule, Renderer2} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {environment} from '../environments/environment';
 import {FormsModule} from '@angular/forms';
 import {HttpModule, JsonpModule} from '@angular/http';
@@ -35,6 +35,8 @@ import {DiffusionLimitedAggregationComponent} from './background/scene/diffusion
 import {GameOfLifeComponent} from './background/scene/game-of-life/game-of-life.component';
 import {KaleidoscopeComponent} from './background/scene/kaleidoscope/kaleidoscope.component';
 import {PolarFunctionsComponent} from './background/scene/polar-functions/polar-functions.component';
+import {LangtonsAntComponent} from './background/scene/langtons-ant/langtons-ant.component';
+
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 import {MyBlinkDirective} from './shared/directives/my-blink.directive';
@@ -48,7 +50,6 @@ import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
 import {ToDoService} from './shared/services/to-do.service';
 import {FpsService} from './shared/services/fps.service';
-
 
 
 @NgModule({
@@ -84,7 +85,8 @@ import {FpsService} from './shared/services/fps.service';
     DiffusionLimitedAggregationComponent,
     GameOfLifeComponent,
     KaleidoscopeComponent,
-    PolarFunctionsComponent],
+    PolarFunctionsComponent,
+    LangtonsAntComponent],
   imports: [
     HttpModule,
     BrowserModule,

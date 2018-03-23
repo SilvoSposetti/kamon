@@ -88,7 +88,7 @@ List element:
 }
 
 .list-element:hover {
-  background: rgba(200, 200, 200, 0.2);
+  background: var(--list-element-hover-background-color);
   cursor: pointer;
 }
 
@@ -96,7 +96,7 @@ List element:
   min-width: 1.7em;
   min-height: 1.7em;
   color: white;
-  background: black;
+  background: var(--shortcut-indicator-background-color);
   border-radius: 50%;
   display: flex;
   align-items: center;

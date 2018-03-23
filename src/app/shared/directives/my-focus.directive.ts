@@ -1,5 +1,7 @@
 import {Directive, HostListener, Input, Renderer2} from '@angular/core';
 import {ScreenSizeService} from '../services/screen-size.service';
+import {ConfigService} from '../services/config.service';
+import {environment} from '../../../environments/environment';
 
 @Directive({
   selector: '[myFocus]',
@@ -19,8 +21,9 @@ export class MyFocusDirective {
 
   // Used to focus on #search-input input at application startup
   private autoFocus(): void {
-    if (document.activeElement.className.substring(0, 16) !== 'edit-to-do-input' && this.isWide) {
+    if (document.activeElement.className.substring(0, 16) !== 'edit-to-do-input' && (this.isWide || !environment.production)) {
       this.renderer.selectRootElement('#search-input').focus();
+
     }
   }
 

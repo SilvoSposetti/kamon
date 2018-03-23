@@ -7,10 +7,15 @@
   --default-font-weight: 200;
   /* Custom Colors */
   --default-font-color: white;
-  --default-background-color: rgba(0, 0, 0, 0.6);
-  --default-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 1);
-  --default-box-shadow-up: 0 -30px 30px -30px rgba(0, 0, 0, 1); /* Used only for clock and list when they coexist */
-  --default-box-shadow-down: 0 30px 30px -30px rgba(0, 0, 0, 1); /* Used only for clock and list when they coexist */
+  /*--default-background-color: rgba(0, 0, 0, 0.6);*/
+  /*--default-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 1);*/
+  /*--default-box-shadow-up: 0 -30px 30px -30px rgba(0, 0, 0, 1); !* Used only for clock and list when they coexist *!*/
+  /*--default-box-shadow-down: 0 30px 30px -30px rgba(0, 0, 0, 1); !* Used only for clock and list when they coexist *!*/
+
+  --default-background-color: rgba(0, 0, 0, 0);
+  --default-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0);
+  --default-box-shadow-up: 0 -30px 30px -30px rgba(0, 0, 0, 0); /* Used only for clock and list when they coexist */
+  --default-box-shadow-down: 0 30px 30px -30px rgba(0, 0, 0, 0); /* Used only for clock and list when they coexist */
 
   /*background: var(--default-background-color);*/
   /*-webkit-box-shadow: var(--default-box-shadow);*/
@@ -37,6 +42,8 @@
   /* List */
   --list-category-font-size: 1.2em;
   --list-default-font-size: 1em;
+  --shortcut-indicator-background-color: rgba(0, 0, 0, 0);
+  --list-element-hover-background-color: rgba(200, 200, 200, 0.4);
 
   /*SEARCH COMPONENT*/
   --search-text-font-size: 2em;

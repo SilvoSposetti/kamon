@@ -77,7 +77,8 @@ export class ScenesService {
       'diffusion-limited-aggregation',
       'game-of-life',
       'kaleidoscope',
-      'polar-functions'
+      'polar-functions',
+      'langtons-ant',
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);
