@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ConfigService} from '../../shared/services/config.service';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {ColorService} from '../../shared/services/color.service';
 
 @Component({
   selector: 'app-setting',
@@ -7,17 +7,31 @@ import {ConfigService} from '../../shared/services/config.service';
   styleUrls: ['./setting.component.css'],
 })
 export class SettingComponent implements OnInit {
+  @ViewChild('myCanvas') canvasRef: ElementRef;
+  @Input() screenWidth: number;
+  @Input() public screenHeight: number;
+  @Input() public isWide: boolean;
+  @Input() public isTall: boolean;
 
-  public useBackground = this.configService.getConfig().useCustomBackgroundImage;
-  public backgroundImage = '/assets/img/background/background.jpg';
+  private backgroundGradient: CanvasGradient;
 
-  constructor(private configService: ConfigService) {
 
+  constructor(private colorService: ColorService) {
   }
 
   ngOnInit() {
+    requestAnimationFrame(() => this.drawBackground());
   }
 
+  private drawBackground() {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
+    this.backgroundGradient = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.backgroundGradient.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
+    this.backgroundGradient.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
+
+    ctx.fillStyle = this.backgroundGradient;
+    ctx.fillRect(0,0,this.screenWidth, this.screenHeight);
+  }
 
 }

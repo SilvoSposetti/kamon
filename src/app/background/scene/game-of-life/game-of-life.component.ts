@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-game-of-life',
@@ -18,8 +19,8 @@ export class GameOfLifeComponent implements OnInit, OnDestroy {
 
   private running: boolean;
 
-  private gradient1: any;
-  private gradient2: any;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private columns: number = 202;
   private rows: number;
@@ -32,7 +33,7 @@ export class GameOfLifeComponent implements OnInit, OnDestroy {
 
   // each element of the grid contains false for black and true for white.
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -77,12 +78,13 @@ export class GameOfLifeComponent implements OnInit, OnDestroy {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
     this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, '#4D6C7B');
-    this.gradient1.addColorStop(1, '#12191C');
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
 
     this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, '#7b514d');
-    this.gradient2.addColorStop(1, '#7b684d');
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
 
     // Variables initialization:
     this.cellSize = this.screenWidth / this.columns;

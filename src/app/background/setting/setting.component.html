@@ -1,6 +1,3 @@
 <div class="setting-parent">
-  <div class="background-image-container" *ngIf="useBackground">
-    <img src="{{backgroundImage}}" class="background-image"/>
-  </div>
-  <div class="background-color" *ngIf="!useBackground"></div>
+    <canvas #myCanvas class="setting-canvas" width="{{screenWidth}}" height="{{screenHeight}}"></canvas>
 </div>

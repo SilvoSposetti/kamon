@@ -71,8 +71,8 @@ export class KaleidoscopeComponent implements OnInit, OnDestroy {
     this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
 
     this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth/2, this.screenHeight/2);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundSecondStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
 
     this.sliceAngle = Math.PI * 2 / this.numOfSlices;
     // Define off-screen canvas dimensions:

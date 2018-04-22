@@ -202,7 +202,7 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
     ctx.lineWidth = this.starsLineWidth;
     for (let i = 0; i < this.numOfStars; i++) {
       //ctx.strokeStyle = this.toHexColour(this.stars[i][5]); ToDO: adjust with value
-      ctx.strokeStyle = this.colorService.getForegroundSecondStopHEX();
+      ctx.strokeStyle = this.gradient2;
       ctx.beginPath();
       ctx.moveTo(this.stars[i][2], this.stars[i][3]);
       ctx.lineTo(this.stars[i][0], this.stars[i][1]);
@@ -231,7 +231,7 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
         ctx.rect(-this.squares[i][1] / 2, -this.squares[i][1] / 2, this.squares[i][1], this.squares[i][1]);
 
         //ctx.strokeStyle = this.toHexColour(Math.floor(Math.abs(Math.cos(this.squares[i][j]) * 200))); //ToDo: adjust with value
-        ctx.strokeStyle = this.colorService.getForegroundSecondStopHEX();
+        ctx.strokeStyle = this.gradient2;
         ctx.lineWidth = this.squaresLineWidth;
         ctx.stroke();
         // restore the context to its untranslated/un-rotated state

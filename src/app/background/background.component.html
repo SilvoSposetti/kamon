@@ -1,5 +1,8 @@
 <div class="background-parent">
-  <app-setting></app-setting>
+  <app-setting [screenHeight]="screenHeight"
+               [screenWidth]="screenWidth"
+               [isWide]="isWide"
+               [isTall]="isTall"></app-setting>
   <app-scene [showFPS]="showFPS"
              [screenHeight]="screenHeight"
              [screenWidth]="screenWidth"

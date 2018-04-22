@@ -106,8 +106,8 @@ export class TreeMapComponent implements OnInit, OnDestroy {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
     this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.01));
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.01));
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
 
     this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
     this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());

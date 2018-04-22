@@ -1,15 +1,16 @@
-import {Injectable} from '@angular/core';
+import {ElementRef, Injectable, ViewChild} from '@angular/core';
 import {ConfigService} from './config.service';
 
 
 @Injectable()
 export class ColorService {
+  @ViewChild('myCanvas') canvasRef: ElementRef;
+  //TODO: see if this canvasRef can be used to send the CanvasGradient directly instead of the HEX/RGBA values
 
-  private backgroundGradientFirstStop: number[];
-  private backgroundGradientSecondStop: number[];
-  private foregroundGradientFirstStop: number[];
-  private foregroundGradientSecondStop: number[];
-  private paintColor: number[];
+  private backgroundGradientFirstStop: string;
+  private backgroundGradientSecondStop: string;
+  private foregroundGradientFirstStop: string;
+  private foregroundGradientSecondStop: string;
 
   constructor(private configService: ConfigService) {
   }
@@ -20,7 +21,6 @@ export class ColorService {
     this.backgroundGradientSecondStop = this.configService.getConfig().backgroundGradientSecondStop;
     this.foregroundGradientFirstStop = this.configService.getConfig().foregroundGradientFirstStop;
     this.foregroundGradientSecondStop = this.configService.getConfig().foregroundGradientSecondStop;
-    this.paintColor = this.configService.getConfig().paintColor;
   }
 
   //********************************************************************************************************************
@@ -41,24 +41,9 @@ export class ColorService {
     return this.getHex(this.foregroundGradientSecondStop);
   }
 
-  public getPaintColorHEX(): string{
-    return this.getHex(this.paintColor);
-  }
 
-
-  private getHex(color: number[]): string { // Color values must be inside interval [0, 255]
-    let returnString = '';
-    for (let i = 0; i < 3; i++) {
-      let str = color[i].toString(16);
-      if (str.length < 1) {
-        str = '0' + str;
-      }
-      if (str.length < 2) {
-        str = '0' + str;
-      }
-      returnString += str;
-    }
-    return '#' + returnString.toUpperCase();
+  private getHex(color: string): string { // Color values must be inside interval [0, 255]
+    return '#' + color.toUpperCase();
   }
 
   //********************************************************************************************************************
@@ -79,11 +64,17 @@ export class ColorService {
     return this.getRGBA(this.foregroundGradientSecondStop, alpha);
   }
 
-  private getRGBA(color: number[], alpha: number): string { // Color are rgb integers between [0, 255]. Alpha is a float within [0, 1]
-    let mappedAlpha = Math.floor(alpha * 255) / 255;
-    console.log([alpha, mappedAlpha]);
+  private getRGBA(color: string, alpha: number): string { // Color are rgb integers between [0, 255]. Alpha is a float within [0, 1]
+
+    let Rstr = color.substring(0, 2);
+    let Gstr = color.substring(2, 4);
+    let Bstr = color.substring(4, 6);
+
+    let R = parseInt(Rstr, 16);
+    let G = parseInt(Gstr, 16);
+    let B = parseInt(Bstr, 16);
 
     // console.log('rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', ' + alpha + ')');
-    return 'rgba(' + color[0] + ', ' + color[1] + ', ' + color[2] + ', ' + alpha + ')';
+    return 'rgba(' + R + ', ' + G + ', ' + B + ', ' + alpha + ')';
   }
 }
