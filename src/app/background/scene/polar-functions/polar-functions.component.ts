@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-polar-functions',
@@ -17,6 +18,8 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private numOfEpicycloids: number = 150;
   private numOfHypocycloids: number = 150;
@@ -27,9 +30,9 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
   private epicycloidRadius: number = 100;
   private hypocylcloidRadius: number = 100;
   private k: number = (1 + Math.sqrt(5)) / 2;
-  private lineWidth: number = 3;
+  private lineWidth: number = 4;
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -59,6 +62,16 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.2));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.2));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     this.delimiter = this.screenHeight / 3.8;
     this.epicycloidRadius = this.delimiter / (this.k * 2);
     this.hypocylcloidRadius = this.delimiter * (this.k * 2);
@@ -78,7 +91,7 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
 
   private drawBackground(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.04)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
   }
 
@@ -102,7 +115,7 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
 
   private drawFunctions(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.strokeStyle = '#aaaaaa';
+    ctx.strokeStyle = this.gradient2;
     ctx.lineWidth = this.lineWidth;
     let amountOfValues = this.numOfEpicycloids + this.numOfHypocycloids;
     for (let i = 0; i < amountOfValues; i++) {

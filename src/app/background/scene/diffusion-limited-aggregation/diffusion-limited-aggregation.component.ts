@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-diffusion-limited-aggregation',
@@ -17,6 +18,8 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private numOfWalkers: number = 20;
   private walkers: number[][] = [];
@@ -29,7 +32,7 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
   private spawnRadius: number = 40;
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -52,7 +55,7 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
     if (this.drawBackgroundOnce) {
       let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
       //ctx.fillStyle = 'rgba(0,0,0,0.1)';
-      ctx.fillStyle = 'rgba(0,0,0,1)';
+      ctx.fillStyle = this.gradient1;
       ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
       this.drawBackgroundOnce = false;
       this.drawCircle();
@@ -68,6 +71,16 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
+
+    this.gradient2 = ctx.createRadialGradient(this.screenWidth / 2, this.screenHeight / 2, 0, this.screenWidth / 2, this.screenHeight / 2, Math.sqrt(Math.pow(this.screenWidth / 2, 2) + Math.pow(this.screenWidth / 2, 2)));
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     // Setup walkers list:
     for (let i = 0; i < this.numOfWalkers; i++) {
       this.walkers.push([]);
@@ -90,7 +103,16 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     //ctx.strokeStyle = '#ffffff';
     //ctx.lineWidth = 2;
-    ctx.fillStyle = this.hexColour();
+
+    let numberBaseTen = -0.5 * this.amountOfCircles + 255 - 30;
+    numberBaseTen = 255 - Math.floor(numberBaseTen);
+    if (numberBaseTen >= 255) {
+      numberBaseTen = 255;
+    }
+    //this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    //this.gradient2.addColorStop(0, this.colorService.mapForegroundGradientSaturationFirstStop(numberBaseTen));
+    //this.gradient2.addColorStop(1, this.colorService.mapForegroundGradientSaturationSecondStop());
+    ctx.fillStyle = this.gradient2;
     ctx.beginPath();
     ctx.arc(this.tree[this.tree.length - 1][0], this.tree[this.tree.length - 1][1], this.tree[this.tree.length - 1][2], 0, 2 * Math.PI);
     ctx.closePath();
@@ -178,21 +200,11 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
     return value;
   }
 
-  private hexColour(): string {
-    let numberBaseTen = -0.5 * this.amountOfCircles + 255 - 30;
-    numberBaseTen = 255 - Math.floor(numberBaseTen);
-    if (numberBaseTen >= 255) {
-      numberBaseTen = 255;
-    }
-    let str = numberBaseTen.toString(16);
-    if (str.length < 1) {
-      str = '0' + str;
-    }
-    if (str.length < 2) {
-      str = '0' + str;
-    }
-    return '#' + str + str + str;
-  }
+  //private hexColour(): string {
+  //
+  //  return this.colorService.mapSecondGradientSaturation(numberBaseTen);
+  //
+  //}
 }
 
 

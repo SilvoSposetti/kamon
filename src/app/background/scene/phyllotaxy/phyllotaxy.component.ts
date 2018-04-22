@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-phyllotaxy',
@@ -18,6 +19,8 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private points: number[][] = [];
   // [x,y,size]
@@ -27,7 +30,7 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
   private elementsPerFrame = 1;
   private c = 20;
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -61,17 +64,19 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(25,25,25,0.01)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
-    ctx.strokeStyle = '#999999';
+    ctx.strokeStyle = this.gradient2;
     for (let i = 0; i < Math.floor(this.elementsPerFrame) && this.counter<this.nrOfPoints; i++) {
       ctx.beginPath();
       let color = Math.floor(this.colorCounter * 0.2) % 100;
       if (color < 17) {
         color = 17;
       }
-      ctx.fillStyle = '#' + color.toString(16) + color.toString(16) + color.toString(16);
+      //ctx.fillStyle = '#' + color.toString(16) + color.toString(16) + color.toString(16); //TODO: add value color
+      ctx.fillStyle = this.gradient2
+
       ctx.arc(this.points[this.counter][0], this.points[this.counter][1], this.points[this.counter][2], 0, 2 * Math.PI);
       ctx.fill();
       ctx.stroke();
@@ -84,6 +89,16 @@ export class PhyllotaxyComponent implements OnInit, OnDestroy {
   }
 
   private loadPoints(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     let goldenAngle = Math.PI * (3 - Math.sqrt(5));
     for (let i = 0; i < this.nrOfPoints; i++) {
       let r = this.c * Math.sqrt(i) - this.c;

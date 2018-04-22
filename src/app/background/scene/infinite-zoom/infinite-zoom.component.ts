@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-infinite-zoom',
@@ -19,6 +20,8 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private timeToLiveIncrement: number = 0.008;
   private speedExponent: number = 3;
@@ -40,7 +43,7 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
   // for each layer: [timeAlive, sideLength, rotationAngle1, rotationAngle2, ...,]
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -71,7 +74,7 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    ctx.fillStyle = this.gradient1;
     //ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
@@ -91,6 +94,17 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
+
     let diagonal: number = Math.sqrt(Math.pow(this.screenWidth, 2) + Math.pow(this.screenHeight, 2));
     // This value is used as "spacing" between timeLived by square's layers:
     let squaresTimeToLiveDifference: number = this.sizeToTime(diagonal) / this.numOfLayers;
@@ -187,7 +201,8 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
 
     ctx.lineWidth = this.starsLineWidth;
     for (let i = 0; i < this.numOfStars; i++) {
-      ctx.strokeStyle = this.toHexColour(this.stars[i][5]);
+      //ctx.strokeStyle = this.toHexColour(this.stars[i][5]); ToDO: adjust with value
+      ctx.strokeStyle = this.colorService.getForegroundSecondStopHEX();
       ctx.beginPath();
       ctx.moveTo(this.stars[i][2], this.stars[i][3]);
       ctx.lineTo(this.stars[i][0], this.stars[i][1]);
@@ -215,7 +230,8 @@ export class InfiniteZoomComponent implements OnInit, OnDestroy {
         //       so the rect needs to be offset accordingly when drawn
         ctx.rect(-this.squares[i][1] / 2, -this.squares[i][1] / 2, this.squares[i][1], this.squares[i][1]);
 
-        ctx.strokeStyle = this.toHexColour(Math.floor(Math.abs(Math.cos(this.squares[i][j]) * 200)));
+        //ctx.strokeStyle = this.toHexColour(Math.floor(Math.abs(Math.cos(this.squares[i][j]) * 200))); //ToDo: adjust with value
+        ctx.strokeStyle = this.colorService.getForegroundSecondStopHEX();
         ctx.lineWidth = this.squaresLineWidth;
         ctx.stroke();
         // restore the context to its untranslated/un-rotated state

@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-sorting-algorithms',
@@ -17,6 +18,8 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private lists: number[][] = [];
   // [Top, Bottom, Left, Right]
@@ -32,7 +35,7 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
   private lineWidth: number;
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -59,7 +62,7 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
     this.fpsService.updateFps();
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,1)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     // List: [Top, Bottom, Left, Right]
@@ -74,7 +77,7 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
         let toX = fromX;
         let toY = this.lists[i][1] - height * this.values[i][j];
         // draw lines
-        ctx.strokeStyle = '#aaaaaa';
+        ctx.strokeStyle = this.gradient2;
         ctx.lineWidth = this.lineWidth;
         ctx.beginPath();
         ctx.moveTo(fromX, fromY);
@@ -100,6 +103,16 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     this.lineWidth = Math.floor(((this.screenWidth - 4 * this.padding) / 2) / this.nrOfElementsPerSet);
 
     // [Top, Bottom, Left, Right]

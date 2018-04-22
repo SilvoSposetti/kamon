@@ -14,9 +14,13 @@ export class Configuration {
               public useToDoList: boolean,
               public useCredits: boolean,
               public showFPS: boolean,
+              public backgroundGradientFirstStop: number[],
+              public backgroundGradientSecondStop: number[],
+              public foregroundGradientFirstStop: number[],
+              public foregroundGradientSecondStop: number[],
+              public paintColor: number[],
               public searchEngine: string[],
               public list: string[][],
               public citations: string[][]) {
   }
-
 }

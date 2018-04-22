@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-langtons-ant',
@@ -17,8 +18,8 @@ export class LangtonsAntComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
-  private redGrd: any;
-  private blueGrd: any;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private columns: number = 101; // Best if it is an odd number;
   private rows: number;
@@ -33,7 +34,7 @@ export class LangtonsAntComponent implements OnInit, OnDestroy {
 
   // each element of the grid contains false for black and true for white.
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -76,13 +77,13 @@ export class LangtonsAntComponent implements OnInit, OnDestroy {
   private setup(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    this.blueGrd = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.blueGrd.addColorStop(0, '#13E2B5');
-    this.blueGrd.addColorStop(1, '#009DE0');
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
 
-    this.redGrd = ctx.createLinearGradient(0, 0,  this.screenWidth, this.screenHeight);
-    this.redGrd.addColorStop(0, '#FFAF2E');
-    this.redGrd.addColorStop(1, '#F70B66');
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
 
 
     this.cellSize = this.screenWidth / this.columns;
@@ -136,7 +137,7 @@ export class LangtonsAntComponent implements OnInit, OnDestroy {
   private drawBackground(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     //ctx.fillStyle = 'rgba(0,0,0,0.1)';
-    ctx.fillStyle = this.blueGrd;
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
   }
@@ -146,7 +147,7 @@ export class LangtonsAntComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.rows; i++) { // start from 1 and ends at +1 because of padding
       for (let j = 0; j < this.columns; j++) { // start from 1 and ends at +1 because of padding
         if (this.grid[i][j]) {
-          ctx.fillStyle = this.redGrd;
+          ctx.fillStyle = this.gradient2;
           ctx.fillRect(this.cellSize * j, this.cellSize * i, this.cellSize, this.cellSize);
         }
       }

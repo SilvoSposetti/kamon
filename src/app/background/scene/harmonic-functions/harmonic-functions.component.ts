@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-harmonic-functions',
@@ -18,6 +19,8 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private functionValues: number[][];
   // [xPos, yPos, previousXPos, previousYPos]
@@ -28,7 +31,7 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   private xForward: number[] = [5.5, 4.5, 5, 3.5];
   private loops: number[] = [];
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -61,7 +64,7 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(0,0,0,0.005)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     for (let i = 0; i < this.numOfFunctions; i++) {
@@ -72,8 +75,8 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
       //ctx.fill();
       //ctx.closePath();
 
-      ctx.strokeStyle = '#dddddd';
-      ctx.lineWidth = 2;
+      ctx.strokeStyle = this.colorService.getForegroundSecondStopHEX();
+      ctx.lineWidth = this.screenHeight/200;
       ctx.beginPath();
       // draw line from previousPos to newPos
       ctx.moveTo(this.functionValues[i][2], this.functionValues[i][3]);
@@ -90,6 +93,16 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     this.rowHeight = this.screenHeight / this.numOfFunctions;
     this.functionValues = [];
     for (let i = 0; i < this.numOfFunctions; i++) {

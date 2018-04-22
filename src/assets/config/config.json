@@ -1,8 +1,8 @@
 {
   "useCustomBackgroundImage": false,
-  "useScene": false,
-  "showClock": true,
-  "defaultScene": "langtons-ant",
+  "useScene": true,
+  "showClock": false,
+  "defaultScene": "polar-functions",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
@@ -13,6 +13,11 @@
   "useToDoList": false,
   "useCredits": true,
   "showFPS": true,
+  "backgroundGradientFirstStop": [77, 108, 123],
+  "backgroundGradientSecondStop": [18, 25, 28],
+  "foregroundGradientFirstStop": [123, 81, 77],
+  "foregroundGradientSecondStop": [123, 104, 77],
+  "paintColor": [123, 104, 77],
   "searchEngine": [
     "Google",
     "http://www.google.com/",

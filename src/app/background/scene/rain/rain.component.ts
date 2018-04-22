@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-rain',
@@ -17,6 +18,8 @@ export class RainComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private numOfRainDrops: number = 500;
   private rainDrops: number[][] = [];
@@ -40,7 +43,7 @@ export class RainComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -68,7 +71,7 @@ export class RainComponent implements OnInit, OnDestroy {
     this.updateRainDrops();
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    ctx.fillStyle = this.gradient1;
     //ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
@@ -80,7 +83,7 @@ export class RainComponent implements OnInit, OnDestroy {
       //ctx.arc(this.rainDrops[i][0], this.rainDrops[i][1], 1, 0, 2 * Math.PI);
       //ctx.fill();
 
-      ctx.strokeStyle = '#dddddd';
+      ctx.strokeStyle = this.gradient2;
       ctx.lineWidth = 2;
       ctx.beginPath();
       // draw line from previousPos to newPos
@@ -107,6 +110,16 @@ export class RainComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.3));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.3));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     for (let i = 0; i < this.numOfRainDrops; ++i) {
       let posX = Math.random() * this.screenWidth;
       let posY = Math.random() * this.screenHeight;

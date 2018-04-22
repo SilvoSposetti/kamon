@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-lissajous',
@@ -18,6 +19,8 @@ export class LissajousComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private spacing: number = 60;
   private columns: number;
@@ -30,7 +33,7 @@ export class LissajousComponent implements OnInit, OnDestroy {
   private gridValues: number[][][] = [];
   // [xPos, yPos, xCenterPos, yCenterPos, sinMultiplier, cosMultiplier, previousXPos, previousYPos]
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -61,14 +64,14 @@ export class LissajousComponent implements OnInit, OnDestroy {
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(0,0,0,0.01)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     for (let i = 0; i < this.columns; i++) {
       for (let j = 0; j < this.rows; j++) {
 
-        ctx.strokeStyle = '#dddddd';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = this.gradient2;
+        ctx.lineWidth = this.screenHeight/400;
         ctx.beginPath();
         // draw line from previousPos to newPos
         ctx.moveTo(this.gridValues[i][j][6], this.gridValues[i][j][7]);
@@ -92,6 +95,16 @@ export class LissajousComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.3));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.3));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     this.columns = Math.ceil(this.screenWidth / this.spacing);
     this.rows = Math.ceil(this.screenHeight / this.spacing);
 

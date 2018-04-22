@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-modular-multiplication',
@@ -51,8 +52,10 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   private smallCirclePoints = 1000;
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -77,6 +80,16 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
 
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     this.normalRadius = this.screenWidth / this.amountOfNormalRadiiInTheScreenWidth;
 
     this.rowsHeight = this.normalRadius * 3 * (1 + Math.sqrt(3));
@@ -204,7 +217,7 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
 
     // Paint background:
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.008)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     // Update data:
@@ -226,7 +239,7 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   private paintCircles(): void {
 
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.strokeStyle = '#dddddd';
+    ctx.strokeStyle = this.gradient2;
     ctx.lineWidth = this.circlesLineWidth;
     for (let i = 0; i < this.rhombusSectors.length; i++) {
       for (let j = 0; j < 12; j++) { // Don't change upper limit (12)! (Truncated hexagonal tiling is made up of sectors each having 12 circles)
@@ -253,7 +266,7 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
 
   private paintLines(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.strokeStyle = '#dddddd';
+    ctx.strokeStyle = this.gradient2;
     ctx.lineWidth = this.lineWidth;
     for (let i = 0; i < this.lines.length; i++) {
       ctx.beginPath();

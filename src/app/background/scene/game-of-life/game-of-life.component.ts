@@ -18,6 +18,9 @@ export class GameOfLifeComponent implements OnInit, OnDestroy {
 
   private running: boolean;
 
+  private gradient1: any;
+  private gradient2: any;
+
   private columns: number = 202;
   private rows: number;
   private cellSize: number;
@@ -71,6 +74,16 @@ export class GameOfLifeComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, '#4D6C7B');
+    this.gradient1.addColorStop(1, '#12191C');
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, '#7b514d');
+    this.gradient2.addColorStop(1, '#7b684d');
+
     // Variables initialization:
     this.cellSize = this.screenWidth / this.columns;
     this.rows = Math.ceil(this.screenHeight / this.cellSize);
@@ -129,14 +142,14 @@ export class GameOfLifeComponent implements OnInit, OnDestroy {
   private drawBackground(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     //ctx.fillStyle = 'rgba(0,0,0,0.1)';
-    ctx.fillStyle = 'rgba(0,0,0,1)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
   }
 
   private drawGrid(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = '#aaaaaa';
+    ctx.fillStyle = this.gradient2;
     for (let i = 1; i < this.rows + 1; i++) { // start from 1 and ends at +1 because of padding
       for (let j = 1; j < this.columns + 1; j++) { // start from 1 and ends at +1 because of padding
         if (this.grid[i][j]) {

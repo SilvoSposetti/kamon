@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angul
 import OpenSimplexNoise from 'open-simplex-noise';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-tree-map',
@@ -18,6 +19,8 @@ export class TreeMapComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private heap: number[][] = [];
   private numOfElements: number;
@@ -32,7 +35,7 @@ export class TreeMapComponent implements OnInit, OnDestroy {
   private noiseIncrement = 1;
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -60,12 +63,12 @@ export class TreeMapComponent implements OnInit, OnDestroy {
     this.fpsService.updateFps();
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.005)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     for (let i = 0; (i < this.linesPerFrame) && (this.counter <= this.numOfElements); ++i) {
       // draw lines
-      ctx.strokeStyle = '#dddddd';
+      ctx.strokeStyle = this.gradient2;
       ctx.lineWidth = 2;
       ctx.beginPath();
       ctx.moveTo(this.heap[this.counter][4], this.heap[this.counter][5]);
@@ -100,6 +103,16 @@ export class TreeMapComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.01));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.01));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     // Set up heap:
     this.numOfElements = Math.pow(2, this.depth);
     // [top,left,bottom,right,lineFromX,lineFromY,lineToX,lineToY,depth,subdivide]

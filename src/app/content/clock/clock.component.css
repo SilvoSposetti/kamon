@@ -30,7 +30,6 @@
   justify-content: center;
   flex-direction: column;
   font-size: var(--clock-info-font-size);
-  border-radius: 3em;
   /*padding: 1.5em;*/
   width: 25em;
   font-weight: 200;

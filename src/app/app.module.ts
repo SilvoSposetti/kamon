@@ -4,6 +4,7 @@ import {environment} from '../environments/environment';
 import {FormsModule} from '@angular/forms';
 import {HttpModule, JsonpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 // App components
 import {AppComponent} from './app.component';
 import {BackgroundComponent} from './background/background.component';
@@ -15,6 +16,7 @@ import {ListComponent} from './content/list/list.component';
 import {CitationsComponent} from './content/citations/citations.component';
 import {CreditsComponent} from './content/credits/credits.component';
 import {ToDoComponent} from './content/to-do/to-do.component';
+
 // Scenes:
 import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
 import {PhyllotaxyComponent} from './background/scene/phyllotaxy/phyllotaxy.component';
@@ -36,10 +38,12 @@ import {GameOfLifeComponent} from './background/scene/game-of-life/game-of-life.
 import {KaleidoscopeComponent} from './background/scene/kaleidoscope/kaleidoscope.component';
 import {PolarFunctionsComponent} from './background/scene/polar-functions/polar-functions.component';
 import {LangtonsAntComponent} from './background/scene/langtons-ant/langtons-ant.component';
+import {QuadTreeComponent} from './background/scene/quad-tree/quad-tree.component';
 
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 import {MyBlinkDirective} from './shared/directives/my-blink.directive';
+
 // Services:
 import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';
@@ -50,6 +54,7 @@ import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
 import {ToDoService} from './shared/services/to-do.service';
 import {FpsService} from './shared/services/fps.service';
+import {ColorService} from './shared/services/color.service';
 
 
 @NgModule({
@@ -86,7 +91,8 @@ import {FpsService} from './shared/services/fps.service';
     GameOfLifeComponent,
     KaleidoscopeComponent,
     PolarFunctionsComponent,
-    LangtonsAntComponent],
+    LangtonsAntComponent,
+    QuadTreeComponent],
   imports: [
     HttpModule,
     BrowserModule,
@@ -107,7 +113,8 @@ import {FpsService} from './shared/services/fps.service';
     ScenesService,
     LocationService,
     ToDoService,
-    FpsService],
+    FpsService,
+    ColorService],
   bootstrap: [AppComponent],
 })
 

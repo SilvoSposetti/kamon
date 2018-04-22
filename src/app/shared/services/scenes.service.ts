@@ -79,6 +79,7 @@ export class ScenesService {
       'kaleidoscope',
       'polar-functions',
       'langtons-ant',
+      'quad-tree'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);

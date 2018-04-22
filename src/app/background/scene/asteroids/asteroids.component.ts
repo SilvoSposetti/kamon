@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-asteroids',
@@ -16,6 +17,9 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject<any>();
   private fpsValues: number[] = [0, 0];
 
+  private gradient1: any;
+  private gradient2: any;
+
   private running: boolean;
   private asteroids: number[][] = [];
   // [posX,posY,velX,velY,mass,previousXPos,previousYPos]
@@ -24,7 +28,7 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
   private nrOfElements = 600;
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -52,10 +56,10 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(25,25,25,0.05)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
-    ctx.strokeStyle = '#cccccc';
+    ctx.strokeStyle = this.gradient2;
     ctx.beginPath();
     ctx.lineWidth = 1;
     ctx.arc(this.screenWidth / 2, this.screenHeight / 2, 30, 0, 2 * Math.PI);
@@ -65,7 +69,6 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     this.fpsService.updateFps();
     for (let i = 0; i < this.nrOfElements; ++i) {
 
-      ctx.strokeStyle = '#aaaaaa';
       ctx.lineWidth = 2;
       ctx.beginPath();
       // draw line from previousPos to newPos
@@ -81,6 +84,16 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
   }
 
   private startAsteroids(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     for (let i = 0; i < this.nrOfElements; ++i) {
       let element: number[] = [];
       let randomAngle = this.randomFloat(0, 2 * Math.PI);

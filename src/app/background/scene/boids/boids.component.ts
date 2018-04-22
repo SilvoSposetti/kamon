@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-boids',
@@ -17,6 +18,8 @@ export class BoidsComponent implements OnInit {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   private numOfBoids: number = 600;
   private boids: number[][] = [];
@@ -60,7 +63,7 @@ export class BoidsComponent implements OnInit {
   private boidsRule5ExtremeDistance: number = 10;
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -92,12 +95,12 @@ export class BoidsComponent implements OnInit {
     // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(25,25,25,0.9)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     // ***** DRAW BOIDS *****
     for (let i = 0; i < this.numOfBoids; i++) {
-      ctx.strokeStyle = 'rgba(200,200,200,1)';
+      ctx.strokeStyle = this.gradient2;
       let angle = Math.atan(this.boids[i][3] / this.boids[i][2]);
       if (this.boids[i][2] < 0) {
         angle = angle + Math.PI;
@@ -130,7 +133,7 @@ export class BoidsComponent implements OnInit {
       let rightX = 0.3 * this.predatorsLength * Math.cos(angleRight);
       let rightY = 0.3 * this.predatorsLength * Math.sin(angleRight);
 
-      ctx.fillStyle = 'rgba(150,150,150,1';
+      ctx.fillStyle = this.gradient2;
       ctx.beginPath();
       ctx.moveTo(this.predators[i][0] + tipX, this.predators[i][1] + tipY);
       ctx.lineTo(this.predators[i][0] + leftX, this.predators[i][1] + leftY);
@@ -155,6 +158,16 @@ export class BoidsComponent implements OnInit {
 
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.9));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.9));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
+
     for (let i = 0; i < this.numOfBoids; i++) {
       let angle = Math.random() * Math.PI * 2;
       let radius = Math.random() * this.screenWidth / 6 + this.screenWidth / 6;

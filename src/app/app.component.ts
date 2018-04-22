@@ -4,6 +4,8 @@ import {SearchService} from './shared/services/search.service';
 import {ScreenSizeService} from './shared/services/screen-size.service';
 import {Subject} from 'rxjs/Subject';
 import {environment} from '../environments/environment';
+import 'rxjs/Rx';
+import {ColorService} from './shared/services/color.service';
 
 @Component({
   selector: 'app-root',
@@ -37,10 +39,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private configService: ConfigService,
               private searchService: SearchService,
-              private screenSizeService: ScreenSizeService) {
+              private screenSizeService: ScreenSizeService,
+              private colorService: ColorService) {
   }
 
   ngOnInit() {
+    this.colorService.initialize();
     this.listenForSelection();
     this.updateWindowSize();
   }

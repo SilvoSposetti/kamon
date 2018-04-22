@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angul
 import OpenSimplexNoise from 'open-simplex-noise';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 
 @Component({
@@ -20,6 +21,8 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
 
   //Declaration of noise type which provides noise functions
   private noise = new OpenSimplexNoise(Date.now()); // Date.now() is the seed
@@ -39,7 +42,7 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   private particlesSize = 1.5;
   private particleMass: number = 0.01; // NOT ZERO!
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -73,7 +76,7 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
     this.updateField();
     this.updateParticles();
 
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    ctx.fillStyle = this.gradient1;
     //ctx.fillStyle = '#000000';
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
@@ -105,8 +108,8 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
     //} // this is the other parenthesis of the for loop over
 
     for (let i = 0; i < this.numOfParticles; ++i) {
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(this.particles[i][0], this.particles[i][1], this.particlesSize, this.particlesSize);
+      //ctx.fillStyle = this.gradient2;
+      //ctx.fillRect(this.particles[i][0], this.particles[i][1], this.particlesSize, this.particlesSize);
 
       //ctx.beginPath();
       //ctx.fillStyle = '#999999';
@@ -115,7 +118,7 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
       //ctx.fill();
       //ctx.stroke();
 
-      ctx.strokeStyle = '#dddddd';
+      ctx.strokeStyle = this.gradient2;
       ctx.lineWidth = 2;
       ctx.beginPath();
       // draw line from previousPos to newPos
@@ -132,6 +135,16 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth/2, this.screenHeight/2);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth/2, this.screenHeight/2);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundSecondStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundFirstStopHEX());
+
     this.columns = Math.ceil(this.screenWidth / this.spacing);
     this.rows = Math.ceil(this.screenHeight / this.spacing);
 

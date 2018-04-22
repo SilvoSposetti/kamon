@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-drops',
@@ -16,6 +17,8 @@ export class DropsComponent implements OnInit, OnDestroy {
   private ngUnsubscribe: Subject<any> = new Subject<any>();
   private fpsValues: number[] = [0, 0];
 
+  private gradient1: CanvasGradient;
+  private gradient2: CanvasGradient;
   // Scene variables:
   private running: boolean;
   private numOfDrops: number = 30;
@@ -29,7 +32,7 @@ export class DropsComponent implements OnInit, OnDestroy {
   private maxLineWidth: number = 20;
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(private fpsService: FpsService, private colorService: ColorService) {
   }
 
   ngOnInit() {
@@ -49,6 +52,16 @@ export class DropsComponent implements OnInit, OnDestroy {
   }
 
   private setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
+
+    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
+    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+
     for (let i = 0; i < this.numOfDrops; i++) {
       this.drops.push(this.newDrop());
     }
@@ -59,8 +72,7 @@ export class DropsComponent implements OnInit, OnDestroy {
 
     // Paint background:
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    //ctx.fillStyle = 'rgba(0,0,0,0.1)';
-    ctx.fillStyle = 'rgba(0,0,0,1)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     this.update();
@@ -87,7 +99,7 @@ export class DropsComponent implements OnInit, OnDestroy {
 
   private paint(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.strokeStyle = '#aaaaaa';
+    ctx.strokeStyle = this.gradient2;
     for (let i = 0; i < this.numOfDrops; i++) {
       for (let j = 0; j <= this.drops[i][5]; j++) {
         let r = this.drops[i][2] - (j * this.waveLength);
