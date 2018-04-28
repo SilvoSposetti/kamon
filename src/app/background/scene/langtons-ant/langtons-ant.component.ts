@@ -1,25 +1,18 @@
 import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-langtons-ant',
   templateUrl: './langtons-ant.component.html',
   styleUrls: ['./langtons-ant.component.css']
 })
-export class LangtonsAntComponent implements OnInit, OnDestroy {
+export class LangtonsAntComponent extends Scene implements OnInit, OnDestroy {
   @ViewChild('myCanvas') canvasRef: ElementRef;
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
-
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
-  private gradient1: CanvasGradient;
-  private gradient2: CanvasGradient;
 
   private columns: number = 101; // Best if it is an odd number;
   private rows: number;
@@ -27,65 +20,23 @@ export class LangtonsAntComponent implements OnInit, OnDestroy {
   private grid: boolean[][] = [];
   private antPosition: number[] = []; // [posX, posY] in the grid
   private antDirection: number; // 0: up, 1: left, 2: down, 3: right
-  private updateEachAmountOfFrame: number = 1;
-  private amountOfUpdatesPerFrame: number = 5;
-  private frameCount: number = 0;
-  private frameDrawnCount: number = 0;
+
 
   // each element of the grid contains false for black and true for white.
 
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.loop());
+    this.initializeCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private loop(): void {
-    this.fpsService.updateFps();
-    if (this.frameCount === 0) {
-      this.drawBackground();
-      // do update before draw so that the first 'setup' is not drawn.
-      for (let i = 0; i < this.amountOfUpdatesPerFrame; i++) {
-        this.update();
-      }
-      this.update();
-      this.drawGrid();
-      this.frameDrawnCount++;
-    }
-
-    this.frameCount++;
-    this.frameCount %= this.updateEachAmountOfFrame;
-
-    if (this.running) {
-      requestAnimationFrame(() => this.loop());
-    }
-  }
-
-  private setup(): void {
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
-
-
+  public setup(): void {
     this.cellSize = this.screenWidth / this.columns;
     this.rows = Math.ceil(this.screenHeight / this.cellSize);
     for (let i = 0; i < this.rows; i++) {
@@ -100,7 +51,7 @@ export class LangtonsAntComponent implements OnInit, OnDestroy {
     this.antDirection = 0;
   }
 
-  private update(): void {
+  public update(): void {
     if (this.grid[this.antPosition[0]][this.antPosition[1]]) {
       this.antDirection = (this.antDirection + 3) % 4;
     }
@@ -134,27 +85,22 @@ export class LangtonsAntComponent implements OnInit, OnDestroy {
     }
   }
 
-  private drawBackground(): void {
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    //ctx.fillStyle = 'rgba(0,0,0,0.1)';
-    ctx.fillStyle = this.gradient1;
-    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
-  }
-
-  private drawGrid(): void {
+  public draw(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     for (let i = 0; i < this.rows; i++) { // start from 1 and ends at +1 because of padding
       for (let j = 0; j < this.columns; j++) { // start from 1 and ends at +1 because of padding
         if (this.grid[i][j]) {
-          ctx.fillStyle = this.gradient2;
-          ctx.fillRect(this.cellSize * j, this.cellSize * i, this.cellSize, this.cellSize);
+          ctx.fillStyle = this.sandGradient;}
+        else{
+          ctx.fillStyle = this.seaGradient;
         }
+        ctx.fillRect(this.cellSize * j, this.cellSize * i, this.cellSize, this.cellSize);
+
       }
     }
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(this.cellSize * this.antPosition[1], this.cellSize * this.antPosition[0], this.cellSize, this.cellSize);
-
   }
 
   private setAntInTheMiddle(): void {

@@ -1,7 +1,7 @@
 {
   "useScene": true,
   "showClock": false,
-  "defaultScene": "tree-map",
+  "defaultScene": "quad-tree",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
@@ -113,11 +113,11 @@
     ],
     [
       "Fun",
-      "Twitch",
+      "Trello",
       "t",
-      "https://www.twitch.tv/",
+      "https://trello.com/",
       null,
-      "#6441a5"
+      "#026AA7"
     ],
     [
       "Fun",

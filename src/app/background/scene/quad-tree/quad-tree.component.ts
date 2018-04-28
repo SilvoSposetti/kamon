@@ -1,7 +1,7 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 
 @Component({
@@ -9,75 +9,34 @@ import {ColorService} from '../../../shared/services/color.service';
   templateUrl: './quad-tree.component.html',
   styleUrls: ['./quad-tree.component.css']
 })
-export class QuadTreeComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class QuadTreeComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private gradient1: CanvasGradient;
-  private gradient2: CanvasGradient;
 
   //Particles:
   private numOfParticles: number = 200;
   private particles: number[][] = [];
   private particleSpeed: number = 2;
   private particleSize: number = 50;
+
   // Each particle contains: [posX, posY, vX, vY]
 
 
-
-  private running: boolean;
-
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
-  ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.loop());
+  ngOnInit(): void {
+    this.initializeCore();
   }
 
-  ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+  ngOnDestroy(): void {
+    this.terminateCore();
   }
 
-  private loop(): void {
-    this.fpsService.updateFps();
-
-    this.updateParticles();
-
-    this.drawBackground();
-    this.drawParticles();
-
-    if (this.running) {
-      requestAnimationFrame(() => this.loop());
-    }
-  }
-
-
-  private setup(): void {
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
-
-
-
+  public setup(): void {
     for (let i = 0; i < this.numOfParticles; i++) {
       let posX = Math.random() * this.screenWidth;
       let posY = Math.random() * this.screenHeight;
@@ -88,7 +47,7 @@ export class QuadTreeComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updateParticles(): void {
+  public update(): void {
     for (let i = 0; i < this.numOfParticles; i++) {
       this.particles[i][0] += this.particles[i][2];
       this.particles[i][1] += this.particles[i][3];
@@ -104,21 +63,26 @@ export class QuadTreeComponent implements OnInit, OnDestroy {
     }
   }
 
+  public draw(): void {
+    this.drawBackground();
+    this.drawParticles();
+  }
+
   private drawParticles(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = this.gradient2;
+    ctx.fillStyle = this.sandGradient;
     for (let i = 0; i < this.numOfParticles; i++) {
       ctx.beginPath();
-      ctx.arc(this.particles[i][0], this.particles[i][1],this.particleSize,0, Math.PI*2 );
+      ctx.arc(this.particles[i][0], this.particles[i][1], this.particleSize, 0, Math.PI * 2);
       ctx.closePath();
       ctx.fill();
 
     }
   }
 
-  private drawBackground(): void{
+  private drawBackground(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = this.gradient1;
-    ctx.fillRect(0,0,this.screenWidth, this.screenHeight);
+    ctx.fillStyle = this.seaGradient;
+    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
   }
 }

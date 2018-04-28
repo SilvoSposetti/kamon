@@ -58,6 +58,7 @@ export class SceneSelectorComponent implements OnInit, OnDestroy {
         sameInitialBlock.push(this.scenesNamesList[i]);
       }
     }
+    this.scenesAlphabeticalList.push(sameInitialBlock);
   }
 
   public getSceneNrFromIAndJ(indexI: number, indexJ: number): number {

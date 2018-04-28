@@ -108,7 +108,7 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
     //} // this is the other parenthesis of the for loop over
 
     for (let i = 0; i < this.numOfParticles; ++i) {
-      //ctx.fillStyle = this.gradient2;
+      //ctx.fillStyle = this.sandGradient;
       //ctx.fillRect(this.particles[i][0], this.particles[i][1], this.particlesSize, this.particlesSize);
 
       //ctx.beginPath();
