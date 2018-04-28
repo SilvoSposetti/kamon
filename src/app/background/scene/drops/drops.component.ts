@@ -1,26 +1,20 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-drops',
   templateUrl: './drops.component.html',
   styleUrls: ['./drops.component.css']
 })
-export class DropsComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class DropsComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
 
-  private gradient1: CanvasGradient;
-  private gradient2: CanvasGradient;
-  // Scene variables:
-  private running: boolean;
   private numOfDrops: number = 30;
   private drops: number[][] = [];
   // Each drop has: [centerX, centerY, radius, timeLived, ageOfDeath, nrOfWaves]
@@ -32,60 +26,25 @@ export class DropsComponent implements OnInit, OnDestroy {
   private maxLineWidth: number = 20;
 
 
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.loop());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private setup(): void {
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
-
+  public setup(): void {
     for (let i = 0; i < this.numOfDrops; i++) {
       this.drops.push(this.newDrop());
     }
   }
 
-  private loop(): void {
-    this.fpsService.updateFps();
-
-    // Paint background:
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = this.gradient1;
-    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
-
-    this.update();
-
-    this.paint();
-
-
-    if (this.running) {
-      requestAnimationFrame(() => this.loop());
-    }
-  }
-
-  private update(): void {
+  public update(): void {
     for (let i = 0; i < this.numOfDrops; i++) {
       this.drops[i][3] += this.ageIncrement;
       if (this.drops[i][3] >= 0) {
@@ -97,9 +56,13 @@ export class DropsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private paint(): void {
+  public draw(): void {
+    // Draw background
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.strokeStyle = this.gradient2;
+    ctx.fillStyle = this.seaGradient;
+    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+    // Draw drop waves:
+    ctx.strokeStyle = this.sandGradient;
     for (let i = 0; i < this.numOfDrops; i++) {
       for (let j = 0; j <= this.drops[i][5]; j++) {
         let r = this.drops[i][2] - (j * this.waveLength);

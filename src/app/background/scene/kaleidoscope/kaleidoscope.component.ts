@@ -1,25 +1,17 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-kaleidoscope',
   templateUrl: './kaleidoscope.component.html',
   styleUrls: ['./kaleidoscope.component.css']
 })
-export class KaleidoscopeComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class KaleidoscopeComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
-
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
-  private gradient1: CanvasGradient;
-  private gradient2: CanvasGradient;
 
   private numOfSlices: number = 20; // Must be bigger than 4.
   private sliceAngle: number;
@@ -27,53 +19,22 @@ export class KaleidoscopeComponent implements OnInit, OnDestroy {
   private offScreenWidth: number;
   private offScreenHeight: number;
 
-  private fpsCounter: number = 0;
 
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.loop());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private loop() {
-
-    // No need to draw background on primary canvas because the slices cover it completely each frame.
-    this.drawOnOffScreenCanvas();
-    this.drawOffScreenCanvasOnCanvas();
 
 
-    this.fpsService.updateFps();
-    this.fpsCounter++;
-
-    if (this.running) {
-      requestAnimationFrame(() => this.loop());
-    }
-  }
-
-  private setup() {
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth/2, this.screenHeight/2);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth/2, this.screenHeight/2);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
-
+  public setup() {
     this.sliceAngle = Math.PI * 2 / this.numOfSlices;
     // Define off-screen canvas dimensions:
     this.offScreenWidth = Math.sqrt(Math.pow(this.screenWidth / 2, 2) + Math.pow(this.screenHeight / 2, 2));
@@ -95,7 +56,7 @@ export class KaleidoscopeComponent implements OnInit, OnDestroy {
     let offScreenContext = this.offScreenCanvas.getContext('2d');
     // Draw canvas background:
     //offScreenContext.fillStyle = 'rgba(0,0,0,0.03)';
-    offScreenContext.fillStyle = this.gradient1;
+    offScreenContext.fillStyle = this.seaGradient;
     offScreenContext.fillRect(0, 0, this.offScreenWidth, this.offScreenHeight);
 
     // Draw slice borders:
@@ -110,12 +71,23 @@ export class KaleidoscopeComponent implements OnInit, OnDestroy {
     let firstCircleRadius: number = 10;
     for (let i = 0; i < 12; i++) {
       // Circles:
-      this.kaleidoCircle(circlesDistance + firstCircleRadius * i, Math.pow(-1, i) * Math.cos(this.fpsCounter / 30), firstCircleRadius * (i + 1));
+      this.kaleidoCircle(circlesDistance + firstCircleRadius * i, Math.pow(-1, i) * Math.cos(this.frameCount / 30), firstCircleRadius * (i + 1));
       // Squares:
-      this.kaleidoRect(circlesDistance + firstCircleRadius * i, Math.pow(-1, i) * Math.cos(this.fpsCounter / 30), 10 * (i + 1), 10* (i + 1), Math.pow(-1, i) * this.fpsCounter / 60 + Math.PI/4);
+      this.kaleidoRect(circlesDistance + firstCircleRadius * i, Math.pow(-1, i) * Math.cos(this.frameCount / 30), 10 * (i + 1), 10 * (i + 1), Math.pow(-1, i) * this.frameCount / 60 + Math.PI / 4);
 
       circlesDistance += 2 * firstCircleRadius * (i + 1);
     }
+  }
+
+  public update() {
+  }
+
+  public draw() {
+
+    // No need to draw background on primary canvas because the slices cover it completely each frame.
+    this.drawOnOffScreenCanvas();
+    this.drawOffScreenCanvasOnCanvas();
+
   }
 
   private drawOffScreenCanvasOnCanvas() {
@@ -158,7 +130,7 @@ export class KaleidoscopeComponent implements OnInit, OnDestroy {
     // draw the rect on the transformed context
     // after transforming [0,0] is visually [x,y], so the rect needs to be offset accordingly when drawn
     //ctx.beginPath();
-    ctx.fillStyle = this.gradient2;
+    ctx.fillStyle = this.sandGradient;
     //ctx.strokeStyle = '#aaaaaa';
     //ctx.lineWidth = 5;
     ctx.fillRect(-width / 2, -height / 2, width, height);
@@ -180,7 +152,7 @@ export class KaleidoscopeComponent implements OnInit, OnDestroy {
     let ctx = this.offScreenCanvas.getContext('2d');
     ctx.beginPath();
     //ctx.fillStyle = '#aaaaaa';
-    ctx.strokeStyle = this.gradient2;
+    ctx.strokeStyle = this.sandGradient;
     ctx.lineWidth = 5;
     ctx.arc(posR * xFactor, posR * yFactor, circleRadius, 0, 2 * Math.PI);
     //ctx.fill();

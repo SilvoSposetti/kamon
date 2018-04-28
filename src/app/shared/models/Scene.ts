@@ -3,21 +3,10 @@ import {FpsService} from '../services/fps.service';
 import {ColorService} from '../services/color.service';
 import {ElementRef, ViewChild} from '@angular/core';
 
-// Interface and abstract class used for initialisation, maintenance and termination of scenes.
-
-export interface SceneInterface {
-
-  setup(): void;
-
-  update(): void;
-
-  draw(): void;
-
-}
-
-export abstract class Scene implements SceneInterface {
+// Abstract class used for initialisation, maintenance and termination of scenes.
+export abstract class Scene {
   @ViewChild('myCanvas') canvasRef: ElementRef;
-
+  
   public screenWidth: number;
   public screenHeight: number;
 
@@ -27,27 +16,21 @@ export abstract class Scene implements SceneInterface {
   private running: boolean;
   public seaGradient: CanvasGradient;
   public sandGradient: CanvasGradient;
+  public frameCount: number;
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
 
   }
 
-  public setup() {
-    console.log('default implementation of setup');
-  }
-
-  public update() {
-    console.log('default implementation of update');
-  }
-
-  public draw() {
-    console.log('default implementation of draw');
-  }
+  public abstract setup(): void;
+  public abstract update(): void;
+  public abstract draw(): void;
 
   /*********************************************************************************************************************
    * CORE:
    */
-  public initializeCore() {
+  public initialiseCore() {
+    this.frameCount = 0;
     this.running = true;
     this.setupGradients();
     this.setup();
@@ -58,6 +41,7 @@ export abstract class Scene implements SceneInterface {
   }
 
   private core() {
+    this.frameCount++;
     this.update();
     this.draw();
     this.fpsService.updateFps();
@@ -91,10 +75,10 @@ export abstract class Scene implements SceneInterface {
 }
 
 /*********************************************************************************************************************
- * Standard Template:
+ * Standard Component-Scene Template:
  */
 
-//import {Component, Input, OnDestroy, OnInit} from '@angular/initializeCore';
+//import {Component, Input, OnDestroy, OnInit} from '@angular/initialiseCore';
 //import {FpsService} from '../../../shared/services/fps.service';
 //import {ColorService} from '../../../shared/services/color.service';
 //import {Scene} from '../../../shared/models/Scene';
@@ -116,7 +100,7 @@ export abstract class Scene implements SceneInterface {
 //  }
 //
 //  ngOnInit() {
-//    this.initializeCore();
+//    this.initialiseCore();
 //  }
 //
 //  ngOnDestroy(): void {

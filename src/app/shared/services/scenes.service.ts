@@ -70,7 +70,6 @@ export class ScenesService {
       'tree-map',
       'sorting-algorithms',
       'boids',
-      'voronoi',
       'infinite-zoom',
       'modular-multiplication',
       'drops',

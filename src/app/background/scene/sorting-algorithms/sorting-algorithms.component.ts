@@ -1,25 +1,18 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-sorting-algorithms',
   templateUrl: './sorting-algorithms.component.html',
   styleUrls: ['./sorting-algorithms.component.css']
 })
-export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class SortingAlgorithmsComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
-
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
-  private gradient1: CanvasGradient;
-  private gradient2: CanvasGradient;
 
   private lists: number[][] = [];
   // [Top, Bottom, Left, Right]
@@ -28,91 +21,25 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
   private nrOfElementsPerSet = 300;
   private padding: number = 10;
 
-  private framesPerStep: number = 5;
-  private frameCounter: number = 0;
+  private framesPerStep: number = 3;
 
   private algorithmStep = [];
   private lineWidth: number;
 
 
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.paint());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private paint(): void {
-    // Check that we're still running.
-    if (!this.running) {
-      return;
-    }
-    this.fpsService.updateFps();
-    // Paint current frame
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = this.gradient1;
-    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
-
-    // List: [Top, Bottom, Left, Right]
-
-    for (let i = 0; i < this.nrOfSortingAlgorithms; i++) {
-      let height = this.lists[i][1] - this.lists[i][0];
-      let width = this.lists[i][3] - this.lists[i][2];
-      let spaceBetweenLines = width / this.nrOfElementsPerSet;
-      for (let j = 0; j < this.nrOfElementsPerSet; j++) {
-        let fromX = this.lists[i][2] + (j) * spaceBetweenLines + spaceBetweenLines / 2;
-        let fromY = this.lists[i][1];
-        let toX = fromX;
-        let toY = this.lists[i][1] - height * this.values[i][j];
-        // draw lines
-        ctx.strokeStyle = this.gradient2;
-        ctx.lineWidth = this.lineWidth;
-        ctx.beginPath();
-        ctx.moveTo(fromX, fromY);
-        ctx.lineTo(toX, toY);
-        ctx.closePath();
-        ctx.stroke();
-      }
-    }
-
-    if (this.frameCounter % this.framesPerStep === 0) {
-      this.update();
-      this.frameCounter = 1;
-    }
-    this.frameCounter++;
-
-    if (!this.running) {
-      console.log('finished');
-    }
-    else {
-      // Schedule next
-      requestAnimationFrame(() => this.paint());
-    }
-  }
-
-  private setup(): void {
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
-
+  public setup(): void {
     this.lineWidth = Math.floor(((this.screenWidth - 4 * this.padding) / 2) / this.nrOfElementsPerSet);
 
     // [Top, Bottom, Left, Right]
@@ -128,12 +55,49 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private update(): void {
-    this.oneStepSelectionSort();
-    this.oneStepBubbleSort();
-    this.oneStepInsertionSort();
-    this.oneStepHeapSort();
+  public update(): void {
+
+    if (this.frameCount % this.framesPerStep === 0) {
+      this.oneStepSelectionSort();
+      this.oneStepBubbleSort();
+      this.oneStepInsertionSort();
+      this.oneStepHeapSort();
+    }
   }
+
+  public draw(): void {
+
+
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+    ctx.fillStyle = this.seaGradient;
+    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+
+    // List: [Top, Bottom, Left, Right]
+
+    for (let i = 0; i < this.nrOfSortingAlgorithms; i++) {
+      let height = this.lists[i][1] - this.lists[i][0];
+      let width = this.lists[i][3] - this.lists[i][2];
+      let spaceBetweenLines = width / this.nrOfElementsPerSet;
+      for (let j = 0; j < this.nrOfElementsPerSet; j++) {
+        let fromX = this.lists[i][2] + (j) * spaceBetweenLines + spaceBetweenLines / 2;
+        let fromY = this.lists[i][1];
+        let toX = fromX;
+        let toY = this.lists[i][1] - height * this.values[i][j];
+        // draw lines
+        ctx.strokeStyle = this.sandGradient;
+        ctx.lineWidth = this.lineWidth;
+        ctx.beginPath();
+        ctx.moveTo(fromX, fromY);
+        ctx.lineTo(toX, toY);
+        ctx.closePath();
+        ctx.stroke();
+      }
+    }
+
+
+  }
+
+
 
   private generateNewData(listIndex: number): void {
     this.values[listIndex] = [];
@@ -242,7 +206,7 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
       }
     }
 
-    let lastElementInHeap = this.nrOfElementsPerSet - this.algorithmStep[3]-1;
+    let lastElementInHeap = this.nrOfElementsPerSet - this.algorithmStep[3] - 1;
     // Swap first position of heap and position right before the sorted part.
     let temp = this.values[3][0];
     this.values[3][0] = this.values[3][lastElementInHeap];
@@ -258,7 +222,7 @@ export class SortingAlgorithmsComponent implements OnInit, OnDestroy {
   }
 
   private heapify(index: number): void {
-    let s = this.nrOfElementsPerSet - this.algorithmStep[3]-1;
+    let s = this.nrOfElementsPerSet - this.algorithmStep[3] - 1;
     let m = index;
     let l = this.leftChild(index);
     let r = this.rightChild(index);

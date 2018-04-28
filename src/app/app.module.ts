@@ -29,7 +29,6 @@ import {HarmonicFunctionsComponent} from './background/scene/harmonic-functions/
 import {TreeMapComponent} from './background/scene/tree-map/tree-map.component';
 import {SortingAlgorithmsComponent} from './background/scene/sorting-algorithms/sorting-algorithms.component';
 import {BoidsComponent} from './background/scene/boids/boids.component';
-import {VoronoiComponent} from './background/scene/voronoi/voronoi.component';
 import {InfiniteZoomComponent} from './background/scene/infinite-zoom/infinite-zoom.component';
 import {ModularMultiplicationComponent} from './background/scene/modular-multiplication/modular-multiplication.component';
 import {DropsComponent} from './background/scene/drops/drops.component';
@@ -80,7 +79,6 @@ import {ColorService} from './shared/services/color.service';
     TreeMapComponent,
     SortingAlgorithmsComponent,
     BoidsComponent,
-    VoronoiComponent,
     InfiniteZoomComponent,
     ModularMultiplicationComponent,
     CitationsComponent,

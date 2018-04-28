@@ -29,7 +29,7 @@ export class LangtonsAntComponent extends Scene implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.initializeCore();
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
@@ -85,14 +85,14 @@ export class LangtonsAntComponent extends Scene implements OnInit, OnDestroy {
     }
   }
 
-
   public draw(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     for (let i = 0; i < this.rows; i++) { // start from 1 and ends at +1 because of padding
       for (let j = 0; j < this.columns; j++) { // start from 1 and ends at +1 because of padding
         if (this.grid[i][j]) {
-          ctx.fillStyle = this.sandGradient;}
-        else{
+          ctx.fillStyle = this.sandGradient;
+        }
+        else {
           ctx.fillStyle = this.seaGradient;
         }
         ctx.fillRect(this.cellSize * j, this.cellSize * i, this.cellSize, this.cellSize);

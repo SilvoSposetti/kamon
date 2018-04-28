@@ -1,25 +1,19 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-polar-functions',
   templateUrl: './polar-functions.component.html',
   styleUrls: ['./polar-functions.component.css']
 })
-export class PolarFunctionsComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class PolarFunctionsComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
-  private gradient1: CanvasGradient;
-  private gradient2: CanvasGradient;
+  private alphaGradient: CanvasGradient;
 
   private numOfEpicycloids: number = 150;
   private numOfHypocycloids: number = 150;
@@ -32,45 +26,24 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
   private k: number = (1 + Math.sqrt(5)) / 2;
   private lineWidth: number = 4;
 
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.loop());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private loop(): void {
-    this.fpsService.updateFps();
-    this.updateFunctions();
-    this.drawBackground();
-    this.drawFunctions();
-    if (this.running) {
-      requestAnimationFrame(() => this.loop());
-    }
-  }
-
-  private setup(): void {
+  public setup(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.2));
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.2));
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+    this.alphaGradient = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.alphaGradient.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.alphaGradient.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
 
     this.delimiter = this.screenHeight / 3.8;
     this.epicycloidRadius = this.delimiter / (this.k * 2);
@@ -89,13 +62,7 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private drawBackground(): void {
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = this.gradient1;
-    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
-  }
-
-  private updateFunctions(): void {
+  public update(): void {
     let amountOfFunctions: number = this.numOfHypocycloids + this.numOfEpicycloids;
     for (let i = 0; i < amountOfFunctions; ++i) {
       this.functionsValues[i][2] = this.functionsValues[i][0];
@@ -113,9 +80,22 @@ export class PolarFunctionsComponent implements OnInit, OnDestroy {
     }
   }
 
+  public draw(): void {
+    this.drawBackground();
+    this.drawFunctions();
+  }
+
+  private drawBackground(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+    ctx.fillStyle = this.alphaGradient;
+    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+  }
+
+
+
   private drawFunctions(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.strokeStyle = this.gradient2;
+    ctx.strokeStyle = this.sandGradient;
     ctx.lineWidth = this.lineWidth;
     let amountOfValues = this.numOfEpicycloids + this.numOfHypocycloids;
     for (let i = 0; i < amountOfValues; i++) {

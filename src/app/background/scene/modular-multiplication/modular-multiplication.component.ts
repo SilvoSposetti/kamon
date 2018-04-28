@@ -1,21 +1,19 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-modular-multiplication',
   templateUrl: './modular-multiplication.component.html',
   styleUrls: ['./modular-multiplication.component.css']
 })
-export class ModularMultiplicationComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class ModularMultiplicationComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
 
   private circlesLineWidth: number = 1;
   private amountOfNormalRadiiInTheScreenWidth: number = 30; // Defines normalRadius!
@@ -51,27 +49,19 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   private bigCirclePoints = 1000;
   private smallCirclePoints = 1000;
 
-  private running: boolean;
-  private gradient1: CanvasGradient;
-  private gradient2: CanvasGradient;
+  private alphaGradient: CanvasGradient;
 
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.paint());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
   /*********************************************************************************************************************
@@ -79,16 +69,12 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
    ********************************************************************************************************************/
 
 
-  private setup(): void {
+  public setup(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+    this.alphaGradient= ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.alphaGradient.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.alphaGradient.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
 
     this.normalRadius = this.screenWidth / this.amountOfNormalRadiiInTheScreenWidth;
 
@@ -152,7 +138,7 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   }
 
 
-  private updateLinesToDraw(): void {
+  public update(): void {
     this.lines = []; // Reset lines to draw because old ones have been drawn the frame before.
 
     let fromX: number = 0;
@@ -206,40 +192,21 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
    * DRAW
    ********************************************************************************************************************/
 
-  private paint(): void {
-    // Calculates fps
-    this.fpsService.updateFps();
-
-    //Paint Circles:
-    //if(this.counter === 0){
-    //  this.paintCircles();
-    //}
-
+  public draw(): void {
     // Paint background:
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = this.gradient1;
+    ctx.fillStyle = this.alphaGradient;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
-    // Update data:
-    this.updateLinesToDraw();
-
-    // Paint current frame:
-
-    this.paintLines();
-
-
-    //this.checkCounters();
-    if (this.running) {
-      requestAnimationFrame(() => this.paint());
-    }
+    this.drawLines();
   }
 
 
 
-  private paintCircles(): void {
+  private drawCircles(): void {
 
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.strokeStyle = this.gradient2;
+    ctx.strokeStyle = this.sandGradient;
     ctx.lineWidth = this.circlesLineWidth;
     for (let i = 0; i < this.rhombusSectors.length; i++) {
       for (let j = 0; j < 12; j++) { // Don't change upper limit (12)! (Truncated hexagonal tiling is made up of sectors each having 12 circles)
@@ -264,9 +231,9 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
   }
 
 
-  private paintLines(): void {
+  private drawLines(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.strokeStyle = this.gradient2;
+    ctx.strokeStyle = this.sandGradient;
     ctx.lineWidth = this.lineWidth;
     for (let i = 0; i < this.lines.length; i++) {
       ctx.beginPath();
@@ -276,18 +243,4 @@ export class ModularMultiplicationComponent implements OnInit, OnDestroy {
       ctx.stroke();
     }
   }
-
-  /*********************************************************************************************************************
-   * OTHER
-   ********************************************************************************************************************/
-
-  //private checkCounters(): void {
-  //  if (this.counter > this.bigCirclePoints * this.smallCirclePoints * this.normalCirclePoints) {
-  //    this.counter = 0;
-  //  }
-  //  if(this.nextCounter < -this.bigCirclePoints*this.smallCirclePoints*this.normalCirclePoints){
-  //    this.nextCounter = 0;
-  //  }
-  //}
-
 }

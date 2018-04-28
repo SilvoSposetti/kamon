@@ -1,26 +1,20 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-harmonic-functions',
   templateUrl: './harmonic-functions.component.html',
   styleUrls: ['./harmonic-functions.component.css']
 })
-export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
-
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class HarmonicFunctionsComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
-  private gradient1: CanvasGradient;
-  private gradient2: CanvasGradient;
+  private alphaGradient : CanvasGradient;
 
   private functionValues: number[][];
   // [xPos, yPos, previousXPos, previousYPos]
@@ -31,52 +25,29 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
   private xForward: number[] = [5.5, 4.5, 5, 3.5];
   private loops: number[] = [];
 
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.paint());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private paint(): void {
-    // Check that we're still running.
-    if (!this.running) {
-      return;
-    }
-    // Calculates fps
-    this.fpsService.updateFps();
+  public draw(): void {
 
-    // Update data
-    this.update();
-
-    // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = this.gradient1;
+    ctx.fillStyle = this.alphaGradient;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     for (let i = 0; i < this.numOfFunctions; i++) {
-      //ctx.fillStyle = '#ffffff';
-      ////ctx.strokeStyle = 'rgba(0,0,0,0)';
-      //ctx.beginPath();
-      //ctx.ellipse(this.functionValues[i][0], this.functionValues[i][1], 4, 4, 0, 0, Math.PI * 2);
-      //ctx.fill();
-      //ctx.closePath();
 
-      ctx.strokeStyle = this.colorService.getForegroundSecondStopHEX();
-      ctx.lineWidth = this.screenHeight/200;
+      ctx.strokeStyle = this.sandGradient;
+      ctx.lineWidth = this.screenHeight / 200;
       ctx.beginPath();
       // draw line from previousPos to newPos
       ctx.moveTo(this.functionValues[i][2], this.functionValues[i][3]);
@@ -84,24 +55,14 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
       ctx.closePath();
       ctx.stroke();
     }
-
-
-    // Schedule next
-    if(this.running) {
-      requestAnimationFrame(() => this.paint());
-    }
   }
 
-  private setup(): void {
+  public setup(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+    this.alphaGradient = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.alphaGradient.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.alphaGradient.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
 
     this.rowHeight = this.screenHeight / this.numOfFunctions;
     this.functionValues = [];
@@ -112,7 +73,7 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private update(): void {
+  public update(): void {
     for (let i = 0; i < this.numOfFunctions; i++) {
       if (this.functionValues[i][0] >= this.screenWidth) {
         this.functionValues[i][0] = 0;
@@ -168,7 +129,7 @@ export class HarmonicFunctionsComponent implements OnInit, OnDestroy {
     return this.rowsCenter[functionNumber] + distanceFromCenter + this.rowHeight / layers * 8 / 10 * Math.sin(x * angularVelocity);
   }
 
-  // Todo: To add a function:
+  // Steps to add a function:
   // 1: declare it here.
   // 2: add the case into functions function.
   // 3: increment numOfFunctions by 1.

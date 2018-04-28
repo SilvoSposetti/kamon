@@ -29,7 +29,7 @@ export class QuadTreeComponent extends Scene implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.initializeCore();
+    this.initialiseCore();
   }
 
   ngOnDestroy(): void {

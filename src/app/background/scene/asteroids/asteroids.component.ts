@@ -1,98 +1,46 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-asteroids',
   templateUrl: './asteroids.component.html',
   styleUrls: ['./asteroids.component.css']
 })
-export class AsteroidsComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class AsteroidsComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private gradient1: any;
-  private gradient2: any;
-
-  private running: boolean;
   private asteroids: number[][] = [];
   // [posX,posY,velX,velY,mass,previousXPos,previousYPos]
   private massInCenter = 10;
   private gravityConstant = 100;
   private nrOfElements = 600;
 
+  private seaGradientAlpha: CanvasGradient;
 
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.startAsteroids();
-    this.running = true;
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.paint());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private paint(): void {
-    // Check that we're still running.
-    if (!this.running) {
-      return;
-    }
-
-    // Paint current frame
+  public setup(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = this.gradient1;
-    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+    this.seaGradientAlpha = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.seaGradientAlpha.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.seaGradientAlpha.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
 
-    ctx.strokeStyle = this.gradient2;
-    ctx.beginPath();
-    ctx.lineWidth = 1;
-    ctx.arc(this.screenWidth / 2, this.screenHeight / 2, 30, 0, 2 * Math.PI);
-    ctx.stroke();
-
-    this.updateAsteroids();
-    this.fpsService.updateFps();
-    for (let i = 0; i < this.nrOfElements; ++i) {
-
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      // draw line from previousPos to newPos
-      ctx.moveTo(this.asteroids[i][5], this.asteroids[i][6]);
-      ctx.lineTo(this.asteroids[i][0], this.asteroids[i][1]);
-      ctx.closePath();
-      ctx.stroke();
-
-    }
-
-    // Schedule next
-    requestAnimationFrame(() => this.paint());
-  }
-
-  private startAsteroids(): void {
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
 
     for (let i = 0; i < this.nrOfElements; ++i) {
       let element: number[] = [];
@@ -115,7 +63,33 @@ export class AsteroidsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updateAsteroids(): void {
+  public draw(): void {
+
+    // Paint current frame
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    ctx.fillStyle = this.seaGradientAlpha;
+    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+
+    ctx.strokeStyle = this.sandGradient;
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    ctx.arc(this.screenWidth / 2, this.screenHeight / 2, 30, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    for (let i = 0; i < this.nrOfElements; ++i) {
+
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      // draw line from previousPos to newPos
+      ctx.moveTo(this.asteroids[i][5], this.asteroids[i][6]);
+      ctx.lineTo(this.asteroids[i][0], this.asteroids[i][1]);
+      ctx.closePath();
+      ctx.stroke();
+    }
+  }
+
+  public update(): void {
     for (let i = 0; i < this.nrOfElements; ++i) {
       let vectorToCenterX = this.screenWidth / 2 - this.asteroids[i][0];
       let vectorToCenterY = this.screenHeight / 2 - this.asteroids[i][1];

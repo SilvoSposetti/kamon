@@ -1,25 +1,20 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
 import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-rain',
   templateUrl: './rain.component.html',
   styleUrls: ['./rain.component.css']
 })
-export class RainComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class RainComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
-  private gradient1: CanvasGradient;
-  private gradient2: CanvasGradient;
+  private alphaGradient: CanvasGradient;
 
   private numOfRainDrops: number = 500;
   private rainDrops: number[][] = [];
@@ -42,83 +37,26 @@ export class RainComponent implements OnInit, OnDestroy {
   private umbrellasCounter = 0;
 
 
-
-  constructor(private fpsService: FpsService, private colorService: ColorService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.spacingBetweenUmbrellas = this.screenHeight / (this.numOfUmbrellas + 1);
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.paint());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private paint(): void {
-    // Check that we're still running.
+  public setup(): void {
+    this.spacingBetweenUmbrellas = this.screenHeight / (this.numOfUmbrellas + 1);
 
-    this.fpsService.updateFps();
-    this.updateUmbrellas();
-    this.updateRainDrops();
-    // Paint current frame
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = this.gradient1;
-    //ctx.fillStyle = '#000000';
-    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
-
-
-    // draw rain drops
-    for (let i = 0; i < this.numOfRainDrops; ++i) {
-      //ctx.beginPath();
-      //ctx.fillStyle = '#ffffff';
-      //ctx.arc(this.rainDrops[i][0], this.rainDrops[i][1], 1, 0, 2 * Math.PI);
-      //ctx.fill();
-
-      ctx.strokeStyle = this.gradient2;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      // draw line from previousPos to newPos
-      ctx.moveTo(this.rainDrops[i][6], this.rainDrops[i][7]);
-      ctx.lineTo(this.rainDrops[i][0], this.rainDrops[i][1]);
-      ctx.closePath();
-      ctx.stroke();
-    }
-
-    //draw umbrellas:
-    //for (let j = 0; j < this.numOfUmbrellas; ++j) {
-    //  ctx.beginPath();
-    //  ctx.fillStyle = '#000000';
-    //  ctx.strokeStyle = '#dddddd';
-    //  ctx.arc(this.umbrellas[j][0], this.umbrellas[j][1], this.umbrellas[j][4], 4.0, 5.4);
-    //  ctx.fill();
-    //  ctx.stroke();
-    //}
-
-    //Schedule next
-    if(this.running){
-      requestAnimationFrame(() => this.paint());
-    }
-  }
-
-  private setup(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.3));
-    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.3));
-
-    this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.gradient2.addColorStop(0, this.colorService.getForegroundFirstStopHEX());
-    this.gradient2.addColorStop(1, this.colorService.getForegroundSecondStopHEX());
+    this.alphaGradient = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.alphaGradient.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.3));
+    this.alphaGradient.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.3));
 
     for (let i = 0; i < this.numOfRainDrops; ++i) {
       let posX = Math.random() * this.screenWidth;
@@ -134,6 +72,12 @@ export class RainComponent implements OnInit, OnDestroy {
         this.umbrellas.push([Math.random() * this.screenWidth, (j + 2) * this.spacingBetweenUmbrellas, -ySpeed, 0, this.umbrellasSize, Math.random() * Math.PI * 2, (j + 2) * this.spacingBetweenUmbrellas]);
       }
     }
+  }
+
+
+  public update() {
+    this.updateUmbrellas();
+    this.updateRainDrops();
   }
 
   private updateRainDrops() {
@@ -199,19 +143,19 @@ export class RainComponent implements OnInit, OnDestroy {
       // Boundary check
       if (this.rainDrops[i][0] < 0) {
         //this.particles[i][0] = this.screenWidth -1;
-        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0,0,0];
+        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0, 0, 0];
       }
       if (this.rainDrops[i][0] >= this.screenWidth) {
         //this.particles[i][0] = 0;
-        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0,0,0];
+        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0, 0, 0];
       }
       if (this.rainDrops[i][1] < 0) {
         //this.particles[i][1] = this.screenHeight -1;
-        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0,0,0];
+        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0, 0, 0];
       }
       if (this.rainDrops[i][1] >= this.screenHeight) {
         //this.particles[i][1] = 0;
-        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0,0,0];
+        this.rainDrops[i] = [Math.random() * this.screenWidth, 0, 0, 0, 0, 0];
       }
     }
   }
@@ -229,4 +173,52 @@ export class RainComponent implements OnInit, OnDestroy {
     }
     this.umbrellasCounter++;
   }
+
+
+  public draw(): void {
+    this.drawBackground();
+    this.drawDrops();
+    //this.drawUmbrellas();
+  }
+
+  private drawBackground() {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+    ctx.fillStyle = this.alphaGradient;
+    //ctx.fillStyle = '#000000';
+    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+  }
+
+  private drawDrops() {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+    for (let i = 0; i < this.numOfRainDrops; ++i) {
+      //ctx.beginPath();
+      //ctx.fillStyle = '#ffffff';
+      //ctx.arc(this.rainDrops[i][0], this.rainDrops[i][1], 1, 0, 2 * Math.PI);
+      //ctx.fill();
+
+      ctx.strokeStyle = this.sandGradient;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      // draw line from previousPos to newPos
+      ctx.moveTo(this.rainDrops[i][6], this.rainDrops[i][7]);
+      ctx.lineTo(this.rainDrops[i][0], this.rainDrops[i][1]);
+      ctx.closePath();
+      ctx.stroke();
+    }
+
+  }
+
+  private drawUmbrellas(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    for (let j = 0; j < this.numOfUmbrellas; ++j) {
+      ctx.beginPath();
+      ctx.fillStyle = '#000000';
+      ctx.strokeStyle = '#dddddd';
+      ctx.arc(this.umbrellas[j][0], this.umbrellas[j][1], this.umbrellas[j][4], 4.0, 5.4);
+      ctx.fill();
+      ctx.stroke();
+    }
+  }
+
 }
