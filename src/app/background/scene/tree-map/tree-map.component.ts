@@ -1,105 +1,53 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import OpenSimplexNoise from 'open-simplex-noise';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-tree-map',
   templateUrl: './tree-map.component.html',
   styleUrls: ['./tree-map.component.css']
 })
-export class TreeMapComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class TreeMapComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
+  private alphaGradient: CanvasGradient;
 
   private heap: number[][] = [];
   private numOfElements: number;
   // one element contains: [top,left,bottom,right,lineFromX,lineFromY,lineToX,lineToY,depth,subdivide]
   // subdivide: if 1 then vertically, 0 horizontally
-  private depth: number = 14;
-  private counter = 0;
-  private linesPerFrame = 10;
+  private depth: number = 12;
   private endFadingFrames = 100;
   private noise = new OpenSimplexNoise(Date.now());
   private noiseValue = 0;
   private noiseIncrement = 1;
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.paint());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private paint(): void {
-    // Check that we're still running.
-    if (!this.running) {
-      return;
-    }
 
-    this.fpsService.updateFps();
-    // Paint current frame
+
+  public setup(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-    ctx.fillStyle = 'rgba(0,0,0,0.005)';
-    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
-    for (let i = 0; (i < this.linesPerFrame) && (this.counter <= this.numOfElements); ++i) {
-      // draw lines
-      ctx.strokeStyle = '#dddddd';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(this.heap[this.counter][4], this.heap[this.counter][5]);
-      ctx.lineTo(this.heap[this.counter][6], this.heap[this.counter][7]);
-      ctx.closePath();
-      ctx.stroke();
+    this.alphaGradient = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.alphaGradient.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.15));
+    this.alphaGradient.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.15));
 
-      // Draw rectangles
-      //if (this.heap[this.counter][8] === 14) {
-      //  let color = Math.floor(Math.random()*255);
-      //  ctx.fillStyle = 'hsl(' + color + ',100%,50%)';
-      //  let posX = this.heap[this.counter][1];
-      //  let posY = this.heap[this.counter][0];
-      //  let width = this.heap[this.counter][3] - this.heap[this.counter][1];
-      //  let height = this.heap[this.counter][2] - this.heap[this.counter][0];
-      //  ctx.fillRect(posX, posY, width, height);
-      //}
-
-
-      this.counter++;
-    }
-
-    if (this.counter >= this.numOfElements) {
-      this.endFadingFrames--;
-      if (this.endFadingFrames === 0) {
-        this.running = false;
-        console.log('finished');
-      }
-    }
-    //Schedule next
-    requestAnimationFrame(() => this.paint());
-  }
-
-  private setup(): void {
     // Set up heap:
     this.numOfElements = Math.pow(2, this.depth);
     // [top,left,bottom,right,lineFromX,lineFromY,lineToX,lineToY,depth,subdivide]
@@ -184,11 +132,49 @@ export class TreeMapComponent implements OnInit, OnDestroy {
     this.heap = this.shuffle(this.heap);
   }
 
+  public update(): void {
+  };
+
+
+  public draw(): void {
+
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+    ctx.fillStyle = this.alphaGradient;
+    ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+
+    //for (let i = 0; (i < this.linesPerFrame) && (this.frameCount <= this.numOfElements); ++i) {
+      // draw lines
+      //ctx.strokeStyle = this.sandGradient;
+      //ctx.lineWidth = 2;
+      //ctx.beginPath();
+      //ctx.moveTo(this.heap[this.frameCount][4], this.heap[this.frameCount][5]);
+      //ctx.lineTo(this.heap[this.frameCount][6], this.heap[this.frameCount][7]);
+      //ctx.closePath();
+      //ctx.stroke();
+
+      // Draw rectangles
+    if(this.frameCount <= this.numOfElements){
+      if (this.heap[this.frameCount][8] === this.depth) {
+        ctx.fillStyle = this.sandGradient;
+        let posX = this.heap[this.frameCount][1];
+        let posY = this.heap[this.frameCount][0];
+        let width = this.heap[this.frameCount][3] - this.heap[this.frameCount][1];
+        let height = this.heap[this.frameCount][2] - this.heap[this.frameCount][0];
+        ctx.fillRect(posX, posY, width, height);
+      }
+    }
+
+    if (this.frameCount >= this.numOfElements + this.endFadingFrames) {
+      this.terminateCore();
+    }
+  }
+
+
   private getDivision(): number {
     //return Math.random();
     this.noiseValue += this.noiseIncrement;
     let noise = this.noise.noise2D(0, this.noiseValue);
-    return (noise + 1 ) / 2;
+    return (noise + 1) / 2;
     //return 0.5;
     //return (1 + Math.sqrt(5))/2 -1;
   }

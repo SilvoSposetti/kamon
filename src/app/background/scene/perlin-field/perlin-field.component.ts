@@ -1,7 +1,8 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import OpenSimplexNoise from 'open-simplex-noise';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 
 @Component({
@@ -9,17 +10,12 @@ import {Subject} from 'rxjs/Subject';
   templateUrl: './perlin-field.component.html',
   styleUrls: ['./perlin-field.component.css']
 })
-export class PerlinFieldComponent implements OnInit, OnDestroy {
-
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class PerlinFieldComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
+  private alphaGradient: CanvasGradient;
 
   //Declaration of noise type which provides noise functions
   private noise = new OpenSimplexNoise(Date.now()); // Date.now() is the seed
@@ -36,86 +32,57 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
   private particles: number[][] = [];
   //[x,y,vx,vy,previousXPos,previousYPos]
   private maxSpeed: number = 1.5;
-  private particlesSize = 1.5;
   private particleMass: number = 0.01; // NOT ZERO!
 
-  constructor(private fpsService: FpsService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.paint());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private paint(): void {
-    // Check that we're still running.
-    if (!this.running) {
-      return;
-    }
-    // Calculates fps
-    this.fpsService.updateFps();
-
-
-    // Paint current frame
+  private drawBackground(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
     this.updateField();
     this.updateParticles();
 
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
-    //ctx.fillStyle = '#000000';
+    ctx.fillStyle = this.alphaGradient;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
+  }
 
-    // Draw vector field.
-    //for (let k = 0; k < this.rows * this.columns; k++) {
-    //  let angle = this.field[this.xPos][this.yPos] * 2 * Math.PI;
-    //
-    //  //output = output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start)
-    //
-    //
-    //  ctx.strokeStyle = '#777777';
-    //  ctx.beginPath();
-    //  ctx.moveTo(this.xPos * this.spacing, this.yPos * this.spacing);
-    //  ctx.lineTo((this.xPos + Math.cos(angle)) * this.spacing, (this.yPos + Math.sin(angle)) * this.spacing);
-    //  ctx.closePath();
-    //  ctx.stroke();
-    //
-    //
-    //  this.xPos += 1;
-    //  if (this.xPos >= this.columns) {
-    //    this.yPos += 1;
-    //    this.xPos = 0;
-    //  }
-    //  if (this.yPos >= this.rows) {
-    //    this.yPos = 0;
-    //    //this.running = false;
-    //    //console.log('ended');
-    //  }
-    //} // this is the other parenthesis of the for loop over
+  public drawVectorField(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    for (let j = 0; j < this.rows; j++) {
+      for(let k = 0; k<this.columns; k++){
+        let angle = this.field[k][j] * 2 * Math.PI;
+
+        //output = output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start)
+
+
+        ctx.strokeStyle = '#777777';
+        ctx.beginPath();
+        ctx.moveTo(k * this.spacing, j* this.spacing);
+        ctx.lineTo((k + Math.cos(angle)) * this.spacing, (j + Math.sin(angle)) * this.spacing);
+        ctx.closePath();
+        ctx.stroke();
+      }
+
+    }
+  }
+
+  public drawParticles(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
     for (let i = 0; i < this.numOfParticles; ++i) {
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(this.particles[i][0], this.particles[i][1], this.particlesSize, this.particlesSize);
 
-      //ctx.beginPath();
-      //ctx.fillStyle = '#999999';
-      //ctx.strokeStyle= 'rgba(0,0,0,0)';
-      //ctx.arc(this.particles[i][0], this.particles[i][1], this.particlesSize, 0, 2 * Math.PI);
-      //ctx.fill();
-      //ctx.stroke();
-
-      ctx.strokeStyle = '#dddddd';
+      ctx.strokeStyle = this.sandGradient;
       ctx.lineWidth = 2;
       ctx.beginPath();
       // draw line from previousPos to newPos
@@ -123,15 +90,25 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
       ctx.lineTo(this.particles[i][0], this.particles[i][1]);
       ctx.closePath();
       ctx.stroke();
-
     }
-
-
-    // Schedule next
-    requestAnimationFrame(() => this.paint());
   }
 
-  private setup(): void {
+  public draw(): void {
+    this.drawBackground();
+    //this.drawVectorField();
+    this.drawParticles();
+
+  }
+
+
+
+  public setup(): void {
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.alphaGradient = ctx.createLinearGradient(0, 0, this.screenWidth / 2, this.screenHeight / 2);
+    this.alphaGradient.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.alphaGradient.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
+
     this.columns = Math.ceil(this.screenWidth / this.spacing);
     this.rows = Math.ceil(this.screenHeight / this.spacing);
 
@@ -149,6 +126,10 @@ export class PerlinFieldComponent implements OnInit, OnDestroy {
     }
   }
 
+  public update(): void {
+    this.updateField();
+    this.updateParticles();
+  }
 
   private updateField(): void {
     for (let x = 0; x < this.columns; x++) {

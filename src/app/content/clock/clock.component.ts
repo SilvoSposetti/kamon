@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ClockService} from '../../shared/services/clock.service';
 import {LocationService} from '../../shared/services/location.service';
 import {ConfigService} from '../../shared/services/config.service';
@@ -25,8 +25,11 @@ import {Subject} from 'rxjs/Subject';
     )
   ],
 })
+
 export class ClockComponent implements OnInit, OnDestroy {
 
+  @Input() showList: boolean;
+  @Input() isWide: boolean;
   public secondsFirstDigit: string;
   public secondsSecondDigit: string;
   public minutesFirstDigit: string;
@@ -138,7 +141,7 @@ export class ClockComponent implements OnInit, OnDestroy {
         this.iconPath = value;
       });
       this.locationService.getAllDataGathered().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
-        this.allDataGathered = value;
+        this.allDataGathered = value && this.isWide;
       });
     }
   }

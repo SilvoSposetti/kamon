@@ -1,24 +1,19 @@
-import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-boids',
   templateUrl: './boids.component.html',
   styleUrls: ['./boids.component.css']
 })
-export class BoidsComponent implements OnInit {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class BoidsComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
-
-  private numOfBoids: number = 600;
+  private numOfBoids: number = 300;
   private boids: number[][] = [];
   // [posX, posY, vX,vY]
   private boidsCenterOfMass: number [] = [];
@@ -60,44 +55,29 @@ export class BoidsComponent implements OnInit {
   private boidsRule5ExtremeDistance: number = 10;
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.paint());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+  this.terminateCore();
   }
 
-  private paint(): void {
-    // Check that we're still running.
-    if (!this.running) {
-      return;
-    }
+  public draw(): void {
 
-    // Calculates fps
-    this.fpsService.updateFps();
-
-
-    // Paint current frame
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(25,25,25,0.9)';
+    // ***** DRAW BACKGROUND *****
+    ctx.fillStyle = this.seaGradient;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     // ***** DRAW BOIDS *****
+    ctx.strokeStyle = this.sandGradient;
     for (let i = 0; i < this.numOfBoids; i++) {
-      ctx.strokeStyle = 'rgba(200,200,200,1)';
       let angle = Math.atan(this.boids[i][3] / this.boids[i][2]);
       if (this.boids[i][2] < 0) {
         angle = angle + Math.PI;
@@ -114,6 +94,7 @@ export class BoidsComponent implements OnInit {
     }
 
     // ***** DRAW PREDATORS *****
+    ctx.fillStyle = this.sandGradient;
 
     for (let i = 0; i < this.numOfPredators; i++) {
       let angle = Math.atan(this.predators[i][3] / this.predators[i][2]);
@@ -130,23 +111,13 @@ export class BoidsComponent implements OnInit {
       let rightX = 0.3 * this.predatorsLength * Math.cos(angleRight);
       let rightY = 0.3 * this.predatorsLength * Math.sin(angleRight);
 
-      ctx.fillStyle = 'rgba(150,150,150,1';
       ctx.beginPath();
       ctx.moveTo(this.predators[i][0] + tipX, this.predators[i][1] + tipY);
       ctx.lineTo(this.predators[i][0] + leftX, this.predators[i][1] + leftY);
       ctx.lineTo(this.predators[i][0] + rightX, this.predators[i][1] + rightY);
       ctx.lineWidth = 2;
       ctx.fill();
-      //ctx.stroke();
-
-      //ctx.beginPath();
-      //ctx.moveTo(this.predators[i][0], this.predators[i][1]);
-      //ctx.lineTo(this.predators[i][0] + tipX, this.predators[i][1] + tipY);
-      //ctx.lineWidth = 4;
-      //ctx.stroke();
     }
-    this.updateParticles();    // Schedule next
-    requestAnimationFrame(() => this.paint());
   }
 
   /*********************************************************************************************************************
@@ -154,7 +125,7 @@ export class BoidsComponent implements OnInit {
    ********************************************************************************************************************/
 
 
-  private setup(): void {
+  public setup(): void {
     for (let i = 0; i < this.numOfBoids; i++) {
       let angle = Math.random() * Math.PI * 2;
       let radius = Math.random() * this.screenWidth / 6 + this.screenWidth / 6;
@@ -241,7 +212,7 @@ export class BoidsComponent implements OnInit {
    * UPDATE:
    ********************************************************************************************************************/
 
-  private updateParticles(): void {
+  public update(): void {
     for (let i = 0; i < this.numOfBoids; i++) {
       // calculate boids rules
       let v1 = this.boidRule1(i);

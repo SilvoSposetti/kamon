@@ -1,6 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ConfigService} from '../../shared/services/config.service';
-import {SearchService} from '../../shared/services/search.service';
 
 @Component({
   selector: 'app-list',
@@ -11,6 +10,7 @@ export class ListComponent implements OnInit {
   @Input() categories: string[];
   @Input() elements: string[][][]; // Tri-dimensional array!
   // First level are categories, second the element of each category, and third the values of each element
+  @Input() showClock: boolean;
 
   constructor(private configService: ConfigService) {
   }

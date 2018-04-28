@@ -1,4 +1,4 @@
-<div class="list-parent">
+<div class="list-parent" [ngClass]="{'list-parent-if-alone': !showClock, 'list-parent-if-not-alone': showClock}">
   <div class="list-container">
     <div class="list-category-container">
       <div class="list-category" *ngFor="let category of categories, let i=index">

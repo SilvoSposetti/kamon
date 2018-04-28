@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VoronoiComponent } from './voronoi.component';
+import { LangtonsAntComponent } from './langtons-ant.component';
 
-describe('VoronoiComponent', () => {
-  let component: VoronoiComponent;
-  let fixture: ComponentFixture<VoronoiComponent>;
+describe('LangtonsAntComponent', () => {
+  let component: LangtonsAntComponent;
+  let fixture: ComponentFixture<LangtonsAntComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ VoronoiComponent ]
+      declarations: [ LangtonsAntComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(VoronoiComponent);
+    fixture = TestBed.createComponent(LangtonsAntComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

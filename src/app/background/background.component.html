@@ -1,7 +1,9 @@
 <div class="background-parent">
-  <app-setting></app-setting>
-  <app-scene *ngIf="useScene"
-             [showFPS]="showFPS"
+  <app-setting [screenHeight]="screenHeight"
+               [screenWidth]="screenWidth"
+               [isWide]="isWide"
+               [isTall]="isTall"></app-setting>
+  <app-scene [showFPS]="showFPS"
              [screenHeight]="screenHeight"
              [screenWidth]="screenWidth"
              [isWide]="isWide"

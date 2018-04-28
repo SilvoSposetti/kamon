@@ -1,22 +1,17 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-diffusion-limited-aggregation',
   templateUrl: './diffusion-limited-aggregation.component.html',
   styleUrls: ['./diffusion-limited-aggregation.component.css']
 })
-export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class DiffusionLimitedAggregationComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
-
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
 
   private numOfWalkers: number = 20;
   private walkers: number[][] = [];
@@ -29,45 +24,31 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
   private spawnRadius: number = 40;
 
 
-  constructor(private fpsService: FpsService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.loop());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private loop(): void {
+  public draw(): void {
     if (this.drawBackgroundOnce) {
       let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
       //ctx.fillStyle = 'rgba(0,0,0,0.1)';
-      ctx.fillStyle = 'rgba(0,0,0,1)';
+      ctx.fillStyle = this.seaGradient;
       ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
       this.drawBackgroundOnce = false;
       this.drawCircle();
     }
-
-    this.fpsService.updateFps();
-
-    this.update();
-
-    if (this.running) {
-      requestAnimationFrame(() => this.loop());
-    }
+    //this.drawWalkers();
   }
 
-  private setup(): void {
+  public setup(): void {
     // Setup walkers list:
     for (let i = 0; i < this.numOfWalkers; i++) {
       this.walkers.push([]);
@@ -79,10 +60,9 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
     this.tree.push([this.screenWidth / 2, this.screenHeight / 2, this.newRadiusSize()]);
   }
 
-  private update() {
+  public update() {
     this.WalkersTreeIntersections();
     this.moveWalkers();
-    //this.drawWalkers();
   }
 
 
@@ -90,7 +70,16 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     //ctx.strokeStyle = '#ffffff';
     //ctx.lineWidth = 2;
-    ctx.fillStyle = this.hexColour();
+
+    let numberBaseTen = -0.5 * this.amountOfCircles + 255 - 30;
+    numberBaseTen = 255 - Math.floor(numberBaseTen);
+    if (numberBaseTen >= 255) {
+      numberBaseTen = 255;
+    }
+    //this.gradient2 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    //this.gradient2.addColorStop(0, this.colorService.mapForegroundGradientSaturationFirstStop(numberBaseTen));
+    //this.gradient2.addColorStop(1, this.colorService.mapForegroundGradientSaturationSecondStop());
+    ctx.fillStyle = this.sandGradient;
     ctx.beginPath();
     ctx.arc(this.tree[this.tree.length - 1][0], this.tree[this.tree.length - 1][1], this.tree[this.tree.length - 1][2], 0, 2 * Math.PI);
     ctx.closePath();
@@ -163,11 +152,6 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
         }
       }
     }
-    if (intersectionCounter >= this.maxIntersectionsPerFrame) {
-      this.running = false;
-      console.log('finished');
-    }
-
   }
 
   private newRadiusSize(): number {
@@ -176,22 +160,6 @@ export class DiffusionLimitedAggregationComponent implements OnInit, OnDestroy {
       value = 4;
     }
     return value;
-  }
-
-  private hexColour(): string {
-    let numberBaseTen = -0.5 * this.amountOfCircles + 255 - 30;
-    numberBaseTen = 255 - Math.floor(numberBaseTen);
-    if (numberBaseTen >= 255) {
-      numberBaseTen = 255;
-    }
-    let str = numberBaseTen.toString(16);
-    if (str.length < 1) {
-      str = '0' + str;
-    }
-    if (str.length < 2) {
-      str = '0' + str;
-    }
-    return '#' + str + str + str;
   }
 }
 

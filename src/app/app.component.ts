@@ -3,6 +3,9 @@ import {ConfigService} from './shared/services/config.service';
 import {SearchService} from './shared/services/search.service';
 import {ScreenSizeService} from './shared/services/screen-size.service';
 import {Subject} from 'rxjs/Subject';
+import {environment} from '../environments/environment';
+import 'rxjs/Rx';
+import {ColorService} from './shared/services/color.service';
 
 @Component({
   selector: 'app-root',
@@ -36,10 +39,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(private configService: ConfigService,
               private searchService: SearchService,
-              private screenSizeService: ScreenSizeService) {
+              private screenSizeService: ScreenSizeService,
+              private colorService: ColorService) {
   }
 
   ngOnInit() {
+    this.colorService.initialize();
     this.listenForSelection();
     this.updateWindowSize();
   }
@@ -112,13 +117,20 @@ export class AppComponent implements OnInit, OnDestroy {
     this.screenSizeService.getWidth().takeUntil(this.ngUnsubscribe).subscribe(
       value => {
         this.screenWidth = value;
-        this.isWide = value >= this.widthThreshold;
+        this.isWide = value >= this.widthThreshold || !environment.production;
+        //this.isWide = value >= this.widthThreshold;
+        // If in production env then the screen is always wide.
+        // This is because most of the development process is done for wide screens.
       }
     );
     this.screenSizeService.getHeight().takeUntil(this.ngUnsubscribe).subscribe(
       value => {
         this.screenHeight = value;
-        this.isTall = value >= this.heightThreshold;
+        this.isTall = value >= this.heightThreshold || !environment.production;
+        //this.isTall = value >= this.heightThreshold;
+        // If in production env then the screen is always tall.
+        // This is because most of the development process is done for tall screens.
+
       }
     );
   }

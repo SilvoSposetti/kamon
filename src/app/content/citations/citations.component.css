@@ -6,10 +6,11 @@
   align-items:flex-end;
   justify-content: center;
   flex-direction: column;
+  color: var(--default-font-color);
 }
 .fuck-off-message{
-  font-size: var(--fuck-off-message-font-size)
+  font-size: var(--citation-message-font-size)
 }
 .fuck-off-author{
-  font-size: var(--fuck-off-author-font-size)
+  font-size: var(--citation-author-font-size)
 }

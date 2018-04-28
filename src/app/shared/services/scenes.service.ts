@@ -13,6 +13,10 @@ export class ScenesService {
   private selectedSceneNrSubject: Subject<number> = new Subject<number>();
 
   constructor(private configService: ConfigService) {
+    this.startScenes();
+    if (this.configService.getConfig().useScene === false) {
+      this.setNone();
+    }
   }
 
   public setSceneFromName(sceneName: string): void {
@@ -46,6 +50,12 @@ export class ScenesService {
     return this.scenesArray;
   }
 
+  public setNone(): void {
+    this.selectedSceneName = '';
+    this.selectedSceneNr = -1;
+    this.selectedSceneNrSubject.next(this.selectedSceneNr);
+    this.selectedSceneNameSubject.next(this.selectedSceneName);
+  }
 
   public startScenes(): void {
     // Add new scenes in array below!
@@ -60,14 +70,15 @@ export class ScenesService {
       'tree-map',
       'sorting-algorithms',
       'boids',
-      'voronoi',
       'infinite-zoom',
       'modular-multiplication',
       'drops',
       'diffusion-limited-aggregation',
       'game-of-life',
       'kaleidoscope',
-      'polar-functions'
+      'polar-functions',
+      'langtons-ant',
+      'quad-tree'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);

@@ -1,11 +1,8 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {environment} from '../environments/environment';
 import {FormsModule} from '@angular/forms';
-
-import {APP_INITIALIZER} from '@angular/core';
-import {HttpModule} from '@angular/http';
-import {JsonpModule} from '@angular/http';
+import {HttpModule, JsonpModule} from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 // App components
@@ -32,7 +29,6 @@ import {HarmonicFunctionsComponent} from './background/scene/harmonic-functions/
 import {TreeMapComponent} from './background/scene/tree-map/tree-map.component';
 import {SortingAlgorithmsComponent} from './background/scene/sorting-algorithms/sorting-algorithms.component';
 import {BoidsComponent} from './background/scene/boids/boids.component';
-import {VoronoiComponent} from './background/scene/voronoi/voronoi.component';
 import {InfiniteZoomComponent} from './background/scene/infinite-zoom/infinite-zoom.component';
 import {ModularMultiplicationComponent} from './background/scene/modular-multiplication/modular-multiplication.component';
 import {DropsComponent} from './background/scene/drops/drops.component';
@@ -40,6 +36,8 @@ import {DiffusionLimitedAggregationComponent} from './background/scene/diffusion
 import {GameOfLifeComponent} from './background/scene/game-of-life/game-of-life.component';
 import {KaleidoscopeComponent} from './background/scene/kaleidoscope/kaleidoscope.component';
 import {PolarFunctionsComponent} from './background/scene/polar-functions/polar-functions.component';
+import {LangtonsAntComponent} from './background/scene/langtons-ant/langtons-ant.component';
+import {QuadTreeComponent} from './background/scene/quad-tree/quad-tree.component';
 
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
@@ -55,7 +53,7 @@ import {ScenesService} from './shared/services/scenes.service';
 import {LocationService} from './shared/services/location.service';
 import {ToDoService} from './shared/services/to-do.service';
 import {FpsService} from './shared/services/fps.service';
-
+import {ColorService} from './shared/services/color.service';
 
 
 @NgModule({
@@ -81,7 +79,6 @@ import {FpsService} from './shared/services/fps.service';
     TreeMapComponent,
     SortingAlgorithmsComponent,
     BoidsComponent,
-    VoronoiComponent,
     InfiniteZoomComponent,
     ModularMultiplicationComponent,
     CitationsComponent,
@@ -91,7 +88,9 @@ import {FpsService} from './shared/services/fps.service';
     DiffusionLimitedAggregationComponent,
     GameOfLifeComponent,
     KaleidoscopeComponent,
-    PolarFunctionsComponent],
+    PolarFunctionsComponent,
+    LangtonsAntComponent,
+    QuadTreeComponent],
   imports: [
     HttpModule,
     BrowserModule,
@@ -111,7 +110,9 @@ import {FpsService} from './shared/services/fps.service';
     SearchService,
     ScenesService,
     LocationService,
-    ToDoService, FpsService],
+    ToDoService,
+    FpsService,
+    ColorService],
   bootstrap: [AppComponent],
 })
 

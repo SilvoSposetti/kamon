@@ -1,12 +1,27 @@
 .list-parent {
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.6);
-  -webkit-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
-  -moz-box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
-  box-shadow: 0 0 200px 0 rgba(0, 0, 0, 1);
+  /*110 because otherwise the box shadow makes strange effects ath the page edges*/
+  width: 110vw;
+  background: var(--default-background-color);
+  -webkit-box-shadow: var(--default-box-shadow);
+  -moz-box-shadow: var(--default-box-shadow);
+  box-shadow: var(--default-box-shadow);
   display: flex;
   align-items: center;
   justify-content: center;
+  color: var(--default-font-color);
+
+}
+
+.list-parent-if-alone {
+  -webkit-box-shadow: var(--default-box-shadow);
+  -moz-box-shadow: var(--default-box-shadow);
+  box-shadow: var(--default-box-shadow);
+}
+
+.list-parent-if-not-alone {
+  -webkit-box-shadow: var(--default-box-shadow-down);
+  -moz-box-shadow: var(--default-box-shadow-down);
+  box-shadow: var(--default-box-shadow-down);
 }
 
 .list-container {
@@ -20,8 +35,8 @@
 }
 
 .list-separator {
-  width: 20px;
-  height: 20px;
+  width: 1em;
+  height: 1em;
 }
 
 /***********************************************************************************************************************
@@ -37,7 +52,7 @@ List category:
 
 .list-category {
   width: 15vw;
-  min-width: 200px;
+  min-width: 10em;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -66,27 +81,22 @@ List element:
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
-  /*border: 1px solid white;*/
   border-radius: 1.5em;
   margin-top: 0.2em;
   margin-bottom: 0.2em;
   overflow: hidden;
-  /*-webkit-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
-  /*-moz-box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
-  /*box-shadow: 0 0 40px 0 rgba(0, 0, 0, 0.2);*/
 }
 
 .list-element:hover {
-  background: rgba(200, 200, 200, 0.2);
+  background: var(--list-element-hover-background-color);
   cursor: pointer;
 }
 
 .shortcut-indicator-container {
   min-width: 1.7em;
   min-height: 1.7em;
-  /*border-left: 15px solid;*/
   color: white;
-  background: black;
+  background: var(--shortcut-indicator-background-color);
   border-radius: 50%;
   display: flex;
   align-items: center;

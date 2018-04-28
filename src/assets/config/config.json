@@ -1,18 +1,21 @@
 {
-  "useCustomBackgroundImage": true,
   "useScene": true,
   "showClock": true,
-  "defaultScene": "polar-functions",
+  "defaultScene": "phyllotaxy",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
-  "allowLocation": true,
+  "allowLocation": false,
   "useToDoList": false,
   "useCredits": true,
-  "showFPS": true,
+  "showFPS": false,
+  "backgroundGradientFirstStop": "30434A",
+  "backgroundGradientSecondStop": "304D3A",
+  "foregroundGradientFirstStop": "CCAB7E",
+  "foregroundGradientSecondStop": "CC987E",
   "searchEngine": [
     "Google",
     "http://www.google.com/",
@@ -110,11 +113,11 @@
     ],
     [
       "Fun",
-      "Twitch",
+      "Trello",
       "t",
-      "https://www.twitch.tv/",
+      "https://trello.com/",
       null,
-      "#6441a5"
+      "#026AA7"
     ],
     [
       "Fun",

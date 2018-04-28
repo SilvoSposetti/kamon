@@ -1,23 +1,19 @@
-import {Component, ElementRef, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
+import {ColorService} from '../../../shared/services/color.service';
+import {Scene} from '../../../shared/models/Scene';
 
 @Component({
   selector: 'app-lissajous',
   templateUrl: './lissajous.component.html',
   styleUrls: ['./lissajous.component.css']
 })
-export class LissajousComponent implements OnInit, OnDestroy {
-
-  @ViewChild('myCanvas') canvasRef: ElementRef;
+export class LissajousComponent extends Scene implements OnInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
-
-  private running: boolean;
+  private gradient1: CanvasGradient;
 
   private spacing: number = 60;
   private columns: number;
@@ -28,70 +24,52 @@ export class LissajousComponent implements OnInit, OnDestroy {
   private amplitude: number;
 
   private gridValues: number[][][] = [];
+
   // [xPos, yPos, xCenterPos, yCenterPos, sinMultiplier, cosMultiplier, previousXPos, previousYPos]
 
-  constructor(private fpsService: FpsService) {
+  constructor(public fpsService: FpsService, public colorService: ColorService) {
+    super(fpsService, colorService);
   }
 
   ngOnInit() {
-    this.spacing = this.screenWidth / 61;
-    this.amplitude = (this.spacing * 9 / 10) / 2;
-    this.running = true;
-    this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
-    });
-    requestAnimationFrame(() => this.paint());
+    this.initialiseCore();
   }
 
   ngOnDestroy() {
-    this.running = false;
-    this.fpsService.reset();
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
+    this.terminateCore();
   }
 
-  private paint(): void {
-    // Check that we're still running.
-    if (!this.running) {
-      return;
-    }
-    this.updateGrid();
-    this.fpsService.updateFps();
-    // Paint current frame
+  public draw(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
 
-    ctx.fillStyle = 'rgba(0,0,0,0.01)';
+    ctx.fillStyle = this.gradient1;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
 
     for (let i = 0; i < this.columns; i++) {
       for (let j = 0; j < this.rows; j++) {
 
-        ctx.strokeStyle = '#dddddd';
-        ctx.lineWidth = 2;
+        ctx.strokeStyle = this.sandGradient;
+        ctx.lineWidth = this.screenHeight / 400;
         ctx.beginPath();
         // draw line from previousPos to newPos
         ctx.moveTo(this.gridValues[i][j][6], this.gridValues[i][j][7]);
         ctx.lineTo(this.gridValues[i][j][0], this.gridValues[i][j][1]);
         ctx.closePath();
         ctx.stroke();
-
-        //Draw them as dots:
-        //ctx.fillStyle = '#ffffff';
-        //ctx.strokeStyle = 'rgba(0,0,0,0)';
-        //ctx.beginPath();
-        //ctx.ellipse(this.gridValues[i][j][0], this.gridValues[i][j][1], 1, 1,0, 0 ,Math.PI*2);
-        //ctx.closePath();
-        //ctx.fill();
-
-
       }
     }
-    // Schedule next
-    requestAnimationFrame(() => this.paint());
   }
 
-  private setup(): void {
+  public setup(): void {
+    this.spacing = this.screenWidth / 61;
+    this.amplitude = (this.spacing * 9 / 10) / 2;
+
+    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
+
+    this.gradient1 = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
+    this.gradient1.addColorStop(0, this.colorService.getBackgroundFirstStopRGBA(0.1));
+    this.gradient1.addColorStop(1, this.colorService.getBackgroundSecondStopRGBA(0.1));
+
     this.columns = Math.ceil(this.screenWidth / this.spacing);
     this.rows = Math.ceil(this.screenHeight / this.spacing);
 
@@ -112,7 +90,7 @@ export class LissajousComponent implements OnInit, OnDestroy {
     }
   }
 
-  private updateGrid(): void {
+  public update(): void {
     for (let i = 0; i < this.columns; i++) {
       for (let j = 0; j < this.rows; j++) {
         let centerX = this.gridValues[i][j][2];
