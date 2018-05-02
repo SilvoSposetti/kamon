@@ -6,7 +6,7 @@ import {ElementRef, ViewChild} from '@angular/core';
 // Abstract class used for initialisation, maintenance and termination of scenes.
 export abstract class Scene {
   @ViewChild('myCanvas') canvasRef: ElementRef;
-  
+
   public screenWidth: number;
   public screenHeight: number;
 
@@ -41,13 +41,13 @@ export abstract class Scene {
   }
 
   private core() {
-    this.frameCount++;
     this.update();
     this.draw();
     this.fpsService.updateFps();
     if (this.running) {
       requestAnimationFrame(() => this.core());
     }
+    this.frameCount++;
   }
 
   public terminateCore() {

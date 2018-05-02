@@ -1,7 +1,7 @@
 {
-  "useScene": true,
+  "useScene": false,
   "showClock": true,
-  "defaultScene": "phyllotaxy",
+  "defaultScene": "quad-tree",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
@@ -11,7 +11,7 @@
   "allowLocation": false,
   "useToDoList": false,
   "useCredits": true,
-  "showFPS": false,
+  "showFPS": true,
   "backgroundGradientFirstStop": "30434A",
   "backgroundGradientSecondStop": "304D3A",
   "foregroundGradientFirstStop": "CCAB7E",
