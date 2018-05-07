@@ -13,25 +13,21 @@ export class SettingComponent implements OnInit {
   @Input() public isWide: boolean;
   @Input() public isTall: boolean;
 
-  private backgroundGradient: CanvasGradient;
-
+  private backgroundStyle = document.createElement('style');
+  private firstStop: string;
+  private secondStop: string;
 
   constructor(private colorService: ColorService) {
   }
 
   ngOnInit() {
-    requestAnimationFrame(() => this.drawBackground());
+    this.firstStop = this.colorService.getBackgroundFirstStopHEX();
+    this.secondStop = this.colorService.getBackgroundSecondStopHEX();
+    this.generateBackgroundGradient();
   }
 
-  private drawBackground() {
-    let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
-
-    this.backgroundGradient = ctx.createLinearGradient(0, 0, this.screenWidth, this.screenHeight);
-    this.backgroundGradient.addColorStop(0, this.colorService.getBackgroundFirstStopHEX());
-    this.backgroundGradient.addColorStop(1, this.colorService.getBackgroundSecondStopHEX());
-
-    ctx.fillStyle = this.backgroundGradient;
-    ctx.fillRect(0,0,this.screenWidth, this.screenHeight);
+  private generateBackgroundGradient(): void {
+    this.backgroundStyle.innerHTML = '.setting-parent{ background: linear-gradient(141deg, ' + this.firstStop + ' 0%, ' + this.secondStop + ' 100%)}';
+    document.getElementsByTagName('app-setting')[0].appendChild(this.backgroundStyle);
   }
-
 }

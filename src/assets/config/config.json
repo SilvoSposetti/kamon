@@ -1,5 +1,5 @@
 {
-  "useScene": false,
+  "useScene": true,
   "showClock": true,
   "defaultScene": "quad-tree",
   "showCitations": false,
@@ -14,8 +14,8 @@
   "showFPS": true,
   "backgroundGradientFirstStop": "30434A",
   "backgroundGradientSecondStop": "304D3A",
-  "foregroundGradientFirstStop": "CCAB7E",
-  "foregroundGradientSecondStop": "CC987E",
+  "foregroundGradientFirstStop": "B39874",
+  "foregroundGradientSecondStop": "B3866F",
   "searchEngine": [
     "Google",
     "http://www.google.com/",

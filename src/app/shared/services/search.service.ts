@@ -231,7 +231,7 @@ export class SearchService {
     this.openLink(link);
   }
 
-  private openLink(link: string): void {
+  public openLink(link: string): void {
     this.resetSearchString();
     if (this.configService.getConfig().openLinkInNewTab) {
       window.open(link, '_blank');
