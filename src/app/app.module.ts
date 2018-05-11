@@ -54,6 +54,7 @@ import {LocationService} from './shared/services/location.service';
 import {ToDoService} from './shared/services/to-do.service';
 import {FpsService} from './shared/services/fps.service';
 import {ColorService} from './shared/services/color.service';
+import { PlexusComponent } from './background/scene/plexus/plexus.component';
 
 
 @NgModule({
@@ -90,7 +91,8 @@ import {ColorService} from './shared/services/color.service';
     KaleidoscopeComponent,
     PolarFunctionsComponent,
     LangtonsAntComponent,
-    QuadTreeComponent],
+    QuadTreeComponent,
+    PlexusComponent],
   imports: [
     HttpModule,
     BrowserModule,

@@ -1,7 +1,7 @@
 {
-  "useScene": true,
+  "useScene": false,
   "showClock": true,
-  "defaultScene": "quad-tree",
+  "defaultScene": "plexus",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
