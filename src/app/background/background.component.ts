@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ConfigService} from '../shared/services/config.service';
 
 @Component({
   selector: 'app-background',

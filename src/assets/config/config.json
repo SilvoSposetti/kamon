@@ -1,7 +1,7 @@
 {
-  "useScene": false,
-  "showClock": true,
-  "defaultScene": "plexus",
+  "useScene": true,
+  "showClock": false,
+  "defaultScene": "harmonic-functions",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
