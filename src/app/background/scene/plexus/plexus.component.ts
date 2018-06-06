@@ -65,6 +65,7 @@ export class PlexusComponent extends Scene implements OnInit, OnDestroy {
    */
 
   public update(): void {
+    this.plexusDistance = this.screenWidth/20;
     this.updateParticles();
     this.updateQuadTree();
 

@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../shared/services/fps.service';
 import {Subject} from 'rxjs/Subject';
 
@@ -7,7 +7,7 @@ import {Subject} from 'rxjs/Subject';
   templateUrl: './fps.component.html',
   styleUrls: ['./fps.component.css']
 })
-export class FpsComponent implements OnInit {
+export class FpsComponent implements OnInit, OnDestroy {
   @ViewChild('fpsCanvas') canvasRef: ElementRef;
 
   private screenWidth: number = 200;
@@ -46,12 +46,17 @@ export class FpsComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+  }
+
   private getFPSData(): void {
     this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.fpsValues = value;
+      //this.fpsValues = value;
+      setTimeout(() => this.fpsValues = value, 0); // need setTimeout otherwise causes an ExpressionChangedAfterItHasBeenCheckedError.
 
-
-      if (this.fpsValues[0] === 0) {
+      if (value[0] === 0) {
         this.valuesCount = 0;
         for (let i = 0; i < this.amountOfGraphValues; i++) {
           this.graphValues[i] = -1;
@@ -60,14 +65,14 @@ export class FpsComponent implements OnInit {
       this.valuesCount++;
 
       // Find max and min:
-      this.graphMax = 0;
+      this.graphMax = -1;
       this.graphMin = 200;
-      for(let i = 0; i < this.amountOfGraphValues; i++){
-        if(this.graphValues[i] !== -1 && this.graphValues[i] !== 0){
-          if(this.graphMax < this.graphValues[i]){
+      for (let i = 0; i < this.amountOfGraphValues; i++) {
+        if (this.graphValues[i] !== -1 && this.graphValues[i] !== 0) {
+          if (this.graphMax < this.graphValues[i]) {
             this.graphMax = this.graphValues[i];
           }
-          if(this.graphMin > this.graphValues[i]){
+          if (this.graphMin > this.graphValues[i]) {
             this.graphMin = this.graphValues[i];
           }
         }
