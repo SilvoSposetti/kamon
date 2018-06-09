@@ -79,7 +79,8 @@ export class ScenesService {
       'polar-functions',
       'langtons-ant',
       'quad-tree',
-      'plexus'
+      'plexus',
+      'refraction'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);

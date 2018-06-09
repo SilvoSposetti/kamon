@@ -1,10 +1,10 @@
 {
-  "useScene": true,
-  "showClock": false,
-  "defaultScene": "harmonic-functions",
+  "useScene": false,
+  "showClock": true,
+  "defaultScene": "refraction",
   "showCitations": false,
   "openLinkInNewTab": false,
-  "showList": false,
+  "showList": true,
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
@@ -74,7 +74,7 @@
     [
       "Uni",
       "Courses",
-      "l",
+      "C",
       "https://studentservices.uzh.ch/uzh/anonym/vvz/index.html",
       null,
       "#0099ff"
@@ -105,11 +105,11 @@
     ],
     [
       "Fun",
-      "Reddit",
-      "r",
-      "https://www.reddit.com",
-      "/search?q={}",
-      "#5f99cf"
+      "drLupo",
+      "l",
+      "https://www.twitch.tv/drLupo",
+      null,
+      "#8E3F7B"
     ],
     [
       "Fun",

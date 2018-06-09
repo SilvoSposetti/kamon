@@ -56,6 +56,7 @@ import {FpsService} from './shared/services/fps.service';
 import {ColorService} from './shared/services/color.service';
 import { PlexusComponent } from './background/scene/plexus/plexus.component';
 import { FpsComponent } from './background/fps/fps.component';
+import { RefractionComponent } from './background/scene/refraction/refraction.component';
 
 
 @NgModule({
@@ -94,7 +95,8 @@ import { FpsComponent } from './background/fps/fps.component';
     LangtonsAntComponent,
     QuadTreeComponent,
     PlexusComponent,
-    FpsComponent],
+    FpsComponent,
+    RefractionComponent],
   imports: [
     HttpModule,
     BrowserModule,
