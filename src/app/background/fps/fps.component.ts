@@ -14,7 +14,7 @@ export class FpsComponent implements OnInit, OnDestroy {
   private screenHeight: number = 150;
 
   private ngUnsubscribe: Subject<any> = new Subject<any>();
-  private fpsValues: number[] = [0, 0];
+  public fpsValues: number[] = [0, 0];
 
 
   private graphValues: number[] = [];
