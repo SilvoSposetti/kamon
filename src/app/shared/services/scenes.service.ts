@@ -80,7 +80,8 @@ export class ScenesService {
       'langtons-ant',
       'quad-tree',
       'plexus',
-      'refraction'
+      'refraction',
+      'parallax'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);

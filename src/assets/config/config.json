@@ -1,7 +1,7 @@
 {
-  "useScene": false,
-  "showClock": true,
-  "defaultScene": "refraction",
+  "useScene": true,
+  "showClock": false,
+  "defaultScene": "parallax",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
