@@ -1,6 +1,6 @@
 {
-  "useScene": true,
-  "showClock": false,
+  "useScene": false,
+  "showClock": true,
   "defaultScene": "parallax",
   "showCitations": false,
   "openLinkInNewTab": false,
@@ -11,7 +11,7 @@
   "allowLocation": false,
   "useToDoList": false,
   "useCredits": true,
-  "showFPS": true,
+  "showFPS": false,
   "backgroundGradientFirstStop": "30434A",
   "backgroundGradientSecondStop": "304D3A",
   "foregroundGradientFirstStop": "B39874",

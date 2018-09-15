@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Scene} from "../../../shared/models/Scene";
-import {FpsService} from "../../../shared/services/fps.service";
-import {ColorService} from "../../../shared/services/color.service";
+import {Scene} from '../../../shared/models/Scene';
+import {FpsService} from '../../../shared/services/fps.service';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-parallax',
@@ -15,16 +15,14 @@ export class ParallaxComponent extends Scene implements OnInit, OnDestroy {
 
 
   // First element is the farthest away, last element is the nearest
-  private time: number = 0;
   private direction: number = -1; // -1 to send elements to the left, +1 to send elements to the right
   private timeIncrement: number = 0.1;
-  private layerDistance: number = 5;
-  private numOfLayers: number = 10;
-  private elements: number[][] = []; // contains [distance, position, size, speed, height, timeToBeBorn]
-  private sizeFactor: number = 10;
-  private speedFactor: number = 10;
-  private heightFactor: number = 10;
-  private maxTimeToBeBorn: number = 10;
+  private numOfElements: number = 200;
+  private elements: number[][] = []; // contains [height, position, size, speed, timeToBeBorn]
+  private sizeFactor: number = 0.2;
+  private speedFactor: number = 0.005;
+  private maxTimeToBeBorn: number = 2;
+  private topMargin: number = 10;
 
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
@@ -42,27 +40,31 @@ export class ParallaxComponent extends Scene implements OnInit, OnDestroy {
   /*****************************************************************************************************************************************
    * SETUP */
   public setup(): void {
-    for (let i = 0; i < this.numOfLayers; i++) {
-      let distance = this.layerDistance * i;
-      let position = distance * Math.random() * this.screenWidth;
+    for (let i = 0; i < this.numOfElements; i++) {
+      let height = Math.pow(i / this.numOfElements, 2) * (this.screenHeight - this.topMargin) + this.topMargin;
+      let position = Math.random() * this.screenWidth;
       let timeToBeBorn = 0;
-      this.elements.push([distance, position, this.getSize(distance), this.getSpeed(distance), this.getHeight(distance), timeToBeBorn]);
+      this.elements.push([height, position, this.getSize(height), this.getSpeed(height), timeToBeBorn]);
     }
   }
 
   /*****************************************************************************************************************************************
    * UPDATE */
   public update(): void {
-    for (let i = 0; i < this.numOfLayers; i++) {
-      this.elements[i][1] += this.direction * this.elements[i][3];
+    for (let i = 0; i < this.numOfElements; i++) {
 
-      if(this.elements[i][5] === 0 && (this.elements[i][1] <= 0 || this.elements[i][1] >= this.screenWidth)){
-        // this.
+      if (this.elements[i][4] <= 0) {
+        this.elements[i][1] += this.direction * this.elements[i][3];
+      }
+      else {
+        this.elements[i][4] -= this.timeIncrement;
       }
 
+      if (this.elements[i][1] <= -this.elements[i][2]) {
+        this.elements[i][1] = this.screenWidth + this.elements[i][2];
+        this.elements[i][4] = Math.random() * this.maxTimeToBeBorn;
+      }
     }
-
-    this.time += this.timeIncrement;
   }
 
   /*****************************************************************************************************************************************
@@ -78,21 +80,19 @@ export class ParallaxComponent extends Scene implements OnInit, OnDestroy {
     ctx.fillStyle = this.seaGradient;
     ctx.fillRect(0, 0, this.screenWidth, this.screenHeight);
   }
-{}
+
   private drawCircles(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
     ctx.strokeStyle = this.sandGradient;
-    // ctx.fillStyle = this.seaGradient;
-    let centerX = this.screenWidth / 2;
-    let centerY = this.screenHeight / 2;
-    for (let i = 0; i < this.numOfLayers; i++) {
+
+    for (let i = 0; i < this.numOfElements; i++) {
+      ctx.lineWidth = Math.ceil(0.1 * this.elements[i][2]);
       ctx.beginPath();
-      ctx.arc(centerX + this.parallaxVector[0] * this.layers[i][0], centerY + this.parallaxVector[1] * this.layers[i][0], this.layers[i][1], 0, Math.PI * 2);
+      ctx.arc(this.elements[i][1], this.elements[i][0], this.elements[i][2], 0, Math.PI * 2);
       ctx.closePath();
-      // ctx.fill();
+      ctx.fill();
       ctx.stroke();
 
-      // ctx.rect(centerX - this.layers[i][0]/2, centerY - this.layers[i][2], this.layers[i][0], this.layers[i][0]);
     }
     ctx.stroke();
   }
@@ -100,16 +100,12 @@ export class ParallaxComponent extends Scene implements OnInit, OnDestroy {
   /*****************************************************************************************************************************************
    * OTHER */
 
-  private getSize(distance: number): number {
-    return this.speedFactor * Math.pow(Math.E, distance);
+  private getSize(height: number): number {
+    return this.sizeFactor * height;
   }
 
-  private getSpeed(distance: number): number {
-    return this.sizeFactor * Math.log(distance);
-  }
-
-  private getHeight(distance: number): number {
-    return this.heightFactor * Math.log(distance);
+  private getSpeed(height: number): number {
+    return this.speedFactor * height;
   }
 
 }
