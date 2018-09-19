@@ -11,7 +11,7 @@ export class FpsService {
 
   private currentFps: number; // this is a mean over the last 'updateCurrentFpsTime' amount of milliseconds.
   private currentFpsTime: number;
-  private updateCurrentFpsTimeMilliseconds: number = 500; // milliseconds between each update interval.
+  private updateCurrentFpsTimeMilliseconds: number = 300; // milliseconds between each update interval.
   private amountOfFpsInAllottedTime: number;
 
   private overallMeanFps: number = 0; // this is a mean over all frames.
@@ -42,7 +42,7 @@ export class FpsService {
     this.deltaTime = newNow - this.now;
     this.now = newNow;
 
-    if (this.fpsCounter > 0) {
+    if (this.fpsCounter > 1) {
       //Update overall average:
       this.overallMeanFps = ((this.overallMeanFps * this.fpsCounter) + (1000 / this.deltaTime)) / (this.fpsCounter + 1);
       this.overallMeanFpsFloored = Math.floor(this.overallMeanFps);
@@ -52,7 +52,7 @@ export class FpsService {
     if (newNow - this.currentFpsTime > this.updateCurrentFpsTimeMilliseconds || this.fpsCounter === 0) {
       this.amountOfFpsInAllottedTime = 0;
       this.currentFpsTime = this.now;
-      this.fpsSubject.next([this.currentFps, this.overallMeanFpsFloored]);
+      this.fpsSubject.next([this.currentFps, this.overallMeanFpsFloored, this.fpsCounter]);
     }
     this.fpsCounter++;
     this.amountOfFpsInAllottedTime++;

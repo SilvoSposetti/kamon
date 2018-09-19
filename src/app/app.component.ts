@@ -14,8 +14,8 @@ import {ColorService} from './shared/services/color.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  private keyboardEvent: any;
-  //private altKeyAction: boolean;
+  // private keyboardEvent: any;
+  // private altKeyAction: boolean;
   public showList: boolean = this.configService.getConfig().showList;
   public selectionSuggestion: number = -1;
   public showClock = this.configService.getConfig().showClock;

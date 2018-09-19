@@ -1,7 +1,7 @@
 {
   "useScene": false,
   "showClock": true,
-  "defaultScene": "plexus",
+  "defaultScene": "parallax",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
@@ -11,7 +11,7 @@
   "allowLocation": false,
   "useToDoList": false,
   "useCredits": true,
-  "showFPS": true,
+  "showFPS": false,
   "backgroundGradientFirstStop": "30434A",
   "backgroundGradientSecondStop": "304D3A",
   "foregroundGradientFirstStop": "B39874",
@@ -74,7 +74,7 @@
     [
       "Uni",
       "Courses",
-      "l",
+      "C",
       "https://studentservices.uzh.ch/uzh/anonym/vvz/index.html",
       null,
       "#0099ff"
@@ -105,11 +105,11 @@
     ],
     [
       "Fun",
-      "Reddit",
-      "r",
-      "https://www.reddit.com",
-      "/search?q={}",
-      "#5f99cf"
+      "drLupo",
+      "l",
+      "https://www.twitch.tv/drLupo",
+      null,
+      "#8E3F7B"
     ],
     [
       "Fun",

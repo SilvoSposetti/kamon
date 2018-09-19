@@ -1,0 +1,49 @@
+.fps-parent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  /*background: var(--default-background-color);*/
+  /*-webkit-box-shadow: var(--default-box-shadow);*/
+  /*-moz-box-shadow: var(--default-box-shadow);*/
+  /*box-shadow: var(--default-box-shadow);*/
+  /*border-radius: var(--credits-hover-square-size);*/
+  color: var(--default-font-color);
+  /*width: 10em;*/
+  /*height: 12em;*/
+  font-size: 14px;
+}
+
+.fps-numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+}
+
+.fps-current-container {
+  flex-grow: 1;
+  width: 33%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.fps-mean-container {
+  flex-grow: 1;
+  width:50%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.fps-amount-container {
+  flex-grow: 1;
+  width: 50%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}

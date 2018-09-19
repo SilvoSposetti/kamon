@@ -187,3 +187,7 @@ fabric.properties
 
 .firebaserc
 firebase.json
+
+\.firebase/hosting\.ZGlzdA\.cache
+
+\.firebase/

@@ -1,0 +1,21 @@
+<div class="fps-parent">
+  <canvas #fpsCanvas class="fps-canvas" width="240" height="135"></canvas>
+  <div class="fps-numbers">
+    <div class="fps-current-container">
+      <div class="fps-current-name">
+        fps:
+      </div>
+      <div class="fps-current-number">
+        {{fpsValues[0]}}
+      </div>
+    </div>
+    <div class="fps-mean-container">
+      <div class="fps-mean-name">
+        avg:
+      </div>
+      <div class="fps-mean-number">
+        {{fpsValues[1]}}
+      </div>
+    </div>
+  </div>
+</div>
