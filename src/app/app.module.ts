@@ -40,6 +40,7 @@ import {QuadTreeComponent} from './background/scene/quad-tree/quad-tree.componen
 import {PlexusComponent} from './background/scene/plexus/plexus.component';
 import {RefractionComponent} from './background/scene/refraction/refraction.component';
 import {ParallaxComponent} from './background/scene/parallax/parallax.component';
+import {VisualClockComponent} from './background/scene/visual-clock/visual-clock.component';
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 import {MyBlinkDirective} from './shared/directives/my-blink.directive';
@@ -94,7 +95,8 @@ import {ColorService} from './shared/services/color.service';
     PlexusComponent,
     FpsComponent,
     RefractionComponent,
-    ParallaxComponent],
+    ParallaxComponent,
+    VisualClockComponent],
   imports: [
     HttpModule,
     BrowserModule,

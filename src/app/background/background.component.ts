@@ -24,7 +24,7 @@ export class BackgroundComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sceneService.getSceneName().takeUntil(this.ngUnsubscribe).subscribe(value => {
-      this.useFpsGraph = this.useScene && value !== '';
+      this.useFpsGraph = this.showFPS && this.useScene && value !== '' ;
     });
   }
 

@@ -81,7 +81,8 @@ export class ScenesService {
       'quad-tree',
       'plexus',
       'refraction',
-      'parallax'
+      'parallax',
+      'visual-clock'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);
