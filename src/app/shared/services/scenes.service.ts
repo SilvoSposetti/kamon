@@ -82,7 +82,8 @@ export class ScenesService {
       'plexus',
       'refraction',
       'parallax',
-      'visual-clock'
+      'visual-clock',
+      'hexagons'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);
