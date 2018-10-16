@@ -62,7 +62,7 @@ export class HexagonsComponent extends Scene implements OnInit, OnDestroy {
       let row: number[][] = [];
       for (let j = 0; j < this.numOfVHexes; j++) {
         // let value =  2 * Math.PI * Math.random();
-        let scale = 3.01; 
+        let scale = 3.01;
         let cos = Math.cos(i * scale);
         let sin = Math.sin(j * scale);
         let value = cos * cos + sin * sin;

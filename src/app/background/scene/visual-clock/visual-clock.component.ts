@@ -34,9 +34,9 @@ export class VisualClockComponent extends Scene implements OnInit, OnDestroy {
   private numOfMod: number = 25;
 
   // IN RATIOS:
-  private secondsRatio: number = 1;
+  private secondsRatio: number = 3;
   private minutesRatio: number = 2;
-  private hoursRatio: number = 3;
+  private hoursRatio: number = 1;
   private spacingRatio: number = 1;
 
   // IN PIXELS!:
@@ -106,8 +106,8 @@ export class VisualClockComponent extends Scene implements OnInit, OnDestroy {
     }
 
     // Anything else
-    // for (let i = 1; i < this.numOfMod; i++) {
-    //   this.modModulo[i] = Math.pow(i, 1.1);
+    // for (let i = 1; i < this.numOfMod + 1; i++) {
+    //   this.modModulo[i] = Math.pow(i, 3);
     // }
   }
 
@@ -154,11 +154,11 @@ export class VisualClockComponent extends Scene implements OnInit, OnDestroy {
   }
 
   private updateCircles(): void {
+
     let seconds = (this.secondsFirstDigit * 10 + this.secondsSecondDigit);
     let minutes = (this.minutesFirstDigit * 10 + this.minutesSecondDigit);
     let hours = (this.hoursFirstDigit * 10 + this.hoursSecondDigit);
-
-    //Allows for circle to  e drawn completely when on 0:
+    //Allows for circle to be drawn completely when on 0:
     if (seconds === 0) seconds = 60;
     if (minutes === 0) minutes = 60;
     if (hours === 0) hours = 24;
@@ -171,7 +171,10 @@ export class VisualClockComponent extends Scene implements OnInit, OnDestroy {
     // Hours:
     this.clock[2] = hours / 24;
 
-    let secondsOfDay = seconds + minutes * 60 + hours * 360;
+    let date = new Date();
+    let secondsOfDay = ((date.getTime() % 86400000 - date.getTimezoneOffset() * 60000) / 1000);
+
+    // let secondsOfDay = seconds + minutes * 60 + hours * 360;
     for (let i = 0; i < this.numOfMod; i++) {
       this.modValues[i] = (secondsOfDay % this.modModulo[i]) / this.modModulo[i];
       if (this.modValues[i] === 0) this.modValues[i] = this.modModulo[i];
