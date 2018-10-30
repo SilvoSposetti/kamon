@@ -56,6 +56,7 @@ import {LocationService} from './shared/services/location.service';
 import {ToDoService} from './shared/services/to-do.service';
 import {FpsService} from './shared/services/fps.service';
 import {ColorService} from './shared/services/color.service';
+import { RecursiveTreeComponent } from './background/scene/recursive-tree/recursive-tree.component';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import {ColorService} from './shared/services/color.service';
     RefractionComponent,
     ParallaxComponent,
     VisualClockComponent,
-    HexagonsComponent],
+    HexagonsComponent,
+    RecursiveTreeComponent],
   imports: [
     HttpModule,
     BrowserModule,

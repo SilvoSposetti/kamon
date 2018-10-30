@@ -83,7 +83,8 @@ export class ScenesService {
       'refraction',
       'parallax',
       'visual-clock',
-      'hexagons'
+      'hexagons',
+      'recursive-tree'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);
