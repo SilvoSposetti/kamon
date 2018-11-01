@@ -42,6 +42,8 @@ import {RefractionComponent} from './background/scene/refraction/refraction.comp
 import {ParallaxComponent} from './background/scene/parallax/parallax.component';
 import {VisualClockComponent} from './background/scene/visual-clock/visual-clock.component';
 import {HexagonsComponent} from './background/scene/hexagons/hexagons.component';
+import {RecursiveTreeComponent} from './background/scene/recursive-tree/recursive-tree.component';
+import {StackedPlotComponent} from './background/scene/stacked-plot/stacked-plot.component';
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 import {MyBlinkDirective} from './shared/directives/my-blink.directive';
@@ -56,7 +58,6 @@ import {LocationService} from './shared/services/location.service';
 import {ToDoService} from './shared/services/to-do.service';
 import {FpsService} from './shared/services/fps.service';
 import {ColorService} from './shared/services/color.service';
-import { RecursiveTreeComponent } from './background/scene/recursive-tree/recursive-tree.component';
 
 
 @NgModule({
@@ -100,7 +101,8 @@ import { RecursiveTreeComponent } from './background/scene/recursive-tree/recurs
     ParallaxComponent,
     VisualClockComponent,
     HexagonsComponent,
-    RecursiveTreeComponent],
+    RecursiveTreeComponent,
+    StackedPlotComponent],
   imports: [
     HttpModule,
     BrowserModule,

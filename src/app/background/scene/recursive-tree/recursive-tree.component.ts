@@ -22,20 +22,20 @@ export class RecursiveTreeComponent extends Scene implements OnInit, OnDestroy {
   private maxSteps: number;
 
 
-  private lengthBase: number = 170;
-  private widthBase: number = 5;
-  private angleBase: number = Math.PI / 7;
-  private stepsBase: number = 5;
+  private lengthBase: number;
+  private widthBase: number;
+  private angleBase: number;
+  private stepsBase: number;
 
-  private lengthAmplitude: number = 20;
-  private widthAmplitude: number = 4;
-  private angleAmplitude: number = Math.PI / 15;
-  private stepsAmplitude: number = 4;
+  private lengthAmplitude: number;
+  private widthAmplitude: number;
+  private angleAmplitude: number;
+  private stepsAmplitude: number;
 
-  private lengthFrequency: number = 1;
-  private widthFrequency: number = 2;
-  private angleFrequency: number = 4;
-  private stepsFrequency: number = 2;
+  private lengthFrequency: number;
+  private widthFrequency: number;
+  private angleFrequency: number;
+  private stepsFrequency: number;
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
@@ -57,12 +57,30 @@ export class RecursiveTreeComponent extends Scene implements OnInit, OnDestroy {
   /*****************************************************************************************************************************************
    * UPDATE */
   public update(): void {
+    this.fitScreen();
     this.branchWidth = this.widthBase + this.widthAmplitude * Math.sin(this.widthFrequency * this.time);
     this.branchLength = this.lengthBase + this.lengthAmplitude * Math.sin(this.lengthFrequency * this.time);
     this.branchAngle = this.angleBase + this.angleAmplitude * Math.sin(this.angleFrequency * this.time);
     this.maxSteps = this.stepsBase + this.stepsAmplitude * Math.sin(this.stepsFrequency * this.time);
 
     this.time += this.timeIncrement;
+  }
+
+  private fitScreen(): void {
+    this.lengthBase = this.screenWidth / 15;
+    this.widthBase = this.lengthBase / 20;
+    this.angleBase = Math.PI / 7;
+    this.stepsBase = 4;
+
+    this.lengthAmplitude = this.lengthBase * 2 / 3;
+    this.widthAmplitude = this.widthBase * 2 / 3;
+    this.angleAmplitude = Math.PI / 15;
+    this.stepsAmplitude = 3;
+
+    this.lengthFrequency = 1;
+    this.widthFrequency = 2;
+    this.angleFrequency = 4;
+    this.stepsFrequency = 2;
   }
 
   /*****************************************************************************************************************************************
