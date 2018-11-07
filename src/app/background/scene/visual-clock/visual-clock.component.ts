@@ -3,7 +3,8 @@ import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
 import {ClockService} from "../../../shared/services/clock.service";
-import {Subject} from "rxjs/Subject";
+import {Subject} from "rxjs";
+import {takeUntil} from "rxjs/operators";
 
 
 @Component({
@@ -64,22 +65,22 @@ export class VisualClockComponent extends Scene implements OnInit, OnDestroy {
 
 
     // Subscribe to clock service variables:
-    this.clockService.getSecondsFirstDigit().takeUntil(this.clockUnsubscribe).subscribe(value => {
+    this.clockService.getSecondsFirstDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
       this.secondsFirstDigit = parseInt(value, 10);
     });
-    this.clockService.getSecondsSecondDigit().takeUntil(this.clockUnsubscribe).subscribe(value => {
+    this.clockService.getSecondsSecondDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
       this.secondsSecondDigit = parseInt(value, 10);
     });
-    this.clockService.getMinutesFirstDigit().takeUntil(this.clockUnsubscribe).subscribe(value => {
+    this.clockService.getMinutesFirstDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
       this.minutesFirstDigit = parseInt(value, 10);
     });
-    this.clockService.getMinutesSecondDigit().takeUntil(this.clockUnsubscribe).subscribe(value => {
+    this.clockService.getMinutesSecondDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
       this.minutesSecondDigit = parseInt(value, 10);
     });
-    this.clockService.getHoursFirstDigit().takeUntil(this.clockUnsubscribe).subscribe(value => {
+    this.clockService.getHoursFirstDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
       this.hoursFirstDigit = parseInt(value, 10);
     });
-    this.clockService.getHoursSecondDigit().takeUntil(this.clockUnsubscribe).subscribe(value => {
+    this.clockService.getHoursSecondDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
       this.hoursSecondDigit = parseInt(value, 10);
     });
   }

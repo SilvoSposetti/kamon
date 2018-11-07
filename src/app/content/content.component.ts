@@ -2,7 +2,8 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {SearchService} from '../shared/services/search.service';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {ConfigService} from '../shared/services/config.service';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-content',
@@ -54,7 +55,6 @@ export class ContentComponent implements OnInit, OnDestroy {
   public categories: string[] = [];
 
 
-
   constructor(private searchService: SearchService, private configService: ConfigService) {
   }
 
@@ -72,16 +72,16 @@ export class ContentComponent implements OnInit, OnDestroy {
   }
 
   private listenForSearch(): void {
-    this.searchService.getSearch().takeUntil(this.ngUnsubscribe).subscribe((value) => {
+    this.searchService.getSearch().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
       this.searchText = value;
       if (value.length === 0) {
         this.checkShowSearch();
       }
     });
-    this.searchService.getSuggestions().takeUntil(this.ngUnsubscribe).subscribe((value) => {
+    this.searchService.getSuggestions().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
       this.searchSuggestions = value;
     });
-    this.searchService.getShortcut().takeUntil(this.ngUnsubscribe).subscribe((value) => {
+    this.searchService.getShortcut().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
       this.shortcut = value;
     });
   }

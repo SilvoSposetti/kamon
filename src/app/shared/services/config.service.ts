@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Configuration} from '../../../assets/config/config';
-import {Http} from '@angular/http';
-import 'rxjs/add/operator/map';
+import {HttpClient} from "@angular/common/http";
 
 
 
@@ -9,14 +8,13 @@ import 'rxjs/add/operator/map';
 export class ConfigService {
   private config: Configuration;
 
-  constructor(private http: Http) {
+  constructor(private http: HttpClient) {
   }
   // used at application startup and loads, maps and returns what is inside the JSON file
   load(url: string) {
     return new Promise((resolve) => {
-      this.http.get(url).map(res => res.json())
-        .subscribe(config => {
-          this.config = config;
+      this.http.get(url).subscribe((res: any) => {
+          this.config = res;
           resolve();
         });
     });

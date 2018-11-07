@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ScenesService} from '../../shared/services/scenes.service';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-scene-selector',
@@ -36,7 +37,7 @@ export class SceneSelectorComponent implements OnInit, OnDestroy {
   }
 
   private getSceneNr(): void {
-    this.scenesService.getSceneNr().takeUntil(this.ngUnsubscribe).subscribe((value) => {
+    this.scenesService.getSceneNr().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
       this.selectedSceneNr = value;
     });
     this.scenesService.wake();
@@ -69,7 +70,7 @@ export class SceneSelectorComponent implements OnInit, OnDestroy {
     return result + indexJ;
   }
 
-  public deactivate(): void{
+  public deactivate(): void {
     this.scenesService.setNone();
   }
 }

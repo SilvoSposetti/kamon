@@ -27,7 +27,6 @@
     "fast-simplex-noise": "^3.2.0",
     "open-simplex-noise": "^1.4.1",
     "rxjs": "^6.3.3",
-    "rxjs-compat": "^6.3.3",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

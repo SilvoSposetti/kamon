@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {environment} from '../environments/environment';
 import {FormsModule} from '@angular/forms';
-import {HttpModule, JsonpModule} from '@angular/http';
+import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // App components
 import {AppComponent} from './app.component';
@@ -104,10 +104,10 @@ import {ColorService} from './shared/services/color.service';
     RecursiveTreeComponent,
     StackedPlotComponent],
   imports: [
-    HttpModule,
     BrowserModule,
     FormsModule,
-    JsonpModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
     BrowserAnimationsModule
   ],
   providers: [ConfigService, {

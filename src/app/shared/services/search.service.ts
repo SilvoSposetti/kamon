@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
-import {Headers, Jsonp} from '@angular/http';
+import {Subject} from 'rxjs';
+import {Observable} from 'rxjs';
+import {HttpClient} from "@angular/common/http";
 import {ConfigService} from './config.service';
 
 @Injectable()
@@ -26,7 +26,7 @@ export class SearchService {
   private shortcut: string[] = [];
   private nullStringRegEx = new RegExp('^\\s*$');
 
-  constructor(private jsonP: Jsonp, private configService: ConfigService) {
+  constructor(private http: HttpClient, private configService: ConfigService) {
   }
 
   public setSearchString(newSearchString: string): void {
@@ -40,7 +40,7 @@ export class SearchService {
     }
     else {
       this.searchStringEncoded = newSearchString.split('+').join('%2B');
-        this.searchString = newSearchString;
+      this.searchString = newSearchString;
       this.searchStringSubject.next(newSearchString);
       this.updateShortcut();
 
@@ -98,7 +98,8 @@ export class SearchService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         headers.append('Access-Control-Allow-Origin', '*');
-        this.jsonP.request('https://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchStringEncoded).map(res => res.json()).subscribe(response => {
+
+        this.http.jsonp('https://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchStringEncoded, 'f').subscribe(response => {
           this.suggestionsArray = response[1].slice(0, this.configService.getConfig().amountOfSuggestions);
           this.suggestionsArraySubject.next(this.suggestionsArray);
           // Reset suggestions styled and elaborate the new ones;

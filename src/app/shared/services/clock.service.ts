@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/internal/Subject';
 import {DaysOfWeek} from '../models/DaysOfWeek';
+import {Observable} from "rxjs/internal/Observable";
 
 @Injectable()
 export class ClockService {

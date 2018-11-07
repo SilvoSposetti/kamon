@@ -1,7 +1,8 @@
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {FpsService} from '../services/fps.service';
 import {ColorService} from '../services/color.service';
 import {ElementRef, ViewChild} from '@angular/core';
+import {takeUntil} from 'rxjs/operators';
 
 // Abstract class used for initialisation, maintenance and termination of scenes.
 export abstract class Scene {
@@ -34,7 +35,7 @@ export abstract class Scene {
     this.running = true;
     this.setupGradients();
     this.setup();
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+    this.fpsService.getFps().pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
       this.fpsValues = value;
     });
     requestAnimationFrame(() => this.core());
