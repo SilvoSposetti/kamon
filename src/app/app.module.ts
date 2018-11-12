@@ -2,7 +2,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {environment} from '../environments/environment';
 import {FormsModule} from '@angular/forms';
-import {HttpModule, JsonpModule} from '@angular/http';
+import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // App components
 import {AppComponent} from './app.component';
@@ -40,6 +40,10 @@ import {QuadTreeComponent} from './background/scene/quad-tree/quad-tree.componen
 import {PlexusComponent} from './background/scene/plexus/plexus.component';
 import {RefractionComponent} from './background/scene/refraction/refraction.component';
 import {ParallaxComponent} from './background/scene/parallax/parallax.component';
+import {VisualClockComponent} from './background/scene/visual-clock/visual-clock.component';
+import {HexagonsComponent} from './background/scene/hexagons/hexagons.component';
+import {RecursiveTreeComponent} from './background/scene/recursive-tree/recursive-tree.component';
+import {StackedPlotComponent} from './background/scene/stacked-plot/stacked-plot.component';
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 import {MyBlinkDirective} from './shared/directives/my-blink.directive';
@@ -94,12 +98,16 @@ import {ColorService} from './shared/services/color.service';
     PlexusComponent,
     FpsComponent,
     RefractionComponent,
-    ParallaxComponent],
+    ParallaxComponent,
+    VisualClockComponent,
+    HexagonsComponent,
+    RecursiveTreeComponent,
+    StackedPlotComponent],
   imports: [
-    HttpModule,
     BrowserModule,
     FormsModule,
-    JsonpModule,
+    HttpClientModule,
+    HttpClientJsonpModule,
     BrowserAnimationsModule
   ],
   providers: [ConfigService, {

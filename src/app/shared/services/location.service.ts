@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
-import {Http} from '@angular/http';
+import {Subject} from 'rxjs';
+import {Observable} from 'rxjs';
+import {HttpClient} from "@angular/common/http";
 import {ConfigService} from './config.service';
 
 @Injectable()
@@ -20,7 +20,7 @@ export class LocationService {
   private latitude: number = 0;
   private longitude: number = 0;
 
-  constructor(private http: Http, private configService: ConfigService) {
+  constructor(private http: HttpClient, private configService: ConfigService) {
     this.allDataGatheredSubject.next(false);
   }
 
@@ -76,7 +76,7 @@ export class LocationService {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     headers.append('Access-Control-Allow-Origin', '*');
-    this.http.get('https://fcc-weather-api.glitch.me/api/current?lat=' + this.latitude + '&lon=' + this.longitude).map(res => res.json()).subscribe(response => {
+    this.http.get('https://fcc-weather-api.glitch.me/api/current?lat=' + this.latitude + '&lon=' + this.longitude).subscribe((response: any) => {
       this.locationNameSubject.next(response.name + ' - ' + response.sys.country);
       this.weatherSubject.next(response.weather[0].description);
       this.sunriseSubject.next(this.dateInSecondsToTime(response.sys.sunrise));

@@ -1,7 +1,7 @@
 {
   "useScene": false,
   "showClock": true,
-  "defaultScene": "parallax",
+  "defaultScene": "stacked-plot",
   "showCitations": false,
   "openLinkInNewTab": false,
   "showList": false,
@@ -10,7 +10,7 @@
   "amountOfSuggestions": 5,
   "allowLocation": false,
   "useToDoList": false,
-  "useCredits": true,
+  "useCredits": false,
   "showFPS": false,
   "backgroundGradientFirstStop": "30434A",
   "backgroundGradientSecondStop": "304D3A",

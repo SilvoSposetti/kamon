@@ -2,10 +2,10 @@ import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ConfigService} from './shared/services/config.service';
 import {SearchService} from './shared/services/search.service';
 import {ScreenSizeService} from './shared/services/screen-size.service';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
 import {environment} from '../environments/environment';
-import 'rxjs/Rx';
 import {ColorService} from './shared/services/color.service';
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -108,13 +108,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private listenForSelection() {
-    this.searchService.getSelection().takeUntil(this.ngUnsubscribe).subscribe((value) =>
+    this.searchService.getSelection().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) =>
       this.selectionSuggestion = value);
   }
 
 
   updateWindowSize(): void {
-    this.screenSizeService.getWidth().takeUntil(this.ngUnsubscribe).subscribe(
+    this.screenSizeService.getWidth().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       value => {
         this.screenWidth = value;
         this.isWide = value >= this.widthThreshold || !environment.production;
@@ -123,7 +123,7 @@ export class AppComponent implements OnInit, OnDestroy {
         // This is because most of the development process is done for wide screens.
       }
     );
-    this.screenSizeService.getHeight().takeUntil(this.ngUnsubscribe).subscribe(
+    this.screenSizeService.getHeight().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       value => {
         this.screenHeight = value;
         this.isTall = value >= this.heightThreshold || !environment.production;

@@ -3,7 +3,8 @@ import {ClockService} from '../../shared/services/clock.service';
 import {LocationService} from '../../shared/services/location.service';
 import {ConfigService} from '../../shared/services/config.service';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-clock',
@@ -76,34 +77,34 @@ export class ClockComponent implements OnInit, OnDestroy {
   updateData(): void {
 
     // CLOCK
-    this.clockService.getSecondsFirstDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getSecondsFirstDigit().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.secondsFirstDigit = value;
     });
-    this.clockService.getSecondsSecondDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getSecondsSecondDigit().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.secondsSecondDigit = value;
     });
-    this.clockService.getMinutesFirstDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getMinutesFirstDigit().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.minutesFirstDigit = value;
     });
-    this.clockService.getMinutesSecondDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getMinutesSecondDigit().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.minutesSecondDigit = value;
     });
-    this.clockService.getHoursFirstDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getHoursFirstDigit().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.hoursFirstDigit = value;
     });
-    this.clockService.getHoursSecondDigit().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getHoursSecondDigit().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.hoursSecondDigit = value;
     });
-    this.clockService.getDate().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getDate().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.day = value;
     });
-    this.clockService.getMonth().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getMonth().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.month = value;
     });
-    this.clockService.getYear().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getYear().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.year = value;
     });
-    this.clockService.getDay().takeUntil(this.ngUnsubscribeTime).subscribe(value => {
+    this.clockService.getDay().pipe(takeUntil(this.ngUnsubscribeTime)).subscribe(value => {
       this.dayOfWeek = value;
     });
 
@@ -113,34 +114,34 @@ export class ClockComponent implements OnInit, OnDestroy {
     // LOCATION & WEATHER:
     if (this.allowLocation) {
       this.locationService.getLocation();
-      this.locationService.getLatitude().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getLatitude().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.latitude = value;
       });
-      this.locationService.getLongitude().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getLongitude().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.longitude = value;
       });
-      this.locationService.getLocationName().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getLocationName().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.locationName = value;
       });
-      this.locationService.getWeather().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getWeather().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.weather = value;
       });
-      this.locationService.getLongitude().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getLongitude().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.longitude = value;
       });
-      this.locationService.getSunrise().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getSunrise().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.sunrise = value;
       });
-      this.locationService.getSunset().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getSunset().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.sunset = value;
       });
-      this.locationService.getTemperature().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getTemperature().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.temperature = value;
       });
-      this.locationService.getWeatherIcon().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getWeatherIcon().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.iconPath = value;
       });
-      this.locationService.getAllDataGathered().takeUntil(this.ngUnsubscribeLocation).subscribe(value => {
+      this.locationService.getAllDataGathered().pipe(takeUntil(this.ngUnsubscribeLocation)).subscribe(value => {
         this.allDataGathered = value && this.isWide;
       });
     }

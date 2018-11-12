@@ -1,7 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ToDoService} from '../../shared/services/to-do.service';
 import {ToDo} from '../../shared/models/ToDo';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-to-do',
@@ -28,7 +29,7 @@ export class ToDoComponent implements OnInit, OnDestroy {
   }
 
   private getToDos(): void {
-    this.toDoService.getToDos().takeUntil(this.toDoUnsubscribe).subscribe(value => {
+    this.toDoService.getToDos().pipe(takeUntil(this.toDoUnsubscribe)).subscribe(value => {
       this.toDoList = value;
     });
   }

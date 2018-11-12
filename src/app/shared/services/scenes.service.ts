@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ConfigService} from './config.service';
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class ScenesService {
@@ -81,7 +81,11 @@ export class ScenesService {
       'quad-tree',
       'plexus',
       'refraction',
-      'parallax'
+      'parallax',
+      'visual-clock',
+      'hexagons',
+      'recursive-tree',
+      'stacked-plot'
     ];
     this.scenesArray.sort();
     this.setSceneFromName(this.configService.getConfig().defaultScene);

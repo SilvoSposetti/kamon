@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FpsService} from '../../shared/services/fps.service';
-import {Subject} from 'rxjs/Subject';
+import {Subject} from 'rxjs';
+import {takeUntil} from "rxjs/operators";
 
 @Component({
   selector: 'app-fps',
@@ -52,7 +53,7 @@ export class FpsComponent implements OnInit, OnDestroy {
   }
 
   private getFPSData(): void {
-    this.fpsService.getFps().takeUntil(this.ngUnsubscribe).subscribe(value => {
+    this.fpsService.getFps().pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
       //this.fpsValues = value;
       setTimeout(() => this.fpsValues = value, 0); // need setTimeout otherwise causes an ExpressionChangedAfterItHasBeenCheckedError.
 
