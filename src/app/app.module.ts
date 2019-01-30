@@ -12,9 +12,6 @@ import {ClockComponent} from './content/clock/clock.component';
 import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
 import {ListComponent} from './content/list/list.component';
-import {CitationsComponent} from './content/citations/citations.component';
-import {CreditsComponent} from './content/credits/credits.component';
-import {ToDoComponent} from './content/to-do/to-do.component';
 import {FpsComponent} from './background/fps/fps.component';
 // Scenes:
 import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
@@ -85,10 +82,7 @@ import {ColorService} from './shared/services/color.service';
     BoidsComponent,
     InfiniteZoomComponent,
     ModularMultiplicationComponent,
-    CitationsComponent,
     DropsComponent,
-    CreditsComponent,
-    ToDoComponent,
     DiffusionLimitedAggregationComponent,
     GameOfLifeComponent,
     KaleidoscopeComponent,

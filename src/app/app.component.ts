@@ -16,14 +16,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
   // private keyboardEvent: any;
   // private altKeyAction: boolean;
-  public showList: boolean = this.configService.getConfig().showList;
+  public showList: boolean = this.configService.getConfig().showShortcutList;
   public selectionSuggestion: number = -1;
   public showClock = this.configService.getConfig().showClock;
-  public showCitations = this.configService.getConfig().showCitations;
-  public citations = this.configService.getConfig().citations;
-  public useToDoList = this.configService.getConfig().useToDoList;
   public showFPS = this.configService.getConfig().showFPS;
-  public useCredits = this.configService.getConfig().useCredits;
   public useScene = this.configService.getConfig().useScene;
 
   private widthThreshold = 769; // Values bigger or equal threshold are considered wide.

@@ -61,7 +61,7 @@ export class ContentComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.showSearch = false;
     this.listenForSearch();
-    this.configList = this.configService.getConfig().list;
+    this.configList = this.configService.getConfig().shortcuts;
     this.readList();
     this.searchService.setList(this.elements);
   }
