@@ -1,90 +1,117 @@
 .search-parent {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 1;
-  width: 100vw;
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  color: var(--default-font-color);
+  color: var(--search-input-font-color);
+  font-size: var(--search-text-font-size);
+  width: var(--search-compomnent-width);
+  background: var(--search-suggestions-background-color);
+  border-radius: var(--search-input-border-radius);
+  overflow: hidden;
+  margin:2em;
+
+  -webkit-box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
 }
 
-.search-background-box-shadow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  -webkit-box-shadow:var(--default-box-shadow);
-  -moz-box-shadow: var(--default-box-shadow);
-  box-shadow: var(--default-box-shadow);
+/*SEARCH INPUT*/
+
+.search-input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
-/***********************************************************************************************************************
-Search Text:
-***********************************************************************************************************************/
+.form-container {
+  width: 100%;
+}
 
-.search-text-container {
+.search-input {
+  width: 100%;
+  padding-left: 0.8em;
+  padding-right: 0.8em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  font-family: 'Montserrat', sans-serif;
+  font-size: var(--search-text-font-size);
+  box-sizing: border-box;
+  border: 0;
+  margin: 0;
+  color: var(--search-input-font-color);
+  background-color: var(--search-input-background-color);
+
+  -webkit-box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
+}
+
+.search-shortcut-container {
+  color:white;
+  /*position: relative;*/
+  /*right: 0;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-shortcut-background {
+  width: 15em;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-box-shadow: inset 0px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: inset 0px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.1);
+
+}
+
+
+.search-input:focus {
+  outline: none;
+}
+
+/*SUGGESTIONS*/
+.search-suggestion-expandable{
+  width:100%;
+}
+.search-suggestion-container {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--search-text-font-size);
-
-}
-
-.search-text {
-  white-space: pre;
-}
-
-/***********************************************************************************************************************
-Suggestions:
-***********************************************************************************************************************/
-.suggestions-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: row;
-  flex-wrap: wrap;
+
 }
 
-.suggestion {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
+.suggestion-separator {
+  min-height: 1em;
 }
 
-.suggestion-text:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 0.4em;
+.suggestion-text-container {
+  width: 100%;
+  height: 2em;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .suggestion-text {
-  font-size: var(--suggestions-font-size);
-  padding: 0.5em;
-  margin: 1em;
-
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
 }
 
-.suggestions-separator {
-  height: 1.618em;
-  width: 1px;
-  margin: 0;
-  padding: 0;
-  border-left: 1px solid white;
+.suggestion-text-container:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+
 }
 
 .suggestionHighlighted {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 0.4em;
-}
-
-.shortcut-name {
-  font-size: var(--shortcut-found-font-size);
+  background-color: rgba(255, 255, 255, 0.1);
 }

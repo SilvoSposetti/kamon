@@ -1,30 +1,12 @@
 <div class="content-parent">
-  <div class="content-container">
-    <app-clock [@myEnter] *ngIf="showClock" [showList]="showList" [isWide]="isWide"></app-clock>
+  <!--<div class="content-menu-window-container">-->
+    <!--<app-menu-window></app-menu-window>-->
+  <!--</div>-->
 
-    <!--<div class="content-separator" *ngIf="showClock && showList"></div>-->
-    <app-list [@myEnter] *ngIf="showList" [elements]="elements" [categories]="categories" [showClock]="showClock"></app-list>
+  <div class="content-search-and-clock-container">
+    <app-search></app-search>
 
-    <app-search [@myEnter] *ngIf="showSearch && isWide" [searchText]="searchText" [selectionSuggestion]="selectionSuggestion"
-                [searchSuggestions]="searchSuggestions" [shortcut]="shortcut"></app-search>
-
-
-    <div class="scene-selector-hover" (mouseenter)="sceneSelectorHoverIn()" (mouseleave)="sceneSelectorHoverOut()">
-      <app-scene-selector [@myEnter] *ngIf="showSceneSelector"></app-scene-selector>
-    </div>
-
-    <div class="search-input-container">
-      <form class="form-container" #searchForm="ngForm" id="searchForm">
-        <label for="search-input">Search</label>
-        <input class="search-input" id="search-input"
-               maxlength="100"
-               [myFocus]="true"
-               [(ngModel)]="searchText"
-               name="search-input"
-               (ngModelChange)="searchInputChanged()"
-               #eventName="ngModel">
-        <!--(ngModelChange) must be after the [(ngModel)] so that the function can be called after the value changes-->
-      </form>
-    </div>
+    <app-clock [isWide]="isWide"></app-clock>
   </div>
 </div>
+

@@ -23,8 +23,8 @@ import {takeUntil} from "rxjs/operators";
           animate(400, style({opacity: 0}))
         ])
       ]
-    )
-  ],
+    ),
+  ]
 })
 
 export class ClockComponent implements OnInit, OnDestroy {

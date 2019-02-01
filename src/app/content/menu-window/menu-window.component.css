@@ -1,0 +1,12 @@
+.menu-window-parent {
+  /*110 because otherwise the box shadow makes strange effects ath the page edges*/
+  width: 100%;
+  height: 100vh;
+  background: var(--default-background-color);
+  display: flex;
+  color: var(--default-font-color);
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid red;
+}

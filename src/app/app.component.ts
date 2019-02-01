@@ -16,9 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   // private keyboardEvent: any;
   // private altKeyAction: boolean;
-  public showList: boolean = this.configService.getConfig().showShortcutList;
   public selectionSuggestion: number = -1;
-  public showClock = this.configService.getConfig().showClock;
   public showFPS = this.configService.getConfig().showFPS;
   public useScene = this.configService.getConfig().useScene;
 
@@ -58,43 +56,41 @@ export class AppComponent implements OnInit, OnDestroy {
     if (event.which === 34) {
       event.preventDefault();
       event.stopPropagation();
-      console.log('pageDown');
-      this.showList = !this.showList;
+      //console.log('pageDown');
     }
     else if (event.which === 27) {
       event.preventDefault();
       event.stopPropagation();
-      console.log('escape');
-      this.searchService.resetSearchString();
+      //console.log('escape');
+      //this.searchService.resetSearchString();
     }
     else if (event.which === 13) {
       event.preventDefault();
       event.stopPropagation();
-      console.log('enter');
-      this.searchService.launchSearch(this.selectionSuggestion);
+      //console.log('enter');
+      //this.searchService.launchSearch(this.selectionSuggestion);
     }
     else if (event.which === 37 || event.which === 38) {
       //event.preventDefault();
       event.stopPropagation();
-      console.log('arrowLeft');
-      this.searchService.selectLeft();
+      //console.log('arrowLeft');
+      //this.searchService.selectLeft();
     }
     else if (event.which === 39 || event.which === 40) {
       //event.preventDefault();
       event.stopPropagation();
-      console.log('arrowRight');
-      this.searchService.selectRight();
+      //console.log('arrowRight');
+      //this.searchService.selectRight();
     }
     else if (event.which === 36) {
       event.preventDefault();
       event.stopPropagation();
-      console.log('home');
+      //console.log('home');
     }
     else if (event.which === 33) {
       event.preventDefault();
       event.stopPropagation();
-      console.log('pageUp');
-      this.showClock = !this.showClock;
+      //console.log('pageUp');
     }
 
     //this.keyboardEvent = event;
@@ -104,8 +100,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private listenForSelection() {
-    this.searchService.getSelection().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) =>
-      this.selectionSuggestion = value);
+  //  this.searchService.getSelectionIndex().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) =>
+  //    this.selectionSuggestion = value);
   }
 
 
@@ -114,7 +110,6 @@ export class AppComponent implements OnInit, OnDestroy {
       value => {
         this.screenWidth = value;
         this.isWide = value >= this.widthThreshold || !environment.production;
-        //this.isWide = value >= this.widthThreshold;
         // If in production env then the screen is always wide.
         // This is because most of the development process is done for wide screens.
       }
@@ -123,7 +118,6 @@ export class AppComponent implements OnInit, OnDestroy {
       value => {
         this.screenHeight = value;
         this.isTall = value >= this.heightThreshold || !environment.production;
-        //this.isTall = value >= this.heightThreshold;
         // If in production env then the screen is always tall.
         // This is because most of the development process is done for tall screens.
 

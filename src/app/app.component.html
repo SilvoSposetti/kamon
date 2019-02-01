@@ -1,13 +1,6 @@
 <div class="app-parent" [ngClass]="{'app-desktop': isWide, 'app-mobile':!isWide}">
   <div class="content">
-    <app-content [showClock]="showClock"
-                 [showList]="showList"
-                 [showCitations]="showCitations"
-                 [selectionSuggestion]="selectionSuggestion"
-                 [citations]="citations"
-                 [useToDoList]="useToDoList"
-                 [useCredits]="useCredits"
-                 [screenHeight]="screenHeight"
+    <app-content [screenHeight]="screenHeight"
                  [screenWidth]="screenWidth"
                  [isWide]="isWide"
                  [isTall]="isTall"

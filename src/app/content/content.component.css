@@ -2,58 +2,27 @@
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 
-.content-container {
+.content-menu-window-container {
+  flex-grow: 382;
+}
+
+.content-search-and-clock-container {
+  flex-grow: 618;
   display: flex;
+  flex-wrap: wrap-reverse;
+  /*width: 10vw;*/
+  /*height: 10vh;*/
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width:100%;
+  align-content: space-around;
+  justify-content: space-around;
 }
 
-.content-separator {
-  width: 30px;
-  height: 40px;
-}
-
-/* MOVED SEARCH INPUT OUTSIDE WINDOW */
-.search-input-container {
-  position: absolute;
-  bottom: 100%;
-  right: 100%;
-}
-
-
-/*SCENE-SELECTOR-HOVER*/
-.scene-selector-hover{
-  position: fixed;
-  top: 1em;
-  left: 1em;
-  border-radius: var(--credits-hover-square-size);
-  min-height: var(--credits-hover-square-size);
-  min-width: var(--credits-hover-square-size);
-}
-
-/*CREDITS-HOVER*/
-.credits-hover{
-  position: fixed;
-  bottom: 1em;
-  right: 1em;
-  border-radius: var(--credits-hover-square-size);
-  min-height: var(--credits-hover-square-size);
-  min-width: var(--credits-hover-square-size);
-}
-
-/*TO-DO-HOVER*/
-.to-do-hover{
-  position: fixed;
-  bottom: 1em;
-  left: 1em;
-  border-radius: var(--credits-hover-square-size);
-  min-height: var(--credits-hover-square-size);
-  min-width: var(--credits-hover-square-size);
+.app-search{
+  flex-shrink: 1;
 }

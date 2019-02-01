@@ -33,14 +33,11 @@
 
   /*********** CONTENT ***********/
 
-  /* Citations */
-  --citation-message-font-size: 1em;
-  --citation-author-font-size: 0.8em;
 
-  /* Clock*/
-  --clock-info-font-size: 0.9em;
-  --clock-dial-font-size: 4.5em;
-  --clock-lines-color: 1px solid rgba(255, 255, 255, 0.3);
+  --clock-info-font-size: 1.1em;
+  --clock-dial-font-size: 5em;
+  --clock-font-color: #BFBA91;
+  --clock-dial-font-weight: 100;
 
   /* List */
   --list-category-font-size: 1.2em;
@@ -49,16 +46,15 @@
   --list-element-hover-background-color: rgba(200, 200, 200, 0.4);
 
   /*SEARCH COMPONENT*/
-  --search-text-font-size: 2em;
+  --search-compomnent-width: 30em;
+  --search-text-font-size: 1.2em;
   --suggestions-font-size: 1em;
-  --shortcut-found-font-size: 1.2em;
-  --search-background-color: rgba(0, 0, 0, 0.7);
+  --shortcut-found-font-size: 1em;
+  --search-input-background-color: #30434A;
+  --search-input-font-color: #BFBA91;
+  --search-suggestions-background-color: #4A6D7C;
+  --search-input-border-radius: 0.5em;
 
-  /*CREDITS*/
-  --credits-font-size: 0.8em;
-  --credits-height: 5em;
-  --credits-border: 15em;
-  --credits-hover-square-size: 5em;
 
   /*OTHER*/
   /*.ng-valid[required], .ng-valid.required {*/
@@ -71,7 +67,7 @@
   /*LOADING SCREEN*/
   --loading-font-size: 2vh;
   --loading-font-color: white;
-  --loading-background-color: #373737;
+  --loading-background-color: #30434A;
 
 }
 

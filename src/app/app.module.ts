@@ -2,12 +2,13 @@ import {BrowserModule} from '@angular/platform-browser';
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {environment} from '../environments/environment';
 import {FormsModule} from '@angular/forms';
-import {HttpClientJsonpModule, HttpClientModule} from "@angular/common/http";
+import {HttpClientJsonpModule, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 // App components
 import {AppComponent} from './app.component';
 import {BackgroundComponent} from './background/background.component';
 import {ContentComponent} from './content/content.component';
+import {MenuWindowComponent} from './content/menu-window/menu-window.component';
 import {ClockComponent} from './content/clock/clock.component';
 import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
@@ -44,6 +45,8 @@ import {StackedPlotComponent} from './background/scene/stacked-plot/stacked-plot
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 import {MyBlinkDirective} from './shared/directives/my-blink.directive';
+import {SmoothHeightAnimationDirective} from './shared/directives/smooth-height-animation.directive';
+
 // Services:
 import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';
@@ -96,7 +99,9 @@ import {ColorService} from './shared/services/color.service';
     VisualClockComponent,
     HexagonsComponent,
     RecursiveTreeComponent,
-    StackedPlotComponent],
+    StackedPlotComponent,
+    MenuWindowComponent,
+    SmoothHeightAnimationDirective],
   imports: [
     BrowserModule,
     FormsModule,
