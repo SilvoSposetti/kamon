@@ -87,7 +87,7 @@ export class SearchService {
           let newSuggestionsStyled = [];
           for (let i = 0; i < this.suggestionsArray.length; i++) {
             let suggestion = this.suggestionsArray[i];
-            suggestion = suggestion.replace(this.searchString.toLowerCase(), '<i><b>' + this.searchString.toLowerCase() + '</i></b>');
+            suggestion = suggestion.replace(this.searchString.toLowerCase(), '<i><b> ' +this.searchString.toLowerCase() + '</b></i>');
             newSuggestionsStyled.push(suggestion);
           }
           this.suggestionsArrayStyledSubject.next(newSuggestionsStyled);

@@ -6,6 +6,7 @@
   color: var(--search-input-font-color);
   font-size: var(--search-text-font-size);
   width: var(--search-compomnent-width);
+  max-width: var(--search-compomnent-max-width);
   background: var(--search-suggestions-background-color);
   border-radius: var(--search-input-border-radius);
   overflow: hidden;
@@ -27,6 +28,7 @@
 .form-container {
   width: 100%;
 }
+
 
 .search-input {
   width: 100%;

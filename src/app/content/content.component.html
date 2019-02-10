@@ -1,9 +1,20 @@
-<div class="content-parent">
-  <!--<div class="content-menu-window-container">-->
-    <!--<app-menu-window></app-menu-window>-->
-  <!--</div>-->
-
-  <div class="content-search-and-clock-container">
+<div class="content-parent" [ngClass]="{'content-parent-wide': isWide, 'content-parent-narrow':!isWide}">
+  <div class="content-menu-window-container"
+       [@myMenuEnterLeaveHorizontal]="state"
+       [@myMenuEnterLeaveVertical]="state"
+       *ngIf="showMenu"
+       [ngClass]="{'content-menu-window-container-wide': isWide, 'content-menu-window-container-narrow':!isWide}">
+    <app-menu-window></app-menu-window>
+  </div>
+  <div class="arrow-container"
+       [ngClass]="{'arrow-container-wide': isWide, 'arrow-container-narrow':!isWide}">
+    <div class="menu-arrow"
+         (click)="swapMenuVisibility()">
+      <img class="arrow-img" src="{{arrowPath}}">
+    </div>
+  </div>
+  <div class="content-search-and-clock-container"
+       [ngClass]="{'content-search-and-clock-container-wide': isWide, 'content-search-and-clock-container-narrow':!isWide}">
     <app-search></app-search>
 
     <app-clock [isWide]="isWide"></app-clock>

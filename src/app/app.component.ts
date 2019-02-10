@@ -5,7 +5,7 @@ import {ScreenSizeService} from './shared/services/screen-size.service';
 import {Subject} from 'rxjs';
 import {environment} from '../environments/environment';
 import {ColorService} from './shared/services/color.service';
-import {takeUntil} from "rxjs/operators";
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -57,37 +57,31 @@ export class AppComponent implements OnInit, OnDestroy {
       event.preventDefault();
       event.stopPropagation();
       //console.log('pageDown');
-    }
-    else if (event.which === 27) {
+    } else if (event.which === 27) {
       event.preventDefault();
       event.stopPropagation();
       //console.log('escape');
       //this.searchService.resetSearchString();
-    }
-    else if (event.which === 13) {
+    } else if (event.which === 13) {
       event.preventDefault();
       event.stopPropagation();
       //console.log('enter');
       //this.searchService.launchSearch(this.selectionSuggestion);
-    }
-    else if (event.which === 37 || event.which === 38) {
+    } else if (event.which === 37 || event.which === 38) {
       //event.preventDefault();
       event.stopPropagation();
       //console.log('arrowLeft');
       //this.searchService.selectLeft();
-    }
-    else if (event.which === 39 || event.which === 40) {
+    } else if (event.which === 39 || event.which === 40) {
       //event.preventDefault();
       event.stopPropagation();
       //console.log('arrowRight');
       //this.searchService.selectRight();
-    }
-    else if (event.which === 36) {
+    } else if (event.which === 36) {
       event.preventDefault();
       event.stopPropagation();
       //console.log('home');
-    }
-    else if (event.which === 33) {
+    } else if (event.which === 33) {
       event.preventDefault();
       event.stopPropagation();
       //console.log('pageUp');
@@ -100,8 +94,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private listenForSelection() {
-  //  this.searchService.getSelectionIndex().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) =>
-  //    this.selectionSuggestion = value);
+    //  this.searchService.getSelectionIndex().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) =>
+    //    this.selectionSuggestion = value);
   }
 
 
@@ -109,7 +103,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.screenSizeService.getWidth().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       value => {
         this.screenWidth = value;
-        this.isWide = value >= this.widthThreshold || !environment.production;
+        //this.isWide = value >= this.widthThreshold || !environment.production;
+        this.isWide = value >= this.widthThreshold;
         // If in production env then the screen is always wide.
         // This is because most of the development process is done for wide screens.
       }
@@ -117,7 +112,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.screenSizeService.getHeight().pipe(takeUntil(this.ngUnsubscribe)).subscribe(
       value => {
         this.screenHeight = value;
-        this.isTall = value >= this.heightThreshold || !environment.production;
+        //this.isTall = value >= this.heightThreshold || !environment.production;
+        this.isTall = value >= this.heightThreshold
         // If in production env then the screen is always tall.
         // This is because most of the development process is done for tall screens.
 
