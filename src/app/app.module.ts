@@ -14,10 +14,15 @@ import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
 import {ListComponent} from './content/list/list.component';
 import {FpsComponent} from './background/fps/fps.component';
+import { ShortcutListComponent } from './content/menu-window/shortcut-list/shortcut-list.component';
+import { DefaultMenuComponent } from './content/menu-window/default-menu/default-menu.component';
+import { HowToComponent } from './content/menu-window/how-to/how-to.component';
+import { AboutComponent } from './content/menu-window/about/about.component';
+import {SceneSelectorComponent} from './content/menu-window/scene-selector/scene-selector.component';
+
 // Scenes:
 import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
 import {PhyllotaxyComponent} from './background/scene/phyllotaxy/phyllotaxy.component';
-import {SceneSelectorComponent} from './content/scene-selector/scene-selector.component';
 import {MazeComponent} from './background/scene/maze/maze.component';
 import {PerlinFieldComponent} from './background/scene/perlin-field/perlin-field.component';
 import {RainComponent} from './background/scene/rain/rain.component';
@@ -45,7 +50,6 @@ import {StackedPlotComponent} from './background/scene/stacked-plot/stacked-plot
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 import {MyBlinkDirective} from './shared/directives/my-blink.directive';
-import {SmoothHeightAnimationDirective} from './shared/directives/smooth-height-animation.directive';
 
 // Services:
 import {ConfigService} from './shared/services/config.service';
@@ -60,6 +64,7 @@ import {FpsService} from './shared/services/fps.service';
 import {ColorService} from './shared/services/color.service';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +76,10 @@ import {ColorService} from './shared/services/color.service';
     ListComponent,
     SearchComponent,
     MyFocusDirective,
+    ShortcutListComponent,
+    DefaultMenuComponent,
+    HowToComponent,
+    AboutComponent,
     AsteroidsComponent,
     PhyllotaxyComponent,
     SceneSelectorComponent,
@@ -100,8 +109,7 @@ import {ColorService} from './shared/services/color.service';
     HexagonsComponent,
     RecursiveTreeComponent,
     StackedPlotComponent,
-    MenuWindowComponent,
-    SmoothHeightAnimationDirective],
+    MenuWindowComponent],
   imports: [
     BrowserModule,
     FormsModule,

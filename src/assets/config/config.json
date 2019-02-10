@@ -1,5 +1,5 @@
 {
-  "useScene": true,
+  "useScene": false,
   "defaultScene": "stacked-plot",
   "openLinkInNewTab": false,
   "suggestions": true,

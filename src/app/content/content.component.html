@@ -1,12 +1,22 @@
 <div class="content-parent" [ngClass]="{'content-parent-wide': isWide, 'content-parent-narrow':!isWide}">
+
+
   <div class="content-menu-window-container"
-       [@myMenuEnterLeaveHorizontal]="state"
-       [@myMenuEnterLeaveVertical]="state"
        *ngIf="showMenu"
+       [@myMenuEnterLeaveHorizontalSlide]="state"
+       [@myMenuEnterLeaveVerticalSlide]="state"
        [ngClass]="{'content-menu-window-container-wide': isWide, 'content-menu-window-container-narrow':!isWide}">
-    <app-menu-window></app-menu-window>
+    <app-menu-window
+      (someEvent)="closeMenu()">
+    </app-menu-window>
   </div>
-  <div class="arrow-container"
+  <div class="content-menu-window-stretch"
+       *ngIf="showMenu"
+       [ngClass]="{'content-menu-window-container-wide': isWide, 'content-menu-window-container-narrow':!isWide}"
+       [@myMenuEnterLeaveHorizontalStretch]="state"
+       [@myMenuEnterLeaveVerticalStretch]="state">
+  </div>
+  <div class="arrow-container" *ngIf="!showMenu"
        [ngClass]="{'arrow-container-wide': isWide, 'arrow-container-narrow':!isWide}">
     <div class="menu-arrow"
          (click)="swapMenuVisibility()">

@@ -119,26 +119,26 @@ export class LocationService {
 
       case '800': {
         if (isDay) {
-          return path + 'day-clear-sky.png';
+          return path + 'day-clear-sky.svg';
         }
         else {
-          return path + 'night-clear-sky.png';
+          return path + 'night-clear-sky.svg';
         }
       }
       case '801': {
         if (isDay) {
-          return path + 'day-few-clouds.png';
+          return path + 'day-few-clouds.svg';
         }
         else {
-          return path + 'night-few-clouds.png';
+          return path + 'night-few-clouds.sc';
         }
       }
       case '802': {
-        return path + 'scattered-clouds.png';
+        return path + 'scattered-clouds.svg';
       }
       case '803':
       case '804': {
-        return path + 'broken-clouds.png';
+        return path + 'broken-clouds.svg';
       }
       case '300':
       case '301':
@@ -153,7 +153,7 @@ export class LocationService {
       case '521':
       case '522':
       case '531': {
-        return path + 'shower-rain.png';
+        return path + 'shower-rain.svg';
       }
       case '500':
       case '501':
@@ -161,10 +161,10 @@ export class LocationService {
       case '503':
       case '504': {
         if (isDay) {
-          return path + 'day-rain.png';
+          return path + 'day-rain.svg';
         }
         else {
-          return path + 'night-rain.png';
+          return path + 'night-rain.svg';
         }
       }
       case '200':
@@ -177,7 +177,7 @@ export class LocationService {
       case '230':
       case '231':
       case '232': {
-        return path + 'thunderstorm.png';
+        return path + 'thunderstorm.svg';
       }
       case '511':
       case '600':
@@ -190,7 +190,7 @@ export class LocationService {
       case '620':
       case '621':
       case '622': {
-        return path + 'snow.png';
+        return path + 'snow.svg';
       }
       case '701':
       case '711':
@@ -202,7 +202,7 @@ export class LocationService {
       case '762':
       case '771':
       case '781': {
-        return path + 'mist.png';
+        return path + 'mist.svg';
       }
     }
     return path + 'empty.png';

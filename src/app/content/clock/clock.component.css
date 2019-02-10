@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  text-shadow: 7px 7px 5px rgba(0, 0, 0, 0.25);
+  text-shadow: 7px 7px 5px rgba(0, 0, 0, 0.4);
   color: var(--clock-font-color);
   margin:2em;
 }
