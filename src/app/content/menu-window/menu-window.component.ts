@@ -17,6 +17,7 @@ export class MenuWindowComponent implements OnInit, OnChanges {
   public arrowPath: string = '../assets/img/UI/ArrowLeft.svg';
 
   public logoPath: string = '../assets/img/icon/icoShadow.svg';
+  public backBtnPath: string = '../assets/img/UI/Close.svg';
 
   @Output() someEvent = new EventEmitter();
 
@@ -64,7 +65,7 @@ export class MenuWindowComponent implements OnInit, OnChanges {
     }
   }
 
-  private closeMenu(): void {
+  public closeMenu(): void {
     this.closeMenuParentMethod();
   }
 

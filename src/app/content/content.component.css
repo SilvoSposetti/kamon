@@ -85,14 +85,13 @@ Arrow
 }
 
 .menu-arrow {
-  border-radius: 10px;
+  border-radius: 100px;
   /*border: 1px solid white;*/
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin: 1em;
   cursor: pointer;
 }
 

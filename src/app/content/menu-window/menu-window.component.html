@@ -1,19 +1,21 @@
 <div class="menu-window-parent">
 
   <div class="back-button-container">
-    <div class="btn" (click)="resetSelectedTab()">
-      X
+    <div class="btn btn-container" (click)="resetSelectedTab()" *ngIf="selectedTab !== 'default'">
+      <img class="btn-img" src="{{backBtnPath}}">
     </div>
   </div>
 
-  <div class="default-menu-container menu-container" *ngIf="selectedTab==='default'">
-    <div class="default-menu">
-      <div class="menu-logo">
-        <img class="logo-img" src="{{logoPath}}">
-      </div>
+  <div class=" menu-container default-menu-container"
+       *ngIf="selectedTab==='default'"
+       [ngClass]="{'default-menu-container-wide': isWide, 'default-menu-container-narrow': !isWide}">
+    <div class="menu-logo-container"
+         [ngClass]="{'menu-logo-container-wide': isWide, 'menu-logo-container-narrow':!isWide}">
+      <img class="logo-img" src="{{logoPath}}">
     </div>
-    <div class="menu-list-container" *ngFor="let tab of tabs, let i=index">
-      <div class="menu-element-container">
+    <div class="menu-list-container"
+         [ngClass]="{'menu-list-container-wide': isWide, 'menu-list-container-narrow':!isWide}">
+    <div class="menu-element-container btn" *ngFor="let tab of tabs, let i=index">
         <div class="menu-element" (click)="selectTabNr(i)">
           {{tabNames[i]}}
         </div>
@@ -40,7 +42,7 @@
 
 
   <div class="menu-arrow-container">
-    <div class="menu-arrow" (click)="closeMenu()">
+    <div class="menu-arrow btn" (click)="closeMenu()">
       <img class="arrow-img" src="{{arrowPath}}">
     </div>
   </div>

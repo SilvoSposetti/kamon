@@ -28,11 +28,11 @@ type ArrowState = ('Up' | 'Down' | 'Left' | 'Right');
       [
         transition('void => narrow', [ // :enter
           style({height: 0}),
-          animate('500ms ease', style({height: '*', opacity: 1}))
+          animate('500ms ease', style({height: '*'}))
         ]),
         transition('narrow => void', [ // :leave
           style({height: '*'}),
-          animate('500ms ease', style({height: 0, opacity: 0}))
+          animate('500ms ease', style({height: 0}))
         ])
       ]
     ),
@@ -63,6 +63,19 @@ type ArrowState = ('Up' | 'Down' | 'Left' | 'Right');
         ])
       ]
     ),
+    trigger(
+      'myArrowEnterLeave',
+      [
+        transition(':enter', [
+          style({opacity: 0}),
+          animate('300ms ease', style({opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({opacity: 1}),
+          animate('300ms ease', style({opacity: 0}))
+        ])
+      ]
+    ),
   ],
 })
 
@@ -73,7 +86,7 @@ export class ContentComponent implements OnInit, OnChanges {
   @Input() public isWide: boolean;
   @Input() public isTall: boolean;
 
-  public showMenu: boolean = false; // ToDo: set this back to false
+  public showMenu: boolean = false;
 
   public state: UIState = 'wide';
 

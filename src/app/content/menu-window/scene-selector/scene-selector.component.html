@@ -1,3 +1,22 @@
-<p>
-  scene-selector works!
-</p>
+<div class="scene-selector-parent">
+  <div class="deactivate-scene-container" (click)="deactivate()" [ngClass]="{highlighted: selectedSceneNr === -1}">
+    <div class="deactivate-scene">
+      Deactivate
+    </div>
+  </div>
+  <div class="alphabetic-blocks" *ngFor="let block of scenesAlphabeticalList, let i = index">
+    <div class="initial-column">
+      {{block[0][0].toUpperCase()}}
+    </div>
+    <div class="scenes-row">
+      <div class="scene-container btn" *ngFor="let scene of block, let j = index"
+           [ngClass]="{highlighted: selectedSceneNr === getSceneNrFromIAndJ(i,j)}">
+        <div class="scene-name"
+             (click)="clickScene(i,j)">
+          {{scene}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

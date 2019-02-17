@@ -17,60 +17,150 @@
   box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
 }
 
-.menu-container {
-  height: 100%;
-  width: 95%;
-  /*border: 2px solid red;*/
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.default-menu{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 /***********************************************************************************************************************
 Back button
 ***********************************************************************************************************************/
 
 .back-button-container {
-  height: 10%;
   width: 95%;
-  display: flex; align-items: center;
+  height: 5%;
+  min-height: 3em;
+  display: flex;
+  align-items: center;
   justify-content: flex-end;
-
 }
 
-.btn {
-  cursor: pointer;
+.btn-container {
+  width: 2.5em;
+  height: 2.5em;
+  border-radius: 2.1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-img {
   width: 2em;
   height: 2em;
 }
 
 /***********************************************************************************************************************
-Logo
+Default Menu
 ***********************************************************************************************************************/
-.menu-logo {
+
+.menu-container {
+  width: 95%;
+  min-height: 1%;
+  height: 90%;
+}
+
+.default-menu-container-wide {
+  flex-direction: column;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 80%;
-  height: 80%;
+  justify-content: space-around;
+  /*width: 95%;*/
+  /*max-height: 60%;*/
 
 }
 
+.default-menu-container-narrow {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /*width: 95%;*/
+  /*height: 80%;*/
+}
+
+
+.menu-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-logo-container-wide {
+  width: 60%;
+  height: 60%;
+}
+
+.menu-logo-container-narrow {
+  width: 70%;
+  height: 70%;
+}
+
+.menu-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.menu-list-container-wide {
+  width: 80%;
+  height: 50%;
+}
+
+.menu-list-container-narrow {
+  height: 80%;
+  width: 50%;
+}
+
+/***********************************************************************************************************************
+Logo
+***********************************************************************************************************************/
+
 .logo-img {
-  width: 100%;
-  height: 100%;
+  width: 90%;
+  height: 90%;
+  max-width: 30vw;
+  max-height: 30vw;
 }
 
 
 /***********************************************************************************************************************
 Menu List
 ***********************************************************************************************************************/
+.menu-element-container {
+  cursor: pointer;
+  border-radius: 1em;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2em;
+}
 
+.menu-element {
+  border-radius: 0.5em;
+  padding: 0.2em;
+}
 
+/***********************************************************************************************************************
+Arrow
+***********************************************************************************************************************/
+.menu-arrow-container {
+  width: 100%;
+  height: 5%;
+  min-height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
 
+.menu-arrow {
+  cursor: pointer;
+  width: 3em;
+  height: 3em;
+  border-radius: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow-img {
+  cursor: pointer;
+  width: 3em;
+  height: 3em;
+}

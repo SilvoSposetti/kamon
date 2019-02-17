@@ -7,6 +7,7 @@
        [@myMenuEnterLeaveVerticalSlide]="state"
        [ngClass]="{'content-menu-window-container-wide': isWide, 'content-menu-window-container-narrow':!isWide}">
     <app-menu-window
+      [isWide]="isWide"
       (someEvent)="closeMenu()">
     </app-menu-window>
   </div>
@@ -17,8 +18,9 @@
        [@myMenuEnterLeaveVerticalStretch]="state">
   </div>
   <div class="arrow-container" *ngIf="!showMenu"
+       [@myArrowEnterLeave]="state"
        [ngClass]="{'arrow-container-wide': isWide, 'arrow-container-narrow':!isWide}">
-    <div class="menu-arrow"
+    <div class="menu-arrow btn"
          (click)="swapMenuVisibility()">
       <img class="arrow-img" src="{{arrowPath}}">
     </div>
