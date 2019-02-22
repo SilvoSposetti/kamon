@@ -14,12 +14,10 @@
   "searchEngine": [
     "Google",
     "http://www.google.com/",
-    "/search?q=",
-    "#373737"
+    "/search?q="
   ],
   "shortcuts": [
     [
-      "Silvo",
       "Gmail",
       "g",
       "https://mail.google.com/mail/u/0/?tab=wm#inbox",
@@ -27,7 +25,6 @@
       "#4285f4"
     ],
     [
-      "Silvo",
       "GitHub",
       "G",
       "https://github.com",
@@ -35,7 +32,6 @@
       "#373737"
     ],
     [
-      "Silvo",
       "Drive",
       "d",
       "https://drive.google.com/drive/my-drive",
@@ -43,15 +39,6 @@
       "#fcc93e"
     ],
     [
-      "Silvo",
-      "WhatsApp Web",
-      "w",
-      "https://web.whatsapp.com/",
-      null,
-      "#2a948a"
-    ],
-    [
-      "Silvo",
       "YouTube",
       "y",
       "https://www.youtube.com/",
@@ -59,23 +46,20 @@
       "#fc0101"
     ],
     [
-      "Uni",
-      "UniMail",
+      "Uni Mail",
       "u",
       "https://webmail.uzh.ch/",
       null,
       "#0099ff"
     ],
     [
-      "Uni",
-      "Courses",
-      "C",
+      "Vorlesungsverzeichnis",
+      "v",
       "https://studentservices.uzh.ch/uzh/anonym/vvz/index.html",
       null,
       "#0099ff"
     ],
     [
-      "Uni",
       "Olat",
       "o",
       "https://lms.uzh.ch/dmz/",
@@ -83,15 +67,13 @@
       "#0099ff"
     ],
     [
-      "Uni",
-      "Scholar",
+      "Google Scholar",
       "s",
       "https://scholar.google.ch/",
       null,
       "#0099ff"
     ],
     [
-      "Uni",
       "Wolfram Alpha",
       "W",
       "https://www.wolframalpha.com/",
@@ -99,15 +81,13 @@
       "#FF7D00"
     ],
     [
-      "Fun",
-      "drLupo",
-      "l",
-      "https://www.twitch.tv/drLupo",
+      "Reddit",
+      "r",
+      "https://www.reddit.com/",
       null,
-      "#8E3F7B"
+      "#FF4500"
     ],
     [
-      "Fun",
       "Trello",
       "t",
       "https://trello.com/",
@@ -115,15 +95,6 @@
       "#026AA7"
     ],
     [
-      "Fun",
-      "YouTube",
-      "y",
-      "https://www.youtube.com/",
-      "/results?search_query={}",
-      "#fc0101"
-    ],
-    [
-      "Fun",
       "The Pirate Bay",
       "b",
       "https://thepiratebay.org",
@@ -131,7 +102,6 @@
       "#4c4132"
     ],
     [
-      "Fun",
       "YTS",
       "Y",
       "https://yts.ag/browse-movies/0/1080p/all/7/latest",
@@ -139,7 +109,6 @@
       "#2f2f2f"
     ],
     [
-      "Other",
       "Desmos",
       "D",
       "https://www.desmos.com/calculator",
@@ -147,15 +116,6 @@
       "#087B38"
     ],
     [
-      "Other",
-      "Facebook",
-      "f",
-      "https://www.facebook.com",
-      "/search/top/?q={}",
-      "#3b5998"
-    ],
-    [
-      "Other",
       "Digitec",
       "c",
       "https://www.digitec.ch/",
@@ -163,7 +123,6 @@
       "#0068ab"
     ],
     [
-      "Other",
       "Steam",
       "S",
       "http://store.steampowered.com/",
@@ -171,7 +130,6 @@
       "#173d57"
     ],
     [
-      "Other",
       "Humble Bundle",
       "h",
       "https://www.humblebundle.com/",

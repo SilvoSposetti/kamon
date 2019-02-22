@@ -86,7 +86,7 @@ export class ContentComponent implements OnInit, OnChanges {
   @Input() public isWide: boolean;
   @Input() public isTall: boolean;
 
-  public showMenu: boolean = false;
+  public showMenu: boolean = true; // ToDo: Set back to false!
 
   public state: UIState = 'wide';
 

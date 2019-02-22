@@ -12,12 +12,11 @@ import {MenuWindowComponent} from './content/menu-window/menu-window.component';
 import {ClockComponent} from './content/clock/clock.component';
 import {SettingComponent} from './background/setting/setting.component';
 import {SceneComponent} from './background/scene/scene.component';
-import {ListComponent} from './content/list/list.component';
 import {FpsComponent} from './background/fps/fps.component';
-import { ShortcutListComponent } from './content/menu-window/shortcut-list/shortcut-list.component';
-import { DefaultMenuComponent } from './content/menu-window/default-menu/default-menu.component';
-import { HowToComponent } from './content/menu-window/how-to/how-to.component';
-import { AboutComponent } from './content/menu-window/about/about.component';
+import {ShortcutListComponent} from './content/menu-window/shortcut-list/shortcut-list.component';
+import {DefaultMenuComponent} from './content/menu-window/default-menu/default-menu.component';
+import {HowToComponent} from './content/menu-window/how-to/how-to.component';
+import {AboutComponent} from './content/menu-window/about/about.component';
 import {SceneSelectorComponent} from './content/menu-window/scene-selector/scene-selector.component';
 
 // Scenes:
@@ -73,7 +72,6 @@ import {ColorService} from './shared/services/color.service';
     ClockComponent,
     SettingComponent,
     SceneComponent,
-    ListComponent,
     SearchComponent,
     MyFocusDirective,
     ShortcutListComponent,

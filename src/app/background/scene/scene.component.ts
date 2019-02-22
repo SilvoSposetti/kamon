@@ -12,14 +12,12 @@ import {Subject} from "rxjs/internal/Subject";
 export class SceneComponent implements OnInit, OnDestroy {
   @Input() showFPS: boolean;
 
-  //TODO: adjust subscription
   @Input() screenWidth: number;
   @Input() public screenHeight: number;
   @Input() public isWide: boolean;
   @Input() public isTall: boolean;
   public sceneName: string;
   public scenesArray: string[];
-
   private ngUnsubscribe: Subject<any> = new Subject<any>();
 
   constructor(private screenSizeService: ScreenSizeService, private scenesService: ScenesService) {

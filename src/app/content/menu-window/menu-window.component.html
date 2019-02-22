@@ -1,8 +1,11 @@
 <div class="menu-window-parent">
 
-  <div class="back-button-container">
-    <div class="btn btn-container" (click)="resetSelectedTab()" *ngIf="selectedTab !== 'default'">
-      <img class="btn-img" src="{{backBtnPath}}">
+  <div class="top-buttons-container">
+    <div class="close-menu-button tob-button-container btn" (click)="closeMenu()">
+      <img class="close-menu-img" src="{{arrowPath}}">
+    </div>
+    <div class="close-tab-button tob-button-container btn" (click)="resetSelectedTab()" *ngIf="selectedTab !== 'default'">
+      <img class="close-tab-img" src="{{backBtnPath}}">
     </div>
   </div>
 
@@ -38,13 +41,6 @@
   <div class="about-container menu-container" *ngIf="selectedTab==='about'">
     <app-about></app-about>
 
-  </div>
-
-
-  <div class="menu-arrow-container">
-    <div class="menu-arrow btn" (click)="closeMenu()">
-      <img class="arrow-img" src="{{arrowPath}}">
-    </div>
   </div>
 
 </div>

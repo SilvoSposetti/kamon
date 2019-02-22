@@ -13,7 +13,7 @@ export class MenuWindowComponent implements OnInit, OnChanges {
   public tabs: Tab[] = ['scene-selector', 'shortcut-list', 'how-to', 'about'];
   public tabNames: string[] = ['Scene Selector', 'Shortcut List', 'How To', 'About'];
   private selectedTabNr: number = -1; // Follows indices in the tabs array.
-  public selectedTab: Tab = 'default';
+  public selectedTab: Tab = 'shortcut-list';// ToDo: Set back to 'default'!
   public arrowPath: string = '../assets/img/UI/ArrowLeft.svg';
 
   public logoPath: string = '../assets/img/icon/icoShadow.svg';
@@ -57,7 +57,7 @@ export class MenuWindowComponent implements OnInit, OnChanges {
 
   private selectTabNr(tabNr: number): void {
     if (tabNr < 0) {
-      this.selectedTabNr = -1;
+      this.selectedTabNr = 2;
       this.selectedTab = 'default';
     } else {
       this.selectedTabNr = tabNr;

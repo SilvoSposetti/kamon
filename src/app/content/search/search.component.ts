@@ -109,9 +109,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   public selectUp(): void {
-    //this.searchService.selectUp();
-    this.searchText += this.searchText;
+    this.searchService.selectUp();
   }
-
 
 }

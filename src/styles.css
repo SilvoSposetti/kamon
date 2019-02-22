@@ -53,7 +53,7 @@
   --search-input-background-color: #30434A;
   --search-input-font-color: #BFBA91;
   --search-suggestions-background-color: #4A6D7C;
-  --search-input-border-radius: 0.5em;
+  --default-border-radius: 0.5em;
 
   /*MENU COMPONENT*/
   --menu-background-color: #30434A;

@@ -8,7 +8,7 @@
   width: var(--search-compomnent-width);
   max-width: var(--search-compomnent-max-width);
   background: var(--search-suggestions-background-color);
-  border-radius: var(--search-input-border-radius);
+  border-radius: var(--default-border-radius);
   overflow: hidden;
   margin:2em;
 

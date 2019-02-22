@@ -17,9 +17,9 @@
     </form>
     <div class="search-shortcut-container">
       <div class="search-shortcut-background" [@myDynamicWidth] *ngIf="shortcut!==undefined && shortcut[0]!==''"
-           [style.background]="shortcut[5]">
+           [style.background]="shortcut[4]">
         <div class="search-shorctut-text">
-          {{shortcut[1]}}
+          {{shortcut[0]}}
         </div>
       </div>
     </div>

@@ -18,9 +18,6 @@ export class SearchService {
   private selectedSuggestionIndexSubject: Subject<number> = new Subject<number>();
   private selectedSuggestionIndex: number = -1;
 
-  public elements: string[][][] = []; // Tri-dimensional array!
-  // First level are categories, second the element of each category, and third the values of each element
-
   private shortcutSubject: Subject<string[]> = new Subject<string[]>();
   public shortcut: string[] = [];
 
@@ -34,7 +31,6 @@ export class SearchService {
 
 
   public setSearchString(newSearchString: string): void {
-
     this.updateSearchString(newSearchString);
     this.lookForShortcut();
     this.requestSuggestions();
@@ -87,7 +83,7 @@ export class SearchService {
           let newSuggestionsStyled = [];
           for (let i = 0; i < this.suggestionsArray.length; i++) {
             let suggestion = this.suggestionsArray[i];
-            suggestion = suggestion.replace(this.searchString.toLowerCase(), '<i><b> ' +this.searchString.toLowerCase() + '</b></i>');
+            suggestion = suggestion.replace(this.searchString.toLowerCase(), '<i><b> ' + this.searchString.toLowerCase() + '</b></i>');
             newSuggestionsStyled.push(suggestion);
           }
           this.suggestionsArrayStyledSubject.next(newSuggestionsStyled);
@@ -124,7 +120,7 @@ export class SearchService {
         let found = false;
         let firstChar = this.searchStringEncoded.substring(0, 1);
         for (let i = 0; i < this.configList.length; i++) {
-          if (this.configList[i][2] === firstChar) {
+          if (this.configList[i][1] === firstChar) {
             elementFound = this.configList[i];
             found = true;
           }
@@ -154,7 +150,7 @@ export class SearchService {
   }
 
   private openShortcut(): void {
-    let link = this.shortcut[3];
+    let link = this.shortcut[2];
     this.openLink(link);
   }
 

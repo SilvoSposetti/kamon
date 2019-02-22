@@ -18,11 +18,11 @@
 }
 
 /***********************************************************************************************************************
-Back button
+Top buttons
 ***********************************************************************************************************************/
 
-.back-button-container {
-  width: 95%;
+.top-buttons-container {
+  width: 100%;
   height: 5%;
   min-height: 3em;
   display: flex;
@@ -30,28 +30,33 @@ Back button
   justify-content: flex-end;
 }
 
-.btn-container {
-  width: 2.5em;
-  height: 2.5em;
-  border-radius: 2.1em;
+.tob-button-container {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.btn-img {
+.close-tab-img {
+   width: 2em;
+  height: 2em;
+}
+
+
+.close-menu-img {
+  cursor: pointer;
   width: 2em;
   height: 2em;
 }
+
 
 /***********************************************************************************************************************
 Default Menu
 ***********************************************************************************************************************/
 
 .menu-container {
-  width: 95%;
+  width: 100%;
   min-height: 1%;
-  height: 90%;
+  height: 95%;
 }
 
 .default-menu-container-wide {
@@ -137,30 +142,3 @@ Menu List
   padding: 0.2em;
 }
 
-/***********************************************************************************************************************
-Arrow
-***********************************************************************************************************************/
-.menu-arrow-container {
-  width: 100%;
-  height: 5%;
-  min-height: 3em;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.menu-arrow {
-  cursor: pointer;
-  width: 3em;
-  height: 3em;
-  border-radius: 2.5em;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.arrow-img {
-  cursor: pointer;
-  width: 3em;
-  height: 3em;
-}
