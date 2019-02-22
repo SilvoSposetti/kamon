@@ -7,27 +7,29 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
-  /*border-radius: 0px 0.5em 0.5em 0px;*/
-  /*-moz-border-radius: 0px 0.5em 0.5em 0px;*/
-  /*-webkit-border-radius: 0px 0.5em 0.5em 0px;*/
-
-  -webkit-box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
-  box-shadow: inset 10px 10px 10px 0px rgba(0, 0, 0, 0.25);
 }
 
 /***********************************************************************************************************************
-Top buttons
+Top bar:
 ***********************************************************************************************************************/
 
-.top-buttons-container {
+.top-bar-container {
   width: 100%;
-  height: 5%;
-  min-height: 3em;
+  height: 1%;
+  min-height: var(--menu-button-container-size);
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  border-bottom: 1px solid var(--default-font-color);
+}
+
+.tab-name-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
 }
 
 .tob-button-container {
@@ -37,15 +39,15 @@ Top buttons
 }
 
 .close-tab-img {
-   width: 2em;
-  height: 2em;
+  width: var(--menu-button-size);
+  height: var(--menu-button-size);
 }
 
 
 .close-menu-img {
   cursor: pointer;
-  width: 2em;
-  height: 2em;
+  width: var(--menu-button-size);
+  height: var(--menu-button-size);
 }
 
 
@@ -56,7 +58,7 @@ Default Menu
 .menu-container {
   width: 100%;
   min-height: 1%;
-  height: 95%;
+  height: 99%;
 }
 
 .default-menu-container-wide {
@@ -64,8 +66,8 @@ Default Menu
   display: flex;
   align-items: center;
   justify-content: space-around;
-  /*width: 95%;*/
-  /*max-height: 60%;*/
+  width: 95%;
+  max-height: 60%;
 
 }
 
@@ -129,7 +131,7 @@ Menu List
 ***********************************************************************************************************************/
 .menu-element-container {
   cursor: pointer;
-  border-radius: 1em;
+  width: 100%;
   font-size: 1.5em;
   display: flex;
   align-items: center;
@@ -138,7 +140,6 @@ Menu List
 }
 
 .menu-element {
-  border-radius: 0.5em;
   padding: 0.2em;
 }
 

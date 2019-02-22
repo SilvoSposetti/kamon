@@ -21,22 +21,21 @@
 /***********************************************************************************************************************
 Menu Window
 ***********************************************************************************************************************/
-.content-menu-window-container{
+.content-menu-window-container {
   position: absolute;
-  left:0;
-  top:0;
+  left: 0;
+  top: 0;
+  overflow:hidden;
 }
-.content-menu-window-container-wide {
 
+.content-menu-window-container-wide {
   width: 38.2%;
   height: 100%;
 }
 
 .content-menu-window-container-narrow {
-
   width: 100%;
   height: 38.2%;
-
 }
 
 /***********************************************************************************************************************
@@ -72,30 +71,48 @@ Arrow
   width: 0;
   height: 100%;
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   justify-content: flex-start;
+
+  -webkit-box-shadow: inset -5px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: inset -5px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: inset -5px 10px 10px 0px rgba(0, 0, 0, 0.25);
 }
 
 .arrow-container-narrow {
+
   width: 100%;
   height: 0;
   display: flex;
   align-items: flex-start;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  -webkit-box-shadow: inset 10px -5px 10px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: inset 10px -5px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 10px -5px 10px 0px rgba(0, 0, 0, 0.25);
 }
 
-.menu-arrow {
-  border-radius: 100px;
-  /*border: 1px solid white;*/
+.menu-button-container {
+  background-color: var(--menu-background-color);
+  border-radius: 0 0 var(--default-border-radius) 0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
   cursor: pointer;
+  width: var(--menu-button-container-size);
+  height: var(--menu-button-container-size);
 }
 
-.arrow-img {
-  width: 3em;
-  height: 3em;
+.menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--menu-button-size);
+  height: var(--menu-button-size);
+}
+
+.menu-img {
+  width: var(--menu-button-size);
+  height: var(--menu-button-size);
 }

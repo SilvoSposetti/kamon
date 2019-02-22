@@ -18,7 +18,6 @@ import {DefaultMenuComponent} from './content/menu-window/default-menu/default-m
 import {HowToComponent} from './content/menu-window/how-to/how-to.component';
 import {AboutComponent} from './content/menu-window/about/about.component';
 import {SceneSelectorComponent} from './content/menu-window/scene-selector/scene-selector.component';
-
 // Scenes:
 import {AsteroidsComponent} from './background/scene/asteroids/asteroids.component';
 import {PhyllotaxyComponent} from './background/scene/phyllotaxy/phyllotaxy.component';
@@ -49,7 +48,6 @@ import {StackedPlotComponent} from './background/scene/stacked-plot/stacked-plot
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
 import {MyBlinkDirective} from './shared/directives/my-blink.directive';
-
 // Services:
 import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';

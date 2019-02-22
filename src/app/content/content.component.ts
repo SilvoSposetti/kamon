@@ -63,19 +63,6 @@ type ArrowState = ('Up' | 'Down' | 'Left' | 'Right');
         ])
       ]
     ),
-    trigger(
-      'myArrowEnterLeave',
-      [
-        transition(':enter', [
-          style({opacity: 0}),
-          animate('300ms ease', style({opacity: 1}))
-        ]),
-        transition(':leave', [
-          style({opacity: 1}),
-          animate('300ms ease', style({opacity: 0}))
-        ])
-      ]
-    ),
   ],
 })
 
@@ -86,11 +73,9 @@ export class ContentComponent implements OnInit, OnChanges {
   @Input() public isWide: boolean;
   @Input() public isTall: boolean;
 
-  public showMenu: boolean = true; // ToDo: Set back to false!
+  public showMenu: boolean = true; // ToDo: set this back to false!
 
   public state: UIState = 'wide';
-
-  public arrowPath: string = '../assets/img/UI/ArrowRight.svg';
 
   constructor() {
   }
@@ -105,27 +90,13 @@ export class ContentComponent implements OnInit, OnChanges {
       } else {
         this.state = 'narrow';
       }
-      this.checkArrowPath();
     }
   }
 
   public swapMenuVisibility(): void {
     this.showMenu = !this.showMenu;
-    this.checkArrowPath();
   }
 
-  private checkArrowPath(): void {
-    let relativePath = '../assets/img/UI/Arrow';
-    let arrowState: ArrowState = 'Right';
-    let extension = '.svg';
-    if (this.isWide) {
-      arrowState = 'Right';
-    } else {
-      arrowState = 'Down';
-    }
-
-    this.arrowPath = relativePath + arrowState + extension;
-  }
 
   public closeMenu(): void {
     this.showMenu = false;

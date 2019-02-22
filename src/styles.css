@@ -8,29 +8,13 @@
   /* Custom Colors */
   --default-font-color: #BFBA91;
 
-  /*--default-background-color: rgba(0, 0, 0, 0.6);*/
-  /*--default-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 1);*/
-  /*--default-box-shadow-up: 0 -30px 30px -30px rgba(0, 0, 0, 1); !* Used only for clock and list when they coexist *!*/
-  /*--default-box-shadow-down: 0 30px 30px -30px rgba(0, 0, 0, 1); !* Used only for clock and list when they coexist *!*/
-
   --default-background-color: rgba(0, 0, 0, 0);
   --default-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0);
   --default-box-shadow-up: 0 -30px 30px -30px rgba(0, 0, 0, 0); /* Used only for clock and list when they coexist */
   --default-box-shadow-down: 0 30px 30px -30px rgba(0, 0, 0, 0); /* Used only for clock and list when they coexist */
 
-  /*background: var(--default-background-color);*/
-  /*-webkit-box-shadow: var(--default-box-shadow);*/
-  /*-moz-box-shadow: var(--default-box-shadow);*/
-  /*box-shadow: var(--default-box-shadow);*/
 
-  /*********** BACKGROUND / SETTING ***********/
-  /*--setting-color: linear-gradient(141deg, #10afa3 0%, #10998e 25%, #177181 51%, #1b5978 75%, #1b4564 100%);*/
-  /*--setting-color: linear-gradient(141deg, #13E2B5 0%, #009DE0 100%);*/
-  /*--setting-color: linear-gradient(141deg, #4D6C7B 0%, #12191C 100%);*/
-  /*--setting-color: linear-gradient(141deg, #FFAF2E 0%, #F70B66 100%);*/
-  /*--setting-color: #121212;*/
-
-  /*********** CONTENT ***********/
+  /* CONTENT */
 
 
   --clock-info-font-size: 1.2em;
@@ -53,10 +37,12 @@
   --search-input-background-color: #30434A;
   --search-input-font-color: #BFBA91;
   --search-suggestions-background-color: #4A6D7C;
-  --default-border-radius: 0.5em;
+  --default-border-radius: 0.3em;
 
   /*MENU COMPONENT*/
   --menu-background-color: #30434A;
+  --menu-button-size: 2em;
+  --menu-button-container-size: 3em;
 
   /*OTHER*/
   /*.ng-valid[required], .ng-valid.required {*/
@@ -132,22 +118,22 @@ links:
 
 /* unvisited link */
 a:link {
-  color: white;
+  color: lightgrey;
 }
 
 /* visited link */
 a:visited {
-  color: lightgrey;
+  color: darkgrey;
 }
 
 /* mouse over link */
 a:hover {
-  color: lightgrey;
+  color: white;
 }
 
 /* selected link */
 a:active {
-  color: white;
+  color: darkgrey;
 }
 
 /***********************************************************************************************************************
@@ -155,18 +141,28 @@ Simple Buttons:
 ***********************************************************************************************************************/
 .btn {
   cursor: pointer;
-
+  transition-duration: 0.1s;
 }
 
 .btn:hover {
-  background: rgba(255,255,255,0.2);
+
+  -webkit-box-shadow: inset 0px 0px 10px 3px rgba(74, 109, 124, 1);
+  -moz-box-shadow: inset 0px 0px 10px 3px rgba(74, 109, 124, 1);
+  box-shadow: inset 0px 0px 10px 3px rgba(74, 109, 124, 1);
+
+  /*border: 1px solid rgba(74, 109, 124, 1);*/
+  /*background: rgba(74, 109, 124, 1);*/
 }
 
 .btn:active {
-  background: rgba(191, 186, 145, 0.5);
-  /*background: #FF0000;*/
+  /*transition-duration: 0.2s;*/
+  -webkit-box-shadow: inset 0px 0px 10px 3px rgba(191, 186, 145, 0.5);
+  -moz-box-shadow: inset 0px 0px 10px 3px rgba(191, 186, 145, 0.5);
+  box-shadow: inset 0px 0px 10px 3px rgba(191, 186, 145, 0.5);
+  /*background: rgba(191, 186, 145, 0.5);*/
+  /*border: 1px solid rgba(191, 186, 145, 0.5);*/
 }
 
 .highlighted {
-  background: rgba(255,255,255,0.2) !important;
+  background: #4A6D7C !important;
 }

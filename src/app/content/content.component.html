@@ -1,6 +1,4 @@
 <div class="content-parent" [ngClass]="{'content-parent-wide': isWide, 'content-parent-narrow':!isWide}">
-
-
   <div class="content-menu-window-container"
        *ngIf="showMenu"
        [@myMenuEnterLeaveHorizontalSlide]="state"
@@ -17,12 +15,14 @@
        [@myMenuEnterLeaveHorizontalStretch]="state"
        [@myMenuEnterLeaveVerticalStretch]="state">
   </div>
-  <div class="arrow-container" *ngIf="!showMenu"
-       [@myArrowEnterLeave]="state"
+  <div class="arrow-container"
        [ngClass]="{'arrow-container-wide': isWide, 'arrow-container-narrow':!isWide}">
-    <div class="menu-arrow btn"
-         (click)="swapMenuVisibility()">
-      <img class="arrow-img" src="{{arrowPath}}">
+    <div class="menu-button-container">
+      <div class="menu-button btn"
+           (click)="swapMenuVisibility()">
+        <img class="menu-img" src="assets/img/UI/Menu.svg">
+      </div>
+
     </div>
   </div>
   <div class="content-search-and-clock-container"
