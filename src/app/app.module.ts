@@ -47,7 +47,6 @@ import {RecursiveTreeComponent} from './background/scene/recursive-tree/recursiv
 import {StackedPlotComponent} from './background/scene/stacked-plot/stacked-plot.component';
 // Directives:
 import {MyFocusDirective} from './shared/directives/my-focus.directive';
-import {MyBlinkDirective} from './shared/directives/my-blink.directive';
 // Services:
 import {ConfigService} from './shared/services/config.service';
 import {ClockService} from './shared/services/clock.service';
@@ -84,7 +83,6 @@ import {ColorService} from './shared/services/color.service';
     RainComponent,
     LissajousComponent,
     HarmonicFunctionsComponent,
-    MyBlinkDirective,
     TreeMapComponent,
     SortingAlgorithmsComponent,
     BoidsComponent,

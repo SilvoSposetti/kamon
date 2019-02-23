@@ -16,10 +16,10 @@ export class ColorService {
 
   public initialize(): void {
     // obtain gradients parameters
-    this.backgroundGradientFirstStop = this.configService.getConfig().backgroundGradientFirstStop;
-    this.backgroundGradientSecondStop = this.configService.getConfig().backgroundGradientSecondStop;
-    this.foregroundGradientFirstStop = this.configService.getConfig().foregroundGradientFirstStop;
-    this.foregroundGradientSecondStop = this.configService.getConfig().foregroundGradientSecondStop;
+    this.backgroundGradientFirstStop = this.configService.getBackgroundGradientFirstStop();
+    this.backgroundGradientSecondStop = this.configService.getBackgroundGradientSecondStop();
+    this.foregroundGradientFirstStop = this.configService.getForegroundGradientFirstStop();
+    this.foregroundGradientSecondStop = this.configService.getForegroundGradientSecondStop();
   }
 
   //********************************************************************************************************************

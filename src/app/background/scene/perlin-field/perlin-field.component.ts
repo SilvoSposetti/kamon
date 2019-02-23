@@ -17,7 +17,6 @@ export class PerlinFieldComponent extends Scene implements OnInit, OnDestroy {
 
   private alphaGradient: CanvasGradient;
 
-  //Declaration of noise type which provides noise functions
   private noise = new OpenSimplexNoise(Date.now()); // Date.now() is the seed
 
   private spacing = 20;

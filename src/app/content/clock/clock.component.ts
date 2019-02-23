@@ -63,7 +63,7 @@ export class ClockComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.allowLocation = this.configService.getConfig().allowLocation;
+    this.allowLocation = this.configService.getAllowLocation();
     this.updateData();
   }
 

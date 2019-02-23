@@ -11,7 +11,7 @@ export class ShortcutListComponent implements OnInit {
   public shortcutList: string[][];
 
   constructor(private configService: ConfigService, private searchService: SearchService) {
-    this.shortcutList = this.configService.getConfig().shortcuts;
+    this.shortcutList = this.configService.getShortcuts();
   }
 
   ngOnInit() {

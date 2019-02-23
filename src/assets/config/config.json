@@ -1,6 +1,7 @@
 {
   "useScene": false,
-  "defaultScene": "stacked-plot",
+  "defaultScene": "maze",
+  "showUI": true,
   "openLinkInNewTab": false,
   "suggestions": true,
   "searchDelimiter": ":",

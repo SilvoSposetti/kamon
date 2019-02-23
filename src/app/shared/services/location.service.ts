@@ -25,7 +25,7 @@ export class LocationService {
   }
 
   public getLocation(): void {
-    if (this.configService.getConfig().allowLocation) {
+    if (this.configService.getAllowLocation()) {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = +position.coords.latitude;
         this.longitude = +position.coords.longitude;

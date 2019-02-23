@@ -25,7 +25,7 @@ export class SearchService {
   readonly configList: string[][];
 
   constructor(private http: HttpClient, private configService: ConfigService) {
-    this.configList = this.configService.getConfig().shortcuts;
+    this.configList = this.configService.getShortcuts();
   }
 
 
@@ -68,7 +68,7 @@ export class SearchService {
       this.suggestionsArraySubject.next(this.suggestionsArray);
       this.suggestionsArrayStyledSubject.next(this.suggestionsArray);
     } else {
-      if (!this.configService.getConfig().suggestions) {
+      if (!this.configService.getAmountOfSuggestions()) {
         // Config file says suggestions are unnecessary.
       } else {
         let headers = new Headers();
@@ -76,7 +76,7 @@ export class SearchService {
         headers.append('Access-Control-Allow-Origin', '*');
 
         this.http.jsonp('https://suggestqueries.google.com/complete/search?client=firefox&hl=en&callback=JSONP_CALLBACK&q=' + this.searchStringEncoded, 'f').subscribe(response => {
-          this.suggestionsArray = response[1].slice(0, this.configService.getConfig().amountOfSuggestions);
+          this.suggestionsArray = response[1].slice(0, this.configService.getAmountOfSuggestions());
           this.suggestionsArraySubject.next(this.suggestionsArray);
           // Reset suggestions styled and elaborate the new ones;
           //this.suggestionsArrayStyledSubject.next([]);
@@ -114,7 +114,7 @@ export class SearchService {
       // Do nothing because empty search string;
       this.setStandardShortcut();
     } else {
-      if (this.searchStringEncoded.length === 1 || this.searchStringEncoded.substring(1, 2) === this.configService.getConfig().searchDelimiter) {
+      if (this.searchStringEncoded.length === 1 || this.searchStringEncoded.substring(1, 2) === this.configService.getSearchDelimiter()) {
         // Update shortcut only if the string is 1 char long or the delimiter is found in the second position of the string.
         let elementFound: string[] = [];
         let found = false;
@@ -145,7 +145,7 @@ export class SearchService {
     } else { // A suggestion was selected
       keyword = this.suggestionsArray[index];
     }
-    let link = this.configService.getConfig().searchEngine[1] + this.configService.getConfig().searchEngine[2] + keyword;
+    let link = this.configService.getSearchEngine()[1] + this.configService.getSearchEngine()[2] + keyword;
     this.openLink(link);
   }
 
@@ -165,7 +165,7 @@ export class SearchService {
 
   public openLink(link: string): void {
     this.resetSearch();
-    if (this.configService.getConfig().openLinkInNewTab) {
+    if (this.configService.getOpenLinkInNewTab()) {
       window.open(link, '_blank');
     } else {
       window.location.href = link;
@@ -196,7 +196,7 @@ export class SearchService {
   }
 
   private updateSelectedSuggestionIndex(newIndex: number): void {
-    if (newIndex > this.configService.getConfig().amountOfSuggestions - 1 || newIndex < -1) {
+    if (newIndex > this.configService.getAmountOfSuggestions() - 1 || newIndex < -1) {
       // Don't do anything
     } else {
       this.selectedSuggestionIndex = newIndex;

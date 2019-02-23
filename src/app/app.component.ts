@@ -3,22 +3,38 @@ import {ConfigService} from './shared/services/config.service';
 import {SearchService} from './shared/services/search.service';
 import {ScreenSizeService} from './shared/services/screen-size.service';
 import {Subject} from 'rxjs';
-import {environment} from '../environments/environment';
 import {ColorService} from './shared/services/color.service';
 import {takeUntil} from 'rxjs/operators';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    // Stretch:
+    trigger(
+      'myContentEnterLeave',
+      [
+        transition(':enter', [
+          style({opacity: 0}),
+          animate('200ms ease', style({opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({opacity: 1}),
+          animate('200ms ease', style({opacity: 0}))
+        ])
+      ]
+    ),
+  ],
 })
 export class AppComponent implements OnInit, OnDestroy {
 
   // private keyboardEvent: any;
   // private altKeyAction: boolean;
-  public selectionSuggestion: number = -1;
-  public showFPS = this.configService.getConfig().showFPS;
-  public useScene = this.configService.getConfig().useScene;
+  public showFPS = this.configService.getShowFPS();
+  public useScene = this.configService.getUseScene();
+  public showUI = this.configService.getShowUI();
 
   private widthThreshold = 769; // Values bigger or equal threshold are considered wide.
   private heightThreshold = 500; // Values bigger or equal threshold are considered tall.
@@ -26,7 +42,7 @@ export class AppComponent implements OnInit, OnDestroy {
   public screenHeight: number;
   public isWide: boolean;
   public isTall: boolean;
-  // env = environment.envName;
+  //env = environment.envName;
 
   private ngUnsubscribe: Subject<any> = new Subject<any>();
 
@@ -84,6 +100,8 @@ export class AppComponent implements OnInit, OnDestroy {
     } else if (event.which === 33) {
       event.preventDefault();
       event.stopPropagation();
+      this.configService.setShowUI(!this.configService.getShowUI());
+      this.showUI = this.configService.getShowUI();
       //console.log('pageUp');
     }
 
@@ -113,7 +131,7 @@ export class AppComponent implements OnInit, OnDestroy {
       value => {
         this.screenHeight = value;
         //this.isTall = value >= this.heightThreshold || !environment.production;
-        this.isTall = value >= this.heightThreshold
+        this.isTall = value >= this.heightThreshold;
         // If in production env then the screen is always tall.
         // This is because most of the development process is done for tall screens.
 

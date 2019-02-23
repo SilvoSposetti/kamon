@@ -2,6 +2,7 @@ export class Configuration {
   // Important: this constructor and the config.json file must have the same mapping to work properly!
   constructor(public useScene: boolean,
               public defaultScene: string,
+              public showUI: boolean,
               public openLinkInNewTab: boolean,
               public suggestions: boolean,
               public searchDelimiter: string,

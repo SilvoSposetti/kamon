@@ -1,5 +1,5 @@
 <div class="app-parent" [ngClass]="{'app-desktop': isWide, 'app-mobile':!isWide}">
-  <div class="content">
+  <div class="content" *ngIf="showUI" [@myContentEnterLeave]>
     <app-content [isWide]="isWide"
                  [isTall]="isTall"
                  [useScene]="useScene"></app-content>
