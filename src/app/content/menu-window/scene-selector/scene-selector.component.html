@@ -1,0 +1,53 @@
+<div class="scene-selector-parent">
+  <div class="deactivate-scene-container" (click)="deactivate()" [ngClass]="{highlighted: selectedSceneNr === -1}">
+    <div class="deactivate-scene">
+      Deactivate
+    </div>
+  </div>
+  <div class="alphabetic-blocks" *ngFor="let block of scenesAlphabeticalList, let i = index">
+
+    <div class="scene-row" *ngFor="let scene of block, let j = index">
+
+      <div class="initial-column-element">
+        <div class="initial-container initial-column-size" *ngIf="j === 0">
+          <div class="initial">
+            {{block[0][0].toUpperCase()}}
+          </div>
+        </div>
+        <div class="bar initial-column-size" *ngIf="j !== 0 && j !== block.length -1">        </div>
+        <div class="angle initial-column-size" *ngIf="j === block.length -1 && j !== 0">        </div>
+      </div>
+
+      <div class="scene-name-container btn"
+           (click)="clickScene(i,j)"
+           [ngClass]="{highlighted: selectedSceneNr === getSceneNrFromIAndJ(i,j)}">
+        <div class="scene-name">
+          {{scene}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--<div class="initial-column" *ngFor="let a of block, let m = index">-->
+<!--<div class="letter" *ngIf="m ===0 ">-->
+<!--{{block[0][0].toUpperCase()}}-->
+<!--</div>-->
+<!--<div class="bar" *ngIf="m !== 0 && !(m === block.length-1)">-->
+<!--a-->
+<!--</div>-->
+<!--<div class="angle" *ngIf="m === block.length-1">-->
+<!--b-->
+<!--</div>-->
+<!--</div>-->
+<!--<div class="scenes-row">-->
+<!--<div class="scene-container btn" *ngFor="let scene of block, let j = index"-->
+<!--[ngClass]="{highlighted: selectedSceneNr === getSceneNrFromIAndJ(i,j)}">-->
+<!--<div class="scene-name"-->
+<!--(click)="clickScene(i,j)">-->
+<!--{{scene}}-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->

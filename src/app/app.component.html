@@ -1,15 +1,6 @@
 <div class="app-parent" [ngClass]="{'app-desktop': isWide, 'app-mobile':!isWide}">
-  <div class="content">
-    <app-content [showClock]="showClock"
-                 [showList]="showList"
-                 [showCitations]="showCitations"
-                 [selectionSuggestion]="selectionSuggestion"
-                 [citations]="citations"
-                 [useToDoList]="useToDoList"
-                 [useCredits]="useCredits"
-                 [screenHeight]="screenHeight"
-                 [screenWidth]="screenWidth"
-                 [isWide]="isWide"
+  <div class="content" *ngIf="showUI" [@myContentEnterLeave]>
+    <app-content [isWide]="isWide"
                  [isTall]="isTall"
                  [useScene]="useScene"></app-content>
   </div>

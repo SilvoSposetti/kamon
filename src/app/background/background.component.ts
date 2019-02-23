@@ -1,7 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ScenesService} from '../shared/services/scenes.service';
 import {Subject} from 'rxjs';
-import {takeUntil} from "rxjs/operators";
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-background',
@@ -25,7 +25,7 @@ export class BackgroundComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sceneService.getSceneName().pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
-      this.useFpsGraph = this.showFPS && this.useScene && value !== '' ;
+      this.useFpsGraph = this.showFPS && this.useScene && value !== '';
     });
   }
 

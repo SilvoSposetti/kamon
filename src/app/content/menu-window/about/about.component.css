@@ -1,0 +1,25 @@
+.about-parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: var(--default-font-color);
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: 1.2em;
+}
+
+.about-element {
+  width: 90%;
+  height: 90%;
+}
+
+.about-title {
+  font-size: 1.5em;
+}
+
+.about-description {
+
+}

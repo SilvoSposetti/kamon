@@ -1,147 +1,106 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {SearchService} from '../shared/services/search.service';
+import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
-import {ConfigService} from '../shared/services/config.service';
-import {Subject} from 'rxjs';
-import {takeUntil} from "rxjs/operators";
+
+type UIState = ('wide' | 'narrow');
+type ArrowState = ('Up' | 'Down' | 'Left' | 'Right');
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.css'],
   animations: [
+    // Stretch:
     trigger(
-      'myEnter',
+      'myMenuEnterLeaveHorizontalStretch',
       [
-        transition(':enter', [
-          style({opacity: 0}),
-          animate(400, style({opacity: 1}))
+        transition('void => wide', [ // :enter
+          style({width: 0}),
+          animate('500ms ease', style({width: '*'}))
         ]),
-        transition(':leave', [
-          style({opacity: 1}),
-          animate(400, style({opacity: 0}))
+        transition('wide => void', [ // :leave
+          style({width: '*'}),
+          animate('500ms ease', style({width: 0}))
         ])
       ]
-    )
+    ),
+    trigger(
+      'myMenuEnterLeaveVerticalStretch',
+      [
+        transition('void => narrow', [ // :enter
+          style({height: 0}),
+          animate('500ms ease', style({height: '*'}))
+        ]),
+        transition('narrow => void', [ // :leave
+          style({height: '*'}),
+          animate('500ms ease', style({height: 0}))
+        ])
+      ]
+    ),
+    // Slide:
+    trigger(
+      'myMenuEnterLeaveHorizontalSlide',
+      [
+        transition('void => wide', [// :enter
+          style({transform: 'translateX(-100%)'}),
+          animate('500ms ease', style({transform: 'translateX(0%)'}))
+        ]),
+        transition('wide => void', [ // :leave
+          style({transform: 'translateX(0%)'}),
+          animate('500ms ease', style({transform: 'translateX(-100%)'}))
+        ])
+      ]
+    ),
+    trigger(
+      'myMenuEnterLeaveVerticalSlide',
+      [
+        transition('void => narrow', [// :enter
+          style({transform: 'translateY(-100%)'}),
+          animate('500ms ease', style({transform: 'translateY(0%)'}))
+        ]),
+        transition('narrow => void', [ // :leave
+          style({transform: 'translateY(0%)'}),
+          animate('500ms ease', style({transform: 'translateY(-100%)'}))
+        ])
+      ]
+    ),
   ],
 })
-export class ContentComponent implements OnInit, OnDestroy {
 
-  @Input() showList: boolean;
-  @Input() selectionSuggestion: number;
-  @Input() showClock: boolean;
-  @Input() showCitations: boolean;
-  @Input() citations: string[][];
-  @Input() useToDoList: boolean;
-  @Input() useCredits: boolean;
+
+export class ContentComponent implements OnInit, OnChanges {
+
   @Input() useScene: boolean;
-  @Input() public screenWidth: number;
-  @Input() public screenHeight: number;
   @Input() public isWide: boolean;
   @Input() public isTall: boolean;
+  @Input() public showUI: boolean;
 
-  public showSceneSelector: boolean = false;
-  public showCredits: boolean = false;
-  public showToDo: boolean = false;
-  public showSearch: boolean;
-  public searchText: string;
-  public searchSuggestions: string[];
-  public shortcut: string[];
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  public showMenu: boolean = false;
 
+  public state: UIState = 'wide';
 
-  private configList: string[][];
-  public elements: string[][][] = [];
-  public categories: string[] = [];
-
-
-  constructor(private searchService: SearchService, private configService: ConfigService) {
+  constructor() {
   }
 
   ngOnInit() {
-    this.showSearch = false;
-    this.listenForSearch();
-    this.configList = this.configService.getConfig().list;
-    this.readList();
-    this.searchService.setList(this.elements);
   }
 
-  ngOnDestroy() {
-    this.ngUnsubscribe.next();
-    this.ngUnsubscribe.complete();
-  }
-
-  private listenForSearch(): void {
-    this.searchService.getSearch().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
-      this.searchText = value;
-      if (value.length === 0) {
-        this.checkShowSearch();
-      }
-    });
-    this.searchService.getSuggestions().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
-      this.searchSuggestions = value;
-    });
-    this.searchService.getShortcut().pipe(takeUntil(this.ngUnsubscribe)).subscribe((value) => {
-      this.shortcut = value;
-    });
-  }
-
-  public searchInputChanged(): void {
-    this.searchService.setSearchString(this.searchText); // Update content of searchString
-    this.checkShowSearch();
-  }
-
-  private checkShowSearch(): void {
-    this.showSearch = !(this.searchText.length === 0);
-  }
-
-  private readList(): void {
-    // Extracts categories (without duplicates) and info about search engine from the list.
-    for (let i = 0; i < this.configList.length; i++) {
-      if (this.categories.indexOf(this.configList[i][0]) === -1) {
-        this.categories.push(this.configList[i][0]);
+  ngOnChanges(changes: SimpleChanges): void {
+    if(changes.isWide !== undefined){
+      if (changes.isWide.currentValue) {
+        this.state = 'wide';
+      } else {
+        this.state = 'narrow';
       }
     }
-
-    // Initializes the elements array to have the correct amount of categories
-    for (let i = 0; i < this.categories.length; i++) {
-      this.elements.push([]);
-    }
-
-    // Inserts a list of values for each element under its correct category in elements array
-    for (let i = 0; i < this.configList.length; i++) {
-      const indexOfCategory = this.categories.indexOf(this.configList[i][0]);
-      const elementValues: any[] = [];
-      for (let j = 1; j < this.configList[i].length; j++) { // ElementValues does not have the 'category' parameter
-        // (starts from 1 instead of 0)
-        elementValues.push(this.configList[i][j]);
-      }
-      this.elements[indexOfCategory].push(elementValues);
-    }
   }
 
-  public sceneSelectorHoverIn(): void {
-    this.showSceneSelector = true;
+  public swapMenuVisibility(): void {
+    this.showMenu = !this.showMenu;
   }
 
-  public sceneSelectorHoverOut(): void {
-    this.showSceneSelector = false;
-  }
 
-  public creditsHoverIn(): void {
-    this.showCredits = this.useCredits;
-  }
-
-  public creditsHoverOut(): void {
-    this.showCredits = false && this.useCredits;
-  }
-
-  public toDoHoverIn(): void {
-    this.showToDo = this.useToDoList;
-  }
-
-  public toDoHoverOut(): void {
-    this.showToDo = false && this.useToDoList;
+  public closeMenu(): void {
+    this.showMenu = false;
   }
 
 }

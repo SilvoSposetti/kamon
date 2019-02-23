@@ -14,7 +14,7 @@ export class ScenesService {
 
   constructor(private configService: ConfigService) {
     this.startScenes();
-    if (this.configService.getConfig().useScene === false) {
+    if (this.configService.getUseScene() === false) {
       this.setNone();
     }
   }
@@ -88,7 +88,7 @@ export class ScenesService {
       'stacked-plot'
     ];
     this.scenesArray.sort();
-    this.setSceneFromName(this.configService.getConfig().defaultScene);
+    this.setSceneFromName(this.configService.getDefaultScene());
   }
 
 

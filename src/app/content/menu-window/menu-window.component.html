@@ -1,0 +1,51 @@
+<div class="menu-window-parent">
+  <div class="top-bar-container" *ngIf="selectedTab !== 'default'">
+    <div class="tab-name-container">
+      <div class="tab-name">
+        {{tabNames[selectedTabNr]}}
+      </div>
+    </div>
+    <div class="close-tab-button tob-button-container btn" (click)="resetSelectedTab()" *ngIf="selectedTab !== 'default'">
+      <img class="close-tab-img" src="assets/img/UI/CloseTab.svg">
+    </div>
+  </div>
+
+  <div class=" menu-container default-menu-container"
+       *ngIf="selectedTab==='default'"
+       [ngClass]="{'default-menu-container-wide': isWide, 'default-menu-container-narrow': !isWide}">
+    <div class="menu-logo-container"
+         [ngClass]="{'menu-logo-container-wide': isWide, 'menu-logo-container-narrow':!isWide}">
+      <img class="logo-img" src="/assets/img/icon/icoShadow.svg">
+    </div>
+    <div class="menu-list-container"
+         [ngClass]="{'menu-list-container-wide': isWide, 'menu-list-container-narrow':!isWide}">
+    <div class="menu-element-container btn" (click)="selectTabNr(i)" *ngFor="let tab of tabs, let i=index">
+        <div class="menu-element">
+          {{tabNames[i]}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scene-selector-container menu-container"
+       *ngIf="selectedTab==='scene-selector'">
+    <app-scene-selector></app-scene-selector>
+  </div>
+
+  <div class="shortcut-list-container menu-container"
+       *ngIf="selectedTab==='shortcut-list'">
+    <app-shortcut-list></app-shortcut-list>
+  </div>
+
+  <div class="how-to-container menu-container"
+       *ngIf="selectedTab==='how-to'">
+    <app-how-to></app-how-to>
+  </div>
+
+  <div class="about-container menu-container"
+       *ngIf="selectedTab==='about'">
+    <app-about></app-about>
+
+  </div>
+
+</div>

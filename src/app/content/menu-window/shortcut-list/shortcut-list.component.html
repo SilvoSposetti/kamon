@@ -1,0 +1,16 @@
+<div class="shortcut-list-parent">
+  <div class="shortcut-container" *ngFor="let shortcut of shortcutList; let i = index">
+    <div class="shortcut">
+      <div class="shortcut-one-letter-container">
+        <div class="shortcut-one-letter">
+          {{shortcut[1]}}
+        </div>
+      </div>
+      <div class="shortcut-name-container btn" (click)="openLink(i)">
+        <div class="shortcut-name">
+          {{shortcut[0]}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,145 @@
+.menu-window-parent {
+  width: 100%;
+  height: 100%;
+  background: var(--menu-background-color);
+  display: flex;
+  color: var(--default-font-color);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/***********************************************************************************************************************
+Top bar:
+***********************************************************************************************************************/
+
+.top-bar-container {
+  width: 100%;
+  height: 1%;
+  min-height: var(--menu-button-container-size);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--default-font-color);
+}
+
+.tab-name-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+}
+
+.tob-button-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-tab-img {
+  width: var(--menu-button-size);
+  height: var(--menu-button-size);
+}
+
+
+.close-menu-img {
+  cursor: pointer;
+  width: var(--menu-button-size);
+  height: var(--menu-button-size);
+}
+
+
+/***********************************************************************************************************************
+Default Menu
+***********************************************************************************************************************/
+
+.menu-container {
+  width: 100%;
+  min-height: 1%;
+  height: 99%;
+}
+
+.default-menu-container-wide {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 95%;
+  max-height: 60%;
+
+}
+
+.default-menu-container-narrow {
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /*width: 95%;*/
+  /*height: 80%;*/
+}
+
+
+.menu-logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-logo-container-wide {
+  width: 60%;
+  height: 60%;
+}
+
+.menu-logo-container-narrow {
+  width: 70%;
+  height: 70%;
+}
+
+.menu-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.menu-list-container-wide {
+  width: 80%;
+  height: 50%;
+}
+
+.menu-list-container-narrow {
+  height: 80%;
+  width: 50%;
+}
+
+/***********************************************************************************************************************
+Logo
+***********************************************************************************************************************/
+
+.logo-img {
+  width: 90%;
+  height: 90%;
+  max-width: 30vw;
+  max-height: 30vw;
+}
+
+
+/***********************************************************************************************************************
+Menu List
+***********************************************************************************************************************/
+.menu-element-container {
+  cursor: pointer;
+  width: 100%;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2em;
+}
+
+.menu-element {
+  padding: 0.2em;
+}
+

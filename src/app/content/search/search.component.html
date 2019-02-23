@@ -1,25 +1,42 @@
-<div class="search-parent" [style.background]="shortcut[4]">
-  <div class="search-background-box-shadow"></div>
-  <div class="search-text-container">
-    <!--do NOT put search text on a line on its own because it has the style   "white-space: pre;"-->
-    <div class="search-text">{{searchText}}</div>
-    <div myBlink>|</div>
-  </div>
-  <div class="suggestions-container">
-    <div class="suggestion" *ngFor="let element of searchSuggestions; let i = index">
-      <div class="suggestions-separator" *ngIf="i !== 0"></div>
-      <div class="suggestion-text"
-           (click)="clickedSuggestion(i)"
-           [ngClass]="{suggestionHighlighted: selectionSuggestion === i}"
-           [innerHTML]="searchSuggestions[i]"
-      >
+<div class="search-parent">
+  <div class="search-input-container">
+    <form class="form-container" #searchForm="ngForm" id="searchForm">
+      <input class="search-input" id="search-input"
+             maxlength="100"
+             [myFocus]="false"
+             [(ngModel)]="searchText"
+             name="search-input"
+             spellcheck="false"
+             placeholder=""
+             (ngModelChange)="searchInputChanged()"
+             (keydown.enter)="launchSearch()"
+             (keydown.escape)="resetSearch()"
+             (keydown.arrowdown)="selectDown()"
+             (keydown.arrowup)="selectUp()">
+      <!--(ngModelChange) must be after the [(ngModel)] so that the function can be called after the value changes-->
+    </form>
+    <div class="search-shortcut-container">
+      <div class="search-shortcut-background" [@myDynamicWidth] *ngIf="shortcut!==undefined && shortcut[0]!==''"
+           [style.background]="shortcut[4]">
+        <div class="search-shorctut-text">
+          {{shortcut[0]}}
+        </div>
       </div>
     </div>
   </div>
-  <div class="shortcut-name-container">
-    <div class="shortcut-name">
-      {{shortcut[0]}}
+  <div class="search-suggestion-expandable" [@myDynamicHeight] *ngIf="showSuggestions"
+  >
+
+    <div class="search-suggestion-container"
+         *ngFor="let searchSuggestion of searchSuggestions; let i = index"
+         [ngClass]="{suggestionHighlighted: selectedSuggestionIndex === i}">
+      <div class="suggestion-text-container"
+
+           (click)="clickedSuggestion(i)">
+        <div class="suggestion-text"
+             [innerHTML]="searchSuggestion">
+        </div>
+      </div>
     </div>
   </div>
 </div>
-

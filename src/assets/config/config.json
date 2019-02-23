@@ -1,30 +1,24 @@
 {
   "useScene": false,
-  "showClock": true,
-  "defaultScene": "stacked-plot",
-  "showCitations": false,
+  "defaultScene": "maze",
+  "showUI": true,
   "openLinkInNewTab": false,
-  "showList": false,
   "suggestions": true,
   "searchDelimiter": ":",
   "amountOfSuggestions": 5,
   "allowLocation": false,
-  "useToDoList": false,
-  "useCredits": false,
   "showFPS": false,
-  "backgroundGradientFirstStop": "30434A",
-  "backgroundGradientSecondStop": "304D3A",
-  "foregroundGradientFirstStop": "B39874",
-  "foregroundGradientSecondStop": "B3866F",
+  "backgroundGradientFirstStop": "62929E",
+  "backgroundGradientSecondStop": "30434A",
+  "foregroundGradientFirstStop": "C6C5B9",
+  "foregroundGradientSecondStop": "BFBA91",
   "searchEngine": [
     "Google",
     "http://www.google.com/",
-    "/search?q=",
-    "#373737"
+    "/search?q="
   ],
-  "list": [
+  "shortcuts": [
     [
-      "Silvo",
       "Gmail",
       "g",
       "https://mail.google.com/mail/u/0/?tab=wm#inbox",
@@ -32,7 +26,6 @@
       "#4285f4"
     ],
     [
-      "Silvo",
       "GitHub",
       "G",
       "https://github.com",
@@ -40,7 +33,6 @@
       "#373737"
     ],
     [
-      "Silvo",
       "Drive",
       "d",
       "https://drive.google.com/drive/my-drive",
@@ -48,15 +40,6 @@
       "#fcc93e"
     ],
     [
-      "Silvo",
-      "WhatsApp Web",
-      "w",
-      "https://web.whatsapp.com/",
-      null,
-      "#2a948a"
-    ],
-    [
-      "Silvo",
       "YouTube",
       "y",
       "https://www.youtube.com/",
@@ -64,23 +47,20 @@
       "#fc0101"
     ],
     [
-      "Uni",
-      "UniMail",
+      "Uni Mail",
       "u",
       "https://webmail.uzh.ch/",
       null,
       "#0099ff"
     ],
     [
-      "Uni",
-      "Courses",
-      "C",
+      "Vorlesungsverzeichnis",
+      "v",
       "https://studentservices.uzh.ch/uzh/anonym/vvz/index.html",
       null,
       "#0099ff"
     ],
     [
-      "Uni",
       "Olat",
       "o",
       "https://lms.uzh.ch/dmz/",
@@ -88,15 +68,13 @@
       "#0099ff"
     ],
     [
-      "Uni",
-      "Scholar",
+      "Google Scholar",
       "s",
       "https://scholar.google.ch/",
       null,
       "#0099ff"
     ],
     [
-      "Uni",
       "Wolfram Alpha",
       "W",
       "https://www.wolframalpha.com/",
@@ -104,15 +82,13 @@
       "#FF7D00"
     ],
     [
-      "Fun",
-      "drLupo",
-      "l",
-      "https://www.twitch.tv/drLupo",
+      "Reddit",
+      "r",
+      "https://www.reddit.com/",
       null,
-      "#8E3F7B"
+      "#FF4500"
     ],
     [
-      "Fun",
       "Trello",
       "t",
       "https://trello.com/",
@@ -120,15 +96,6 @@
       "#026AA7"
     ],
     [
-      "Fun",
-      "YouTube",
-      "y",
-      "https://www.youtube.com/",
-      "/results?search_query={}",
-      "#fc0101"
-    ],
-    [
-      "Fun",
       "The Pirate Bay",
       "b",
       "https://thepiratebay.org",
@@ -136,7 +103,6 @@
       "#4c4132"
     ],
     [
-      "Fun",
       "YTS",
       "Y",
       "https://yts.ag/browse-movies/0/1080p/all/7/latest",
@@ -144,7 +110,6 @@
       "#2f2f2f"
     ],
     [
-      "Other",
       "Desmos",
       "D",
       "https://www.desmos.com/calculator",
@@ -152,15 +117,6 @@
       "#087B38"
     ],
     [
-      "Other",
-      "Facebook",
-      "f",
-      "https://www.facebook.com",
-      "/search/top/?q={}",
-      "#3b5998"
-    ],
-    [
-      "Other",
       "Digitec",
       "c",
       "https://www.digitec.ch/",
@@ -168,7 +124,6 @@
       "#0068ab"
     ],
     [
-      "Other",
       "Steam",
       "S",
       "http://store.steampowered.com/",
@@ -176,58 +131,11 @@
       "#173d57"
     ],
     [
-      "Other",
       "Humble Bundle",
       "h",
       "https://www.humblebundle.com/",
       null,
       "#3b3e48"
-    ]
-  ],
-  "citations": [
-    [
-      "Silently judging your font choices.",
-      "Jan Gugler"
-    ],
-    [
-      "There is no such thing as enough particles.",
-      "Luka Lapanashvili"
-    ],
-    [
-      "Duuuuuude",
-      "Silvo Sposetti"
-    ],
-    [
-      "Rest in pepperoni.",
-      "Everybody to Luka"
-    ],
-    [
-      "It should be both noted and ignored, embraced and dismissed, laughed at and revered.",
-      "Nobody000 on the Urban Dictionary"
-    ],
-    [
-      "The heart beat function for a dead guy is defined by f(x) = 0.",
-      "35093731895230467514051"
-    ],
-    [
-      "If a flight-simulator could transport you from A to B, then it would be a flight-emulator.",
-      "Henk Holterman"
-    ],
-    [
-      "Ich habe sogar vergessen wie geil bier schmeckt",
-      "Luka Lapanashvili"
-    ],
-    [
-      "1: Wear pants. 2: Your own pants.",
-      "Ze Frank"
-    ],
-    [
-      "I'm sad that I like the talent to make this shit up.",
-      "JonTron"
-    ],
-    [
-      "It is ridiculous and unnecessary, but when has that ever stopped programmers?",
-      "Tom Scott"
     ]
   ]
 }

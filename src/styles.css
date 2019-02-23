@@ -3,44 +3,24 @@
 
   /* Root Font Size*/
   --default-font-size: 20px;
-  --default-mobile-font-size: 10px;
+  --default-mobile-font-size: 15px;
   --default-font-weight: 200;
   /* Custom Colors */
-  --default-font-color: white;
-  /*--default-font-color: #E3BDAC;*/
-
-  /*--default-background-color: rgba(0, 0, 0, 0.6);*/
-  /*--default-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 1);*/
-  /*--default-box-shadow-up: 0 -30px 30px -30px rgba(0, 0, 0, 1); !* Used only for clock and list when they coexist *!*/
-  /*--default-box-shadow-down: 0 30px 30px -30px rgba(0, 0, 0, 1); !* Used only for clock and list when they coexist *!*/
+  --default-font-color: #BFBA91;
 
   --default-background-color: rgba(0, 0, 0, 0);
   --default-box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0);
   --default-box-shadow-up: 0 -30px 30px -30px rgba(0, 0, 0, 0); /* Used only for clock and list when they coexist */
   --default-box-shadow-down: 0 30px 30px -30px rgba(0, 0, 0, 0); /* Used only for clock and list when they coexist */
 
-  /*background: var(--default-background-color);*/
-  /*-webkit-box-shadow: var(--default-box-shadow);*/
-  /*-moz-box-shadow: var(--default-box-shadow);*/
-  /*box-shadow: var(--default-box-shadow);*/
 
-  /*********** BACKGROUND / SETTING ***********/
-  /*--setting-color: linear-gradient(141deg, #10afa3 0%, #10998e 25%, #177181 51%, #1b5978 75%, #1b4564 100%);*/
-  /*--setting-color: linear-gradient(141deg, #13E2B5 0%, #009DE0 100%);*/
-  /*--setting-color: linear-gradient(141deg, #4D6C7B 0%, #12191C 100%);*/
-  /*--setting-color: linear-gradient(141deg, #FFAF2E 0%, #F70B66 100%);*/
-  /*--setting-color: #121212;*/
+  /* CONTENT */
 
-  /*********** CONTENT ***********/
 
-  /* Citations */
-  --citation-message-font-size: 1em;
-  --citation-author-font-size: 0.8em;
-
-  /* Clock*/
-  --clock-info-font-size: 0.9em;
-  --clock-dial-font-size: 4.5em;
-  --clock-lines-color: 1px solid rgba(255, 255, 255, 0.3);
+  --clock-info-font-size: 1.2em;
+  --clock-dial-font-size: 4em;
+  --clock-font-color: #BFBA91;
+  --clock-dial-font-weight: 100;
 
   /* List */
   --list-category-font-size: 1.2em;
@@ -49,16 +29,20 @@
   --list-element-hover-background-color: rgba(200, 200, 200, 0.4);
 
   /*SEARCH COMPONENT*/
-  --search-text-font-size: 2em;
+  --search-compomnent-width: 55vw; /*less than 61.8%*/
+  --search-compomnent-max-width: 30em; /*less than 61.8%*/
+  --search-text-font-size: 1.2em;
   --suggestions-font-size: 1em;
-  --shortcut-found-font-size: 1.2em;
-  --search-background-color: rgba(0, 0, 0, 0.7);
+  --shortcut-found-font-size: 1em;
+  --search-input-background-color: #30434A;
+  --search-input-font-color: #BFBA91;
+  --search-suggestions-background-color: #4A6D7C;
+  --default-border-radius: 0.3em;
 
-  /*CREDITS*/
-  --credits-font-size: 0.8em;
-  --credits-height: 5em;
-  --credits-border: 15em;
-  --credits-hover-square-size: 5em;
+  /*MENU COMPONENT*/
+  --menu-background-color: #30434A;
+  --menu-button-size: 2em;
+  --menu-button-container-size: 3em;
 
   /*OTHER*/
   /*.ng-valid[required], .ng-valid.required {*/
@@ -71,7 +55,7 @@
   /*LOADING SCREEN*/
   --loading-font-size: 2vh;
   --loading-font-color: white;
-  --loading-background-color: #373737;
+  --loading-background-color: #30434A;
 
 }
 
@@ -134,21 +118,51 @@ links:
 
 /* unvisited link */
 a:link {
-  color: white;
+  color: lightgrey;
 }
 
 /* visited link */
 a:visited {
-  color: lightgrey;
+  color: darkgrey;
 }
 
 /* mouse over link */
 a:hover {
-  color: lightgrey;
+  color: white;
 }
 
 /* selected link */
 a:active {
-  color: white;
+  color: darkgrey;
 }
 
+/***********************************************************************************************************************
+Simple Buttons:
+***********************************************************************************************************************/
+.btn {
+  cursor: pointer;
+  transition-duration: 0.1s;
+}
+
+.btn:hover {
+
+  -webkit-box-shadow: inset 0px 0px 10px 3px rgba(74, 109, 124, 1);
+  -moz-box-shadow: inset 0px 0px 10px 3px rgba(74, 109, 124, 1);
+  box-shadow: inset 0px 0px 10px 3px rgba(74, 109, 124, 1);
+
+  /*border: 1px solid rgba(74, 109, 124, 1);*/
+  /*background: rgba(74, 109, 124, 1);*/
+}
+
+.btn:active {
+  /*transition-duration: 0.2s;*/
+  -webkit-box-shadow: inset 0px 0px 10px 3px rgba(191, 186, 145, 0.5);
+  -moz-box-shadow: inset 0px 0px 10px 3px rgba(191, 186, 145, 0.5);
+  box-shadow: inset 0px 0px 10px 3px rgba(191, 186, 145, 0.5);
+  /*background: rgba(191, 186, 145, 0.5);*/
+  /*border: 1px solid rgba(191, 186, 145, 0.5);*/
+}
+
+.highlighted {
+  background: #4A6D7C !important;
+}

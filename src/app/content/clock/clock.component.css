@@ -1,26 +1,11 @@
 .clock-parent {
-  /*110 because otherwise the box shadow makes strange effects ath the page edges*/
-  width: 110vw;
   background: var(--default-background-color);
-  /*-webkit-box-shadow: var(--default-box-shadow);*/
-  /*-moz-box-shadow: var(--default-box-shadow);*/
-  /*box-shadow: var(--default-box-shadow);*/
   display: flex;
-  color: var(--default-font-color);
   align-items: center;
   justify-content: center;
-}
-
-.clock-parent-if-alone {
-  -webkit-box-shadow: var(--default-box-shadow);
-  -moz-box-shadow: var(--default-box-shadow);
-  box-shadow: var(--default-box-shadow);
-}
-
-.clock-parent-if-not-alone {
-  -webkit-box-shadow: var(--default-box-shadow-up);
-  -moz-box-shadow: var(--default-box-shadow-up);
-  box-shadow: var(--default-box-shadow-up);
+  text-shadow: 7px 7px 5px rgba(0, 0, 0, 0.4);
+  color: var(--clock-font-color);
+  margin:2em;
 }
 
 .clock-container {
@@ -38,15 +23,6 @@
 /***********************************************************************************************************************
 Clock Header
 ***********************************************************************************************************************/
-.clock-header-padding {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  width: 100%;
-  min-height: 1em;
-}
-
 .clock-header {
   display: flex;
   align-items: center;
@@ -122,7 +98,7 @@ Dial
   justify-content: center;
   flex-direction: row;
   font-size: var(--clock-dial-font-size);
-  font-weight: 100;
+  font-weight: var(--clock-dial-font-weight);
 }
 
 .digits-container {
@@ -142,12 +118,12 @@ Dial
   height: 0.4em;
 }
 
-/***********************************************************************************************************************
-Horizontal Line
-***********************************************************************************************************************/
-.horizontal-line {
-  width: 27em;
-  border-top: var(--clock-lines-color);
+.date-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 /***********************************************************************************************************************
@@ -163,26 +139,18 @@ Clock Footer
 }
 
 .coordinate-container {
-  width: 33%;
+  width: 50%;
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 }
 
 .place-container {
-  width: 33%;
+  width: 50%;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   text-align: end;
-}
-
-.date-container {
-  width: 33%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 

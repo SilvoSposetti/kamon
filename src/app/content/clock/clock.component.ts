@@ -23,8 +23,8 @@ import {takeUntil} from "rxjs/operators";
           animate(400, style({opacity: 0}))
         ])
       ]
-    )
-  ],
+    ),
+  ]
 })
 
 export class ClockComponent implements OnInit, OnDestroy {
@@ -63,7 +63,7 @@ export class ClockComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.allowLocation = this.configService.getConfig().allowLocation;
+    this.allowLocation = this.configService.getAllowLocation();
     this.updateData();
   }
 

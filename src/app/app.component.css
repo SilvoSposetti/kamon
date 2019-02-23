@@ -6,10 +6,17 @@
   color: var(--default-font-color);
 }
 
-.app-desktop{
+.app-desktop {
   font-size: var(--default-font-size);
 }
 
-.app-mobile{
+.app-mobile {
   font-size: var(--default-mobile-font-size);
+}
+
+.content {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  overflow: hidden;
 }
