@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -13,12 +13,10 @@ import {takeUntil} from "rxjs/operators";
   styleUrls: ['./visual-clock.component.css']
 })
 
-export class VisualClockComponent extends Scene implements AfterViewInit, OnDestroy {
+export class VisualClockComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
-
-  private clockUnsubscribe: Subject<any> = new Subject<any>();
 
   private secondsFirstDigit: number = 0;
   private secondsSecondDigit: number = 0;
@@ -65,40 +63,32 @@ export class VisualClockComponent extends Scene implements AfterViewInit, OnDest
 
 
     // Subscribe to clock service variables:
-    this.clockService.getSecondsFirstDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
+    this.clockService.getSecondsFirstDigit().pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
       this.secondsFirstDigit = parseInt(value, 10);
     });
-    this.clockService.getSecondsSecondDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
+    this.clockService.getSecondsSecondDigit().pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
       this.secondsSecondDigit = parseInt(value, 10);
     });
-    this.clockService.getMinutesFirstDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
+    this.clockService.getMinutesFirstDigit().pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
       this.minutesFirstDigit = parseInt(value, 10);
     });
-    this.clockService.getMinutesSecondDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
+    this.clockService.getMinutesSecondDigit().pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
       this.minutesSecondDigit = parseInt(value, 10);
     });
-    this.clockService.getHoursFirstDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
+    this.clockService.getHoursFirstDigit().pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
       this.hoursFirstDigit = parseInt(value, 10);
     });
-    this.clockService.getHoursSecondDigit().pipe(takeUntil(this.clockUnsubscribe)).subscribe(value => {
+    this.clockService.getHoursSecondDigit().pipe(takeUntil(this.ngUnsubscribe)).subscribe(value => {
       this.hoursSecondDigit = parseInt(value, 10);
     });
-  }
-
-  ngAfterViewInit() {
-    this.initialiseCore();
-    this.clockService.resetClock();
-  }
-
-  ngOnDestroy(): void {
-    this.terminateCore();
-    this.clockUnsubscribe.next();
-    this.clockUnsubscribe.complete();
   }
 
   /*****************************************************************************************************************************************
    * SETUP */
   public setup(): void {
+    this.clockService.resetClock();
+
+
     // Fibonacci:
     this.modModulo[0] = 1;
     this.modModulo[1] = 2;

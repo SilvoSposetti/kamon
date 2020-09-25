@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {makeNoise3D} from 'open-simplex-noise';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
@@ -10,7 +10,7 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './perlin-field.component.html',
   styleUrls: ['./perlin-field.component.css']
 })
-export class PerlinFieldComponent extends Scene implements AfterViewInit, OnDestroy {
+export class PerlinFieldComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -35,14 +35,6 @@ export class PerlinFieldComponent extends Scene implements AfterViewInit, OnDest
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngAfterViewInit() {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy() {
-    this.terminateCore();
   }
 
   private drawBackground(): void {

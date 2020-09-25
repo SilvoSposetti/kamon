@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -8,7 +8,7 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './lissajous.component.html',
   styleUrls: ['./lissajous.component.css']
 })
-export class LissajousComponent extends Scene implements AfterViewInit, OnDestroy {
+export class LissajousComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -29,14 +29,6 @@ export class LissajousComponent extends Scene implements AfterViewInit, OnDestro
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngAfterViewInit() {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy() {
-    this.terminateCore();
   }
 
   public draw(): void {

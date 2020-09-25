@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Scene} from '../../../shared/models/Scene';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
@@ -8,7 +8,7 @@ import {ColorService} from '../../../shared/services/color.service';
   templateUrl: './parallax.component.html',
   styleUrls: ['./parallax.component.css']
 })
-export class ParallaxComponent extends Scene implements AfterViewInit, OnDestroy {
+export class ParallaxComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -27,14 +27,6 @@ export class ParallaxComponent extends Scene implements AfterViewInit, OnDestroy
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngAfterViewInit() {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy(): void {
-    this.terminateCore();
   }
 
   /*****************************************************************************************************************************************

@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {Scene} from '../../../shared/models/Scene';
 import {ColorService} from '../../../shared/services/color.service';
@@ -9,7 +9,7 @@ import {ColorService} from '../../../shared/services/color.service';
   templateUrl: './maze.component.html',
   styleUrls: ['./maze.component.css']
 })
-export class MazeComponent extends Scene implements AfterViewInit, OnDestroy {
+export class MazeComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -32,14 +32,6 @@ export class MazeComponent extends Scene implements AfterViewInit, OnDestroy {
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngAfterViewInit() {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy() {
-    this.terminateCore();
   }
 
   public setup(): void {

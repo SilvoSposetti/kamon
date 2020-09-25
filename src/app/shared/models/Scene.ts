@@ -1,18 +1,17 @@
 import {Subject} from 'rxjs';
 import {FpsService} from '../services/fps.service';
 import {ColorService} from '../services/color.service';
-import {ElementRef, ViewChild} from '@angular/core';
+import {ElementRef, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
-import {AfterViewInit} from '@angular/core';
 
 // Abstract class used for initialisation, maintenance and termination of scenes.
-export abstract class Scene {
+export abstract class Scene implements AfterViewInit, OnDestroy {
   @ViewChild('myCanvas') canvasRef: ElementRef;
 
   public screenWidth: number;
   public screenHeight: number;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  public ngUnsubscribe: Subject<any> = new Subject<any>();
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
@@ -25,8 +24,18 @@ export abstract class Scene {
   }
 
   public abstract setup(): void;
+
   public abstract update(): void;
+
   public abstract draw(): void;
+
+  ngAfterViewInit() {
+    this.initialiseCore();
+  }
+
+  ngOnDestroy() {
+    this.terminateCore();
+  }
 
   /*********************************************************************************************************************
    * CORE:
@@ -99,14 +108,6 @@ export abstract class Scene {
 //
 //  constructor(public fpsService: FpsService, public colorService: ColorService) {
 //    super(fpsService, colorService);
-//  }
-//
-//  ngAfterViewInit() {
-//    this.initialiseCore();
-//  }
-//
-//  ngOnDestroy(): void {
-//    this.terminateCore();
 //  }
 //
 //  /*****************************************************************************************************************************************

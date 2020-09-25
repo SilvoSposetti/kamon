@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnDestroy, AfterViewInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -8,7 +8,7 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './langtons-ant.component.html',
   styleUrls: ['./langtons-ant.component.css']
 })
-export class LangtonsAntComponent extends Scene implements AfterViewInit, OnDestroy {
+export class LangtonsAntComponent extends Scene {
   @ViewChild('myCanvas') canvasRef: ElementRef;
   @Input() screenWidth: number;
   @Input() screenHeight: number;
@@ -26,14 +26,6 @@ export class LangtonsAntComponent extends Scene implements AfterViewInit, OnDest
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngAfterViewInit() {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy() {
-    this.terminateCore();
   }
 
   public setup(): void {
