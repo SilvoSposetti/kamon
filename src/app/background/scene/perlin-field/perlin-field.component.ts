@@ -1,5 +1,5 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import OpenSimplexNoise from 'open-simplex-noise';
+import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
+import {makeNoise3D} from 'open-simplex-noise';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -10,14 +10,14 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './perlin-field.component.html',
   styleUrls: ['./perlin-field.component.css']
 })
-export class PerlinFieldComponent extends Scene implements OnInit, OnDestroy {
+export class PerlinFieldComponent extends Scene implements AfterViewInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
 
   private alphaGradient: CanvasGradient;
 
-  private noise = new OpenSimplexNoise(Date.now()); // Date.now() is the seed
+  private noise = makeNoise3D(Date.now()); // Date.now() is the seed
 
   private spacing = 20;
   private columns: number;
@@ -37,7 +37,7 @@ export class PerlinFieldComponent extends Scene implements OnInit, OnDestroy {
     super(fpsService, colorService);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initialiseCore();
   }
 
@@ -114,7 +114,7 @@ export class PerlinFieldComponent extends Scene implements OnInit, OnDestroy {
     for (let x = 0; x < this.columns; x++) {
       this.field.push([]);
       for (let y = 0; y < this.rows; y++) {
-        this.field[x].push(0.5 * this.noise.noise3D(x * this.inc, y * this.inc, this.time * this.timeInc) + 0.5);
+        this.field[x].push(0.5 * this.noise(x * this.inc, y * this.inc, this.time * this.timeInc) + 0.5);
       }
     }
 
@@ -134,7 +134,7 @@ export class PerlinFieldComponent extends Scene implements OnInit, OnDestroy {
     for (let x = 0; x < this.columns; x++) {
       for (let y = 0; y < this.rows; y++) {
         //this.field[x][y] = Math.random();
-        this.field[x][y] = (0.5 * this.noise.noise3D(x * this.inc, y * this.inc, this.time * this.timeInc) + 0.5);
+        this.field[x][y] = (0.5 * this.noise(x * this.inc, y * this.inc, this.time * this.timeInc) + 0.5);
         if (this.field[x][y] < 0.01) {
           this.field[x][y] = 0.01;
         }

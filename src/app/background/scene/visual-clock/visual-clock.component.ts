@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -13,7 +13,7 @@ import {takeUntil} from "rxjs/operators";
   styleUrls: ['./visual-clock.component.css']
 })
 
-export class VisualClockComponent extends Scene implements OnInit, OnDestroy {
+export class VisualClockComponent extends Scene implements AfterViewInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -85,7 +85,7 @@ export class VisualClockComponent extends Scene implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initialiseCore();
     this.clockService.resetClock();
   }

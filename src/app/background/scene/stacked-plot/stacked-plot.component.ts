@@ -1,8 +1,8 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
 import {Scene} from "../../../shared/models/Scene";
 import {FpsService} from "../../../shared/services/fps.service";
 import {ColorService} from "../../../shared/services/color.service";
-import OpenSimplexNoise from 'open-simplex-noise';
+import {makeNoise2D} from 'open-simplex-noise';
 
 
 @Component({
@@ -10,7 +10,7 @@ import OpenSimplexNoise from 'open-simplex-noise';
   templateUrl: './stacked-plot.component.html',
   styleUrls: ['./stacked-plot.component.css']
 })
-export class StackedPlotComponent extends Scene implements OnInit, OnDestroy {
+export class StackedPlotComponent extends Scene implements AfterViewInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -24,7 +24,7 @@ export class StackedPlotComponent extends Scene implements OnInit, OnDestroy {
   private linesLeftAndRightPaddingRatio: number = 1 / 6;
   private linesLeftAndRightPadding: number;
   private maxElementHeight: number = 300;
-  private noise = new OpenSimplexNoise(Date.now()); // Date.now() is the seed
+  private noise = makeNoise2D(Date.now()); // Date.now() is the seed
   private noiseHorizontalScale = 0.3;
   private noiseVerticalScale = 10;
 
@@ -47,7 +47,7 @@ export class StackedPlotComponent extends Scene implements OnInit, OnDestroy {
     super(fpsService, colorService);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initialiseCore();
   }
 
@@ -116,7 +116,7 @@ export class StackedPlotComponent extends Scene implements OnInit, OnDestroy {
   private updatePointsGraph(): void {
     for (let i = 0; i < this.numOfLines; i++) {
       for (let j = 0; j < this.numOfPoints; j++) {
-        this.graphPoints[i][j] = (this.noise.noise2D((i + 1) * this.noiseVerticalScale + this.noiseHorizontalScale * (j + 1), this.time)) / 2 + 0.5;
+        this.graphPoints[i][j] = (this.noise((i + 1) * this.noiseVerticalScale + this.noiseHorizontalScale * (j + 1), this.time)) / 2 + 0.5;
       }
     }
   }

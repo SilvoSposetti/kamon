@@ -3,6 +3,7 @@ import {FpsService} from '../services/fps.service';
 import {ColorService} from '../services/color.service';
 import {ElementRef, ViewChild} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
+import {AfterViewInit} from '@angular/core';
 
 // Abstract class used for initialisation, maintenance and termination of scenes.
 export abstract class Scene {
@@ -79,7 +80,7 @@ export abstract class Scene {
  * Standard Component-Scene Template:
  */
 
-//import {Component, Input, OnDestroy, OnInit} from '@angular/initialiseCore';
+//import {Component, Input, OnDestroy, AfterViewInit} from '@angular/initialiseCore';
 //import {FpsService} from '../../../shared/services/fps.service';
 //import {ColorService} from '../../../shared/services/color.service';
 //import {Scene} from '../../../shared/models/Scene';
@@ -91,7 +92,7 @@ export abstract class Scene {
 //  styleUrls: ['./*********.css']
 //})
 
-//export class ********* extends Scene implements OnInit, OnDestroy{
+//export class ********* extends Scene implements AfterViewInit, OnDestroy{
 //  @Input() screenWidth: number;
 //  @Input() screenHeight: number;
 //  @Input() showFPS: boolean;
@@ -100,7 +101,7 @@ export abstract class Scene {
 //    super(fpsService, colorService);
 //  }
 //
-//  ngOnInit() {
+//  ngAfterViewInit() {
 //    this.initialiseCore();
 //  }
 //

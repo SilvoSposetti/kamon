@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -8,7 +8,7 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './kaleidoscope.component.html',
   styleUrls: ['./kaleidoscope.component.css']
 })
-export class KaleidoscopeComponent extends Scene implements OnInit, OnDestroy {
+export class KaleidoscopeComponent extends Scene implements AfterViewInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -24,15 +24,13 @@ export class KaleidoscopeComponent extends Scene implements OnInit, OnDestroy {
     super(fpsService, colorService);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initialiseCore();
   }
 
   ngOnDestroy() {
     this.terminateCore();
   }
-
-
 
   public setup() {
     this.sliceAngle = Math.PI * 2 / this.numOfSlices;

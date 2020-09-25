@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -8,7 +8,7 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './modular-multiplication.component.html',
   styleUrls: ['./modular-multiplication.component.css']
 })
-export class ModularMultiplicationComponent extends Scene implements OnInit, OnDestroy {
+export class ModularMultiplicationComponent extends Scene implements AfterViewInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -55,7 +55,7 @@ export class ModularMultiplicationComponent extends Scene implements OnInit, OnD
     super(fpsService, colorService);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initialiseCore();
   }
 

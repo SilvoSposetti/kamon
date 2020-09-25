@@ -1,5 +1,5 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import OpenSimplexNoise from 'open-simplex-noise';
+import {Component, Input, OnDestroy, AfterViewInit} from '@angular/core';
+import {makeNoise2D} from 'open-simplex-noise';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -9,7 +9,7 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './tree-map.component.html',
   styleUrls: ['./tree-map.component.css']
 })
-export class TreeMapComponent extends Scene implements OnInit, OnDestroy {
+export class TreeMapComponent extends Scene implements AfterViewInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -22,7 +22,7 @@ export class TreeMapComponent extends Scene implements OnInit, OnDestroy {
   // subdivide: if 1 then vertically, 0 horizontally
   private depth: number = 12;
   private endFadingFrames = 100;
-  private noise = new OpenSimplexNoise(Date.now());
+  private noise = makeNoise2D(Date.now());
   private noiseValue = 0;
   private noiseIncrement = 1;
 
@@ -31,15 +31,13 @@ export class TreeMapComponent extends Scene implements OnInit, OnDestroy {
     super(fpsService, colorService);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initialiseCore();
   }
 
   ngOnDestroy() {
     this.terminateCore();
   }
-
-
 
   public setup(): void {
     let ctx: CanvasRenderingContext2D = this.canvasRef.nativeElement.getContext('2d');
@@ -173,7 +171,7 @@ export class TreeMapComponent extends Scene implements OnInit, OnDestroy {
   private getDivision(): number {
     //return Math.random();
     this.noiseValue += this.noiseIncrement;
-    let noise = this.noise.noise2D(0, this.noiseValue);
+    let noise = this.noise(0, this.noiseValue);
     return (noise + 1) / 2;
     //return 0.5;
     //return (1 + Math.sqrt(5))/2 -1;

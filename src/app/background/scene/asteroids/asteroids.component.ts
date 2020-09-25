@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -8,7 +8,7 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './asteroids.component.html',
   styleUrls: ['./asteroids.component.css']
 })
-export class AsteroidsComponent extends Scene implements OnInit, OnDestroy {
+export class AsteroidsComponent extends Scene implements AfterViewInit, OnDestroy {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -26,7 +26,7 @@ export class AsteroidsComponent extends Scene implements OnInit, OnDestroy {
     super(fpsService, colorService);
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.initialiseCore();
   }
 
