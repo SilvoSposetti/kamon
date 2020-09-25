@@ -1,10 +1,13 @@
 import {Subject} from 'rxjs';
 import {FpsService} from '../services/fps.service';
 import {ColorService} from '../services/color.service';
-import {ElementRef, OnDestroy, ViewChild, AfterViewInit} from '@angular/core';
+import {ElementRef, OnDestroy, ViewChild, AfterViewInit, Component} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 
 // Abstract class used for initialisation, maintenance and termination of scenes.
+@Component({
+  template: ''
+})
 export abstract class Scene implements AfterViewInit, OnDestroy {
   @ViewChild('myCanvas') canvasRef: ElementRef;
 
