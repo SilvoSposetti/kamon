@@ -1,14 +1,14 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Scene} from "../../../shared/models/Scene";
-import {FpsService} from "../../../shared/services/fps.service";
-import {ColorService} from "../../../shared/services/color.service";
+import {Component, Input} from '@angular/core';
+import {Scene} from '../../../shared/models/Scene';
+import {FpsService} from '../../../shared/services/fps.service';
+import {ColorService} from '../../../shared/services/color.service';
 
 @Component({
   selector: 'app-recursive-tree',
   templateUrl: './recursive-tree.component.html',
   styleUrls: ['./recursive-tree.component.css']
 })
-export class RecursiveTreeComponent extends Scene implements OnInit, OnDestroy {
+export class RecursiveTreeComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -39,14 +39,6 @@ export class RecursiveTreeComponent extends Scene implements OnInit, OnDestroy {
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngOnInit() {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy(): void {
-    this.terminateCore();
   }
 
   /*****************************************************************************************************************************************
@@ -124,8 +116,7 @@ export class RecursiveTreeComponent extends Scene implements OnInit, OnDestroy {
       // ctx.fillStyle = 'white';
       // ctx.fillRect(-3, -3, 6, 6);
       return;
-    }
-    else { // Am at a non-leaf branch, which needs to be subdivided
+    } else { // Am at a non-leaf branch, which needs to be subdivided
       // Draw branch and move on top of it
       ctx.moveTo(0, 0);
       ctx.lineTo(0, -length);

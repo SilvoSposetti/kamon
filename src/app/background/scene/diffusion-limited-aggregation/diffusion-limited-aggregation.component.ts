@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -8,7 +8,7 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './diffusion-limited-aggregation.component.html',
   styleUrls: ['./diffusion-limited-aggregation.component.css']
 })
-export class DiffusionLimitedAggregationComponent extends Scene implements OnInit, OnDestroy {
+export class DiffusionLimitedAggregationComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -26,14 +26,6 @@ export class DiffusionLimitedAggregationComponent extends Scene implements OnIni
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngOnInit() {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy() {
-    this.terminateCore();
   }
 
   public draw(): void {

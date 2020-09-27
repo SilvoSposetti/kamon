@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SearchService} from '../../shared/services/search.service';
 import {takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs/internal/Subject';
+import {Subject} from 'rxjs';
 import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({

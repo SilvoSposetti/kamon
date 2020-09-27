@@ -2,7 +2,7 @@ import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {ScreenSizeService} from '../../shared/services/screen-size.service';
 import {ScenesService} from '../../shared/services/scenes.service';
 import {takeUntil} from "rxjs/operators";
-import {Subject} from "rxjs/internal/Subject";
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-scene',

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ScenesService} from '../../../shared/services/scenes.service';
 import {takeUntil} from 'rxjs/operators';
-import {Subject} from 'rxjs/internal/Subject';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-scene-selector',

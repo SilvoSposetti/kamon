@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {ColorService} from "../../../shared/services/color.service";
 import {FpsService} from "../../../shared/services/fps.service";
 import {Scene} from "../../../shared/models/Scene";
@@ -8,7 +8,7 @@ import {Scene} from "../../../shared/models/Scene";
   templateUrl: './hexagons.component.html',
   styleUrls: ['./hexagons.component.css']
 })
-export class HexagonsComponent extends Scene implements OnInit, OnDestroy {
+export class HexagonsComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -30,14 +30,6 @@ export class HexagonsComponent extends Scene implements OnInit, OnDestroy {
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngOnInit() {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy(): void {
-    this.terminateCore();
   }
 
   /*****************************************************************************************************************************************

@@ -75,13 +75,6 @@
       "#0099ff"
     ],
     [
-      "Wolfram Alpha",
-      "W",
-      "https://www.wolframalpha.com/",
-      null,
-      "#FF7D00"
-    ],
-    [
       "Reddit",
       "r",
       "https://www.reddit.com/",
@@ -94,20 +87,6 @@
       "https://trello.com/",
       null,
       "#026AA7"
-    ],
-    [
-      "The Pirate Bay",
-      "b",
-      "https://thepiratebay.org",
-      "/search/{}",
-      "#4c4132"
-    ],
-    [
-      "YTS",
-      "Y",
-      "https://yts.ag/browse-movies/0/1080p/all/7/latest",
-      null,
-      "#2f2f2f"
     ],
     [
       "Desmos",
@@ -136,6 +115,13 @@
       "https://www.humblebundle.com/",
       null,
       "#3b3e48"
+    ],
+    [
+      "Google Maps",
+      "m",
+      "https://www.google.ch/maps",
+      null,
+      "#32a350"
     ]
   ]
 }

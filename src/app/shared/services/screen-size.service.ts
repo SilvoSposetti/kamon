@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {distinctUntilChanged, map, pluck, publishReplay, refCount, startWith} from 'rxjs/operators';
-import {fromEvent} from "rxjs/internal/observable/fromEvent";
+import {fromEvent} from 'rxjs';
 
 /* Provides observables for real-time screen width and height */
 

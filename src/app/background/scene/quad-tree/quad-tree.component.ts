@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -10,7 +10,7 @@ import {QuadTree} from '../../../shared/models/QuadTree';
   templateUrl: './quad-tree.component.html',
   styleUrls: ['./quad-tree.component.css']
 })
-export class QuadTreeComponent extends Scene implements OnInit, OnDestroy {
+export class QuadTreeComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -31,14 +31,6 @@ export class QuadTreeComponent extends Scene implements OnInit, OnDestroy {
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngOnInit(): void {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy(): void {
-    this.terminateCore();
   }
 
   public setup(): void {

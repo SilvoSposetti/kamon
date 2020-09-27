@@ -1,17 +1,20 @@
 import {Subject} from 'rxjs';
 import {FpsService} from '../services/fps.service';
 import {ColorService} from '../services/color.service';
-import {ElementRef, ViewChild} from '@angular/core';
+import {ElementRef, OnDestroy, ViewChild, AfterViewInit, Component} from '@angular/core';
 import {takeUntil} from 'rxjs/operators';
 
 // Abstract class used for initialisation, maintenance and termination of scenes.
-export abstract class Scene {
+@Component({
+  template: ''
+})
+export abstract class Scene implements AfterViewInit, OnDestroy {
   @ViewChild('myCanvas') canvasRef: ElementRef;
 
   public screenWidth: number;
   public screenHeight: number;
 
-  private ngUnsubscribe: Subject<any> = new Subject<any>();
+  public ngUnsubscribe: Subject<any> = new Subject<any>();
   private fpsValues: number[] = [0, 0];
 
   private running: boolean;
@@ -24,8 +27,18 @@ export abstract class Scene {
   }
 
   public abstract setup(): void;
+
   public abstract update(): void;
+
   public abstract draw(): void;
+
+  ngAfterViewInit() {
+    this.initialiseCore();
+  }
+
+  ngOnDestroy() {
+    this.terminateCore();
+  }
 
   /*********************************************************************************************************************
    * CORE:
@@ -79,7 +92,7 @@ export abstract class Scene {
  * Standard Component-Scene Template:
  */
 
-//import {Component, Input, OnDestroy, OnInit} from '@angular/initialiseCore';
+//import {Component, Input, OnDestroy, AfterViewInit} from '@angular/initialiseCore';
 //import {FpsService} from '../../../shared/services/fps.service';
 //import {ColorService} from '../../../shared/services/color.service';
 //import {Scene} from '../../../shared/models/Scene';
@@ -91,21 +104,13 @@ export abstract class Scene {
 //  styleUrls: ['./*********.css']
 //})
 
-//export class ********* extends Scene implements OnInit, OnDestroy{
+//export class ********* extends Scene implements AfterViewInit, OnDestroy{
 //  @Input() screenWidth: number;
 //  @Input() screenHeight: number;
 //  @Input() showFPS: boolean;
 //
 //  constructor(public fpsService: FpsService, public colorService: ColorService) {
 //    super(fpsService, colorService);
-//  }
-//
-//  ngOnInit() {
-//    this.initialiseCore();
-//  }
-//
-//  ngOnDestroy(): void {
-//    this.terminateCore();
 //  }
 //
 //  /*****************************************************************************************************************************************

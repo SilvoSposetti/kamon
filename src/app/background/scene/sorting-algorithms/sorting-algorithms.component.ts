@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {FpsService} from '../../../shared/services/fps.service';
 import {ColorService} from '../../../shared/services/color.service';
 import {Scene} from '../../../shared/models/Scene';
@@ -8,7 +8,7 @@ import {Scene} from '../../../shared/models/Scene';
   templateUrl: './sorting-algorithms.component.html',
   styleUrls: ['./sorting-algorithms.component.css']
 })
-export class SortingAlgorithmsComponent extends Scene implements OnInit, OnDestroy {
+export class SortingAlgorithmsComponent extends Scene {
   @Input() screenWidth: number;
   @Input() screenHeight: number;
   @Input() showFPS: boolean;
@@ -28,14 +28,6 @@ export class SortingAlgorithmsComponent extends Scene implements OnInit, OnDestr
 
   constructor(public fpsService: FpsService, public colorService: ColorService) {
     super(fpsService, colorService);
-  }
-
-  ngOnInit() {
-    this.initialiseCore();
-  }
-
-  ngOnDestroy() {
-    this.terminateCore();
   }
 
   public setup(): void {
@@ -95,7 +87,6 @@ export class SortingAlgorithmsComponent extends Scene implements OnInit, OnDestr
 
 
   }
-
 
 
   private generateNewData(listIndex: number): void {
@@ -188,8 +179,7 @@ export class SortingAlgorithmsComponent extends Scene implements OnInit, OnDestr
       this.values[2][insertIndex] = valueToInsert;
 
       this.algorithmStep[2]++;
-    }
-    else {
+    } else {
       this.generateNewData(2);
       this.algorithmStep[2] = 0;
     }
